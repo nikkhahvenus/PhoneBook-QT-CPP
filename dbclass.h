@@ -3,7 +3,9 @@
 
 
 #include <QtSql>
+#include <QSqlQueryModel>
 #include <QDebug>
+#include <QMessageBox>
 #include "logger.h"
 
 class DbClass
