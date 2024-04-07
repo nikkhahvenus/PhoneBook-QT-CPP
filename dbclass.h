@@ -28,8 +28,6 @@ public:
     static bool readyConnection();
     bool createTables();
     int ParseSqlScriptFile();
-//    int ParseSqlScriptFile2();
-
 
 private:
     static bool openDBConnection();

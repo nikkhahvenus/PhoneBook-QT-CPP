@@ -174,54 +174,12 @@ int DbClass::ParseSqlScriptFile()
         if (statement.trimmed().length() > 0)
         {
             QSqlQuery query(db);
-            Logger::dLog(statement);
             if (query.exec(statement))
                 successCount++;
             else
-                qDebug() << "Failed:" << statement << "\nReason:" << query.lastError();
+                Logger::dLog( "Failed:" + statement + "\nReason:" + query.lastError().text());
         }
     }
 
     return successCount;
 }
-
-////////////////
-//#include <QSqlDatabase>
-//#include <QDebug>
-//#include <QSqlTableModel>
-//#include <QStringList>
-//#include <QSqlQuery>
-//#include <QTreeView>
-//#include <QFile>
-//#include <QSqlError>
-
-//int DbClass::ParseSqlScriptFile2()
-//{
-//    if(!(dbClassPtr->phoneDB.isValid() && dbClassPtr->phoneDB.isOpen())){
-//        Logger::dLog("Run readyConnection to make DB connection ready to use");
-//        return false;
-//    }
-//    QSqlDatabase &db= dbClassPtr->phoneDB;
-//    const QString & fileName = tableCreationCommandsFileName;
-//    QFile file(fileName);
-//    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
-//        return  0;
-
-//    QTextStream in(&file);
-//    QString sql = in.readAll();
-//    QStringList sqlStatements = sql.split(';', QString::SkipEmptyParts);
-//    int successCount = 0;
-
-//    foreach(const QString& statement, sqlStatements)
-//    {
-//        if (statement.trimmed() != "")
-//        {
-//            QSqlQuery query(db);
-//            if (query.exec(statement))
-//                successCount++;
-//            else
-//                qDebug() << "Failed:" << statement << "\nReason:" << query.lastError();
-//        }
-//    }
-//    return successCount;
-//}
