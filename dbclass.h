@@ -16,6 +16,9 @@ protected:
 
 private:
     QSqlDatabase phoneDB;
+    static QString dbPath;
+    const QString tableCreationCommandsFileName = "/Users/mohammadnikkhah/QT/phoneBookProject/phoneBookApp/sql.sql";
+
 public:
     ~DbClass();
     DbClass(DbClass &other) = delete;
@@ -23,6 +26,10 @@ public:
 
     static DbClass *getInstance();
     static bool readyConnection();
+    bool createTables();
+    int ParseSqlScriptFile();
+//    int ParseSqlScriptFile2();
+
 
 private:
     static bool openDBConnection();

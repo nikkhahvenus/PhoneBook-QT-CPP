@@ -1,6 +1,10 @@
 #include "dbclass.h"
 
 DbClass* DbClass::dbClassPtr= nullptr;;
+QString DbClass::dbPath= "/Users/mohammadnikkhah/QT/phoneBookProject/phoneBookApp/phonebook.db";
+
+
+
 DbClass::DbClass()
 {
 
@@ -39,8 +43,6 @@ void DbClass::closeDBConnection()
 
 bool DbClass::openDBConnection()
 {
-    QSqlDatabase db;
-
     if(!dbClassPtr){
         Logger::dLog("Run GetInstance to make an instance of DbClass then run openDBConnection");
         return false;
@@ -53,12 +55,10 @@ bool DbClass::openDBConnection()
     else if(!dbClassPtr->phoneDB.isValid())
     {
         dbClassPtr->phoneDB = QSqlDatabase::addDatabase("QSQLITE");
-        //complete path to DB is required
-        dbClassPtr->phoneDB.setDatabaseName("/Users/mohammadnikkhah/QT/phoneBookProject/phoneBookApp/phonebook.db");
-        db = dbClassPtr->phoneDB;
+        dbClassPtr->phoneDB.setDatabaseName(dbPath);
     }
 
-    if(!db.open())
+    if(!dbClassPtr->phoneDB.open())
     {
         Logger::dLog( "Failed to open database....");
         return false;
@@ -66,101 +66,162 @@ bool DbClass::openDBConnection()
     else
     {
         Logger::dLog( "Connected...!" );
-        const QString createSQL = "CREATE TABLE IF NOT EXISTS customers ( "
-                                          "                customerID INTEGER PRIMARY KEY AUTOINCREMENT, "
-                                          "                firstName VARCHAR, "
-                                          "                lastName VARCHAR"
-                                          ");";
-
-
-                QSqlQuery query(db);
-                if (query.exec(createSQL)) {
-                    Logger::dLog("Table creation query execute successfully");
-                } else {
-                    // If 'exec' fails, error information can be accessed via the lastError function
-                    // the last error is reset every time exec is called.
-                    const QSqlError error = query.lastError();
-                    Logger::dLog("Create table error: %1" + error.text());
-                }
         return true;
     }
 }
 
+bool DbClass::createTables()
+{
+    if(!(dbClassPtr->phoneDB.isValid() && dbClassPtr->phoneDB.isOpen())){
+        Logger::dLog("Run readyConnection to make DB connection ready to use");
+        return false;
+    }
+//    bool AllTablesCreated = true;
+    QSqlDatabase &db= dbClassPtr->phoneDB;
 
-//void MainWindow::on_pushButton_2_clicked()
+    QSqlQuery query(db);
+
+    const QString createSQL = "CREATE TABLE IF NOT EXISTS customers ( "
+                                      "                customerID INTEGER PRIMARY KEY AUTOINCREMENT, "
+                                      "                firstName VARCHAR, "
+                                      "                lastName VARCHAR"
+                                      ");";
+
+
+
+    if (!query.exec(createSQL)) {
+        Logger::dLog("Create table error: %1" + query.lastError().text());
+    }
+    return true;
+}
+
+#include <QApplication>
+#include <QSqlDatabase>
+#include <QDebug>
+#include <QSqlTableModel>
+#include <QStringList>
+#include <QSqlQuery>
+#include <QTreeView>
+#include <QFile>
+#include <QSqlError>
+
+
+int DbClass::ParseSqlScriptFile()
+{
+    if(!(dbClassPtr->phoneDB.isValid() && dbClassPtr->phoneDB.isOpen())){
+        Logger::dLog("Run readyConnection to make DB connection ready to use");
+        return false;
+    }
+    QSqlDatabase &db= dbClassPtr->phoneDB;
+    const QString & fileName = tableCreationCommandsFileName;
+    QFile file(fileName);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        Logger::dLog("Failed to open the input sql file");
+        return  0;
+    }
+    QTextStream in(&file);
+    QString sql = in.readAll();
+    if (sql.length() == 0)
+        return 0;
+
+    QList<int> splitPoints;
+    enum { IN_STR, IN_ESC, NORMAL } state = NORMAL;
+    int successCount = 0;
+
+    for (int i = 0; i < sql.length(); i++)
+    {
+        const int character = sql.at(i).unicode();
+        switch (state)
+        {
+        case IN_STR:
+            switch (character)
+            {
+            case '\'':
+                state = NORMAL;
+                break;
+            case '\\':
+                state = IN_ESC;
+                break;
+            }
+            break;
+
+        case IN_ESC:
+            state = IN_STR;
+            break;
+
+        case NORMAL:
+            switch (character)
+            {
+            case ';':
+                splitPoints.push_back(i);
+                break;
+
+            case '\'':
+                state = IN_STR;
+                break;
+            }
+        }
+    }
+
+    splitPoints.push_back(sql.length() - 1);
+
+    for (int i = 0, j = 0; i < splitPoints.length(); i++)
+    {
+        QString statement = sql.mid(j, splitPoints.at(i) - j + 1);
+        j = splitPoints.at(i) + 1;
+
+        if (statement.trimmed().length() > 0)
+        {
+            QSqlQuery query(db);
+            Logger::dLog(statement);
+            if (query.exec(statement))
+                successCount++;
+            else
+                qDebug() << "Failed:" << statement << "\nReason:" << query.lastError();
+        }
+    }
+
+    return successCount;
+}
+
+////////////////
+//#include <QSqlDatabase>
+//#include <QDebug>
+//#include <QSqlTableModel>
+//#include <QStringList>
+//#include <QSqlQuery>
+//#include <QTreeView>
+//#include <QFile>
+//#include <QSqlError>
+
+//int DbClass::ParseSqlScriptFile2()
 //{
-//    QString id,family,name;
-//    id = ui->txt_id->text();
-//    name = ui->txt_name->text();
-//    family = ui->txt_family->text();
-//    if(!conopen()){
-//        qDebug() << "Failed to open database";
-//        return;
+//    if(!(dbClassPtr->phoneDB.isValid() && dbClassPtr->phoneDB.isOpen())){
+//        Logger::dLog("Run readyConnection to make DB connection ready to use");
+//        return false;
 //    }
-//    else {
-//        QSqlQuery qry;
-//        qry.prepare("update tbl set name= '"+name+"',family= '"+family+"' where id = '"+id+"' " );
-//        if(qry.exec()){
-//            QMessageBox::critical(this,"update","updated");
-//            conclose();
-//        }
-//        else{
-//            QMessageBox::critical(this,"error:",qry.lastError().text());
-//            conclose();
+//    QSqlDatabase &db= dbClassPtr->phoneDB;
+//    const QString & fileName = tableCreationCommandsFileName;
+//    QFile file(fileName);
+//    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+//        return  0;
+
+//    QTextStream in(&file);
+//    QString sql = in.readAll();
+//    QStringList sqlStatements = sql.split(';', QString::SkipEmptyParts);
+//    int successCount = 0;
+
+//    foreach(const QString& statement, sqlStatements)
+//    {
+//        if (statement.trimmed() != "")
+//        {
+//            QSqlQuery query(db);
+//            if (query.exec(statement))
+//                successCount++;
+//            else
+//                qDebug() << "Failed:" << statement << "\nReason:" << query.lastError();
 //        }
 //    }
+//    return successCount;
 //}
-
-//void MainWindow::on_pushButton_3_clicked()
-//{
-//    QString id,family,name;
-//    id = ui->txt_id->text();
-//    name = ui->txt_name->text();
-//    family = ui->txt_family->text();
-//    if(!conopen()){
-//        qDebug() << "Failed to open database";
-//        return;
-//    }
-//    else {
-//        QSqlQuery qry;
-//        qry.prepare("delete from tbl  where id = '"+id+"' " );
-//        if(qry.exec()){
-//            QMessageBox::critical(this,"delete","deleted");
-//            conclose();
-//        }
-//        else{
-//            QMessageBox::critical(this,"error:",qry.lastError().text());
-//            conclose();
-//        }
-//    }
-//}
-
-//void MainWindow::on_pushButton_4_clicked()
-//{
-//    QSqlQueryModel *model = new QSqlQueryModel();
-//    QString id,family,name;
-//    id = ui->txt_id->text();
-//    name = ui->txt_name->text();
-//    family = ui->txt_family->text();
-//    if(!conopen()){
-//        qDebug() << "Failed to open database";
-//        return;
-//    }
-//    else {
-//        QSqlQuery qry;
-//        qry.prepare("select * from tbl" );
-
-//        if(qry.exec()){
-//            model->setQuery(qry);
-//            ui->tableView->setModel(model);
-//            qDebug() << model->rowCount();
-//            QMessageBox::critical(this,"select","selected");
-//            conclose();
-//        }
-//        else{
-//            QMessageBox::critical(this,"error:",qry.lastError().text());
-//            conclose();
-//        }
-//    }
-//}
-

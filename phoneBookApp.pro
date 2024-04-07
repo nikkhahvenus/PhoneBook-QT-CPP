@@ -19,12 +19,14 @@ SOURCES += \
     dbclass.cpp \
     logger.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    repository.cpp
 
 HEADERS += \
     dbclass.h \
     logger.h \
-    mainwindow.h
+    mainwindow.h \
+    repository.h
 
 FORMS += \
     mainwindow.ui
@@ -33,3 +35,6 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+DISTFILES += \
+    sql.sql

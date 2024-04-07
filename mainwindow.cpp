@@ -14,6 +14,7 @@ MainWindow::MainWindow(QWidget *parent)
     }
     else
         ui->setupUi(this);
+    Logger::dLog(QString((DbClass::getInstance())->ParseSqlScriptFile()));
 }
 
 MainWindow::~MainWindow()
