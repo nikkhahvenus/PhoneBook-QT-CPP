@@ -3,7 +3,7 @@
 
 
 #include <QtSql>
-#include <QSqlQueryModel>
+//#include <QSqlQueryModel>
 #include <QDebug>
 #include <QMessageBox>
 #include "logger.h"
@@ -16,7 +16,6 @@ protected:
 
 private:
     QSqlDatabase phoneDB;
-
 public:
     ~DbClass();
     DbClass(DbClass &other) = delete;

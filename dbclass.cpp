@@ -1,7 +1,6 @@
 #include "dbclass.h"
 
 DbClass* DbClass::dbClassPtr= nullptr;;
-
 DbClass::DbClass()
 {
 
@@ -41,7 +40,7 @@ void DbClass::closeDBConnection()
 bool DbClass::openDBConnection()
 {
     QSqlDatabase db;
-    QString dbname = "phonebook";
+
     if(!dbClassPtr){
         Logger::dLog("Run GetInstance to make an instance of DbClass then run openDBConnection");
         return false;
@@ -53,21 +52,13 @@ bool DbClass::openDBConnection()
     }
     else if(!dbClassPtr->phoneDB.isValid())
     {
-//        dbClassPtr->phoneDB = QSqlDatabase::addDatabase("QSQLITE");
-//        //complete path to DB is required
-//        dbClassPtr->phoneDB.setDatabaseName("/Users/mohammadnikkhah/QT/phoneBookProject/phoneBookApp/phonebook.db");
-        dbClassPtr->phoneDB = QSqlDatabase::addDatabase("QMYSQL");
+        dbClassPtr->phoneDB = QSqlDatabase::addDatabase("QSQLITE");
         //complete path to DB is required
-        dbClassPtr->phoneDB.setDatabaseName("phonebook.db");
-        dbClassPtr->phoneDB.setHostName("localhost");
-        dbClassPtr->phoneDB.setUserName("root");
-        dbClassPtr->phoneDB.setPassword("nikkhah@1356#1#3@home#75");
-        dbClassPtr->phoneDB.setPort(3306);
+        dbClassPtr->phoneDB.setDatabaseName("/Users/mohammadnikkhah/QT/phoneBookProject/phoneBookApp/phonebook.db");
         db = dbClassPtr->phoneDB;
-
     }
 
-    if(!dbClassPtr->phoneDB.open())
+    if(!db.open())
     {
         Logger::dLog( "Failed to open database....");
         return false;
@@ -75,15 +66,22 @@ bool DbClass::openDBConnection()
     else
     {
         Logger::dLog( "Connected...!" );
-        QSqlQuery query(db);
-        bool sr = query.exec("CREATE DATABASE IF NOT EXISTS "+dbname);
-        if (!sr)
-        {
-            QMessageBox::critical(nullptr,"DB Error:",db.lastError().text());
-            return false;
-        }
-        sr = query.exec("USE "+dbname);
+        const QString createSQL = "CREATE TABLE IF NOT EXISTS customers ( "
+                                          "                customerID INTEGER PRIMARY KEY AUTOINCREMENT, "
+                                          "                firstName VARCHAR, "
+                                          "                lastName VARCHAR"
+                                          ");";
 
+
+                QSqlQuery query(db);
+                if (query.exec(createSQL)) {
+                    Logger::dLog("Table creation query execute successfully");
+                } else {
+                    // If 'exec' fails, error information can be accessed via the lastError function
+                    // the last error is reset every time exec is called.
+                    const QSqlError error = query.lastError();
+                    Logger::dLog("Create table error: %1" + error.text());
+                }
         return true;
     }
 }
