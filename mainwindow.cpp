@@ -14,45 +14,12 @@ MainWindow::MainWindow(QWidget *parent)
     }
     else
         ui->setupUi(this);
-    Logger::dLog(QString((DbClass::getInstance())->ParseSqlScriptFile()));
 }
 
 MainWindow::~MainWindow()
 {
     deleteDbClassInstance();
     delete ui;
-}
-
-
-void MainWindow::on_pushButton_clicked()
-{
-    QString id,family,name;
-    id = "120";
-    name = "hamid";
-    family = "zzz";
-
-    QSqlQuery qry;
-    qry.prepare("insert into tbl (id,name,family)  values(149, 'Dennis', 'Young')");
-
-//        qry.prepare("INSERT INTO tbl (id,name,family) VALUES (:id,:name,:family)");
-//        qry.bindValue(":id", id);
-//        qry.bindValue(":name", name);
-//        qry.bindValue(":family", family);
-
-//        qry.prepare("INSERT INTO tbl (name,family) VALUES (:name,:family)");
-//        qry.bindValue(":name", name);
-//        qry.bindValue(":family", family);
-
-//        qry.prepare("insert into tbl (id,name,family) values ('"+id+"','"+name+"','"+family+"')" );
-
-//        qry.prepare("insert into tbl (name,family) values ('"+name+"','"+family+"')" );
-    if(qry.exec()){
-        QMessageBox::critical(this,"save","saved");
-
-    }
-    else{
-        QMessageBox::critical(this,"error:",qry.lastError().text());
-    }
 }
 
 void MainWindow::deleteDbClassInstance()
@@ -62,3 +29,24 @@ void MainWindow::deleteDbClassInstance()
         delete db;
     }
 }
+
+void MainWindow::on_btnSearch_clicked()
+{
+
+}
+
+void MainWindow::on_actionCreate_Initialize_DB_triggered()
+{
+    QString((DbClass::getInstance())->ParseSqlScriptFile());
+}
+
+void MainWindow::on_actionQuit_triggered()
+{
+    QCoreApplication::quit();
+}
+
+void MainWindow::on_actionLicense_triggered()
+{
+     QMessageBox::about(this,"License","All rights reserved for Mr. Nikkhah.");
+}
+

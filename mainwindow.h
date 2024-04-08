@@ -17,7 +17,14 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_pushButton_clicked();
+    void on_btnSearch_clicked();
+
+    void on_actionCreate_Initialize_DB_triggered();
+
+    void on_actionQuit_triggered();
+
+    void on_actionLicense_triggered();
+
 
 private:
     Ui::MainWindow *ui;
