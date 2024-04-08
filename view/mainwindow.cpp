@@ -40,11 +40,6 @@ void MainWindow::on_actionCreate_Initialize_DB_triggered()
     QString((DbClass::getInstance())->ParseSqlScriptFile());
 }
 
-void MainWindow::on_actionQuit_triggered()
-{
-    QCoreApplication::quit();
-}
-
 void MainWindow::on_actionLicense_triggered()
 {
      QMessageBox::about(this,"License","All rights reserved for Mr. Nikkhah.");

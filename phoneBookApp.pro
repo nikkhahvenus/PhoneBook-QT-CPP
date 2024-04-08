@@ -22,16 +22,18 @@ SOURCES += \
     controller/logger.cpp \
     controller/repository.cpp \
     main.cpp \
+    model/owner.cpp \
     view/mainwindow.cpp
 
 HEADERS += \
     controller/dbclass.h \
     controller/logger.h \
     controller/repository.h \
+    model/owner.h \
     view/mainwindow.h
 
 FORMS += \
-    view/mainwindow.ui
+    Form/mainwindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

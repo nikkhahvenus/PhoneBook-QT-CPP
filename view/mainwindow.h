@@ -21,8 +21,6 @@ private slots:
 
     void on_actionCreate_Initialize_DB_triggered();
 
-    void on_actionQuit_triggered();
-
     void on_actionLicense_triggered();
 
 
