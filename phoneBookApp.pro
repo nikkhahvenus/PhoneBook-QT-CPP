@@ -18,20 +18,20 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    dbclass.cpp \
-    logger.cpp \
+    controller/dbclass.cpp \
+    controller/logger.cpp \
+    controller/repository.cpp \
     main.cpp \
-    mainwindow.cpp \
-    repository.cpp
+    view/mainwindow.cpp
 
 HEADERS += \
-    dbclass.h \
-    logger.h \
-    mainwindow.h \
-    repository.h
+    controller/dbclass.h \
+    controller/logger.h \
+    controller/repository.h \
+    view/mainwindow.h
 
 FORMS += \
-    mainwindow.ui
+    view/mainwindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -39,5 +39,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 DISTFILES += \
-    sql.sql \
+    controller/sql.sql \
     test.sql
