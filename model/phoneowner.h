@@ -12,6 +12,11 @@ private:
 
 public:
     PhoneOwner();
+    QString getId();
+    QString getPhone();
+    QString getFullName();
+    bool setPhoneNumber(QString);
+    bool setFullName(QString);
 };
 
 #endif // PHONEOWNER_H

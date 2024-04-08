@@ -1,16 +1,44 @@
 #include "dbinterface.h"
 
-DBInterface::DBInterface()
+DbInterface* DbInterface::dbInterfacePtr= nullptr;;
+
+DbInterface::DbInterface()
 {
 
 }
 
-PhoneOwner DBInterface::getPhoneOwner()
+DbInterface::~DbInterface()
 {
-    return phoneOwner;
+    delete dbInterfacePtr;
 }
 
-bool DBInterface::findOwnerInformation()
+DbInterface *DbInterface::getInstance()
 {
+    if(dbInterfacePtr== nullptr){
+        dbInterfacePtr = new DbInterface();
+        Logger::dLog("new DbInterface");
+    }
+    return dbInterfacePtr;
+}
+
+QString DbInterface::getPhoneOwner_s_Phone()
+{
+    return phoneOwner.getPhone();
+}
+
+QString DbInterface::getPhoneOwner_s_FullName()
+{
+    return phoneOwner.getFullName();
+}
+
+bool DbInterface::fetchOwnerInformation(QString phoneNumber)
+{
+    if(!dbInterfacePtr)
+    {
+        Logger::dLog("create an instance of DbInterface, then call fetchOwnerInformation");
+    }
+
+    //validate phone number then assign
+    dbInterfacePtr->phoneOwner.setPhoneNumber( phoneNumber);
     return false;
 }
