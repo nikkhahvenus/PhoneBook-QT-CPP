@@ -18,7 +18,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    controller/dbclass.cpp \
+    controller/dbconnector.cpp \
     controller/dbinterface.cpp \
     controller/logger.cpp \
     controller/repository.cpp \
@@ -27,7 +27,7 @@ SOURCES += \
     view/mainwindow.cpp
 
 HEADERS += \
-    controller/dbclass.h \
+    controller/dbconnector.h \
     controller/dbinterface.h \
     controller/logger.h \
     controller/repository.h \

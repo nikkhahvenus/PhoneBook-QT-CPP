@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "../controller/dbclass.h"
+#include "../controller/dbconnector.h"
 #include "../controller/logger.h"
 
 QT_BEGIN_NAMESPACE
@@ -31,6 +31,6 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    void deleteDbClassInstance();
+    void deleteDbConnectorInstance();
 };
 #endif // MAINWINDOW_H

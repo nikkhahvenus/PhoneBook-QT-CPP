@@ -1,5 +1,5 @@
-#ifndef DBCLASS_H
-#define DBCLASS_H
+#ifndef DBCONNECTOR_H
+#define DBCONNECTOR_H
 
 
 #include <QtSql>
@@ -7,11 +7,11 @@
 #include <QMessageBox>
 #include "logger.h"
 
-class DbClass
+class DbConnector
 {
 protected:
-    static DbClass* dbClassPtr;
-    DbClass();
+    static DbConnector* DbConnectorPtr;
+    DbConnector();
 
 private:
     QSqlDatabase phoneDB;
@@ -19,11 +19,11 @@ private:
     const QString tableCreationCommandsFileName = "/Users/mohammadnikkhah/QT/phoneBookProject/phoneBookApp/controller/sql.sql";
 
 public:
-    ~DbClass();
-    DbClass(DbClass &other) = delete;
-    void operator=(const DbClass &) = delete;
+    ~DbConnector();
+    DbConnector(DbConnector &other) = delete;
+    void operator=(const DbConnector &) = delete;
 
-    static DbClass *getInstance();
+    static DbConnector *getInstance();
     static bool readyConnection();
     int ParseSqlScriptFile();
 
@@ -32,4 +32,4 @@ private:
     static void closeDBConnection();
 
 };
-#endif // DBCLASS_H
+#endif // DBCONNECTOR_H

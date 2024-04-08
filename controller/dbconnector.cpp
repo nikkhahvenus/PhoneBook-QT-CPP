@@ -1,64 +1,64 @@
-#include "dbclass.h"
+#include "dbconnector.h"
 
-DbClass* DbClass::dbClassPtr= nullptr;;
-QString DbClass::dbPath= "/Users/mohammadnikkhah/QT/phoneBookProject/phoneBookApp/phonebook.db";
+DbConnector* DbConnector::DbConnectorPtr= nullptr;;
+QString DbConnector::dbPath= "/Users/mohammadnikkhah/QT/phoneBookProject/phoneBookApp/phonebook.db";
 
 
 
-DbClass::DbClass()
+DbConnector::DbConnector()
 {
 
 }
-DbClass::~DbClass(){
+DbConnector::~DbConnector(){
     closeDBConnection();
-    Logger::dLog( "DbClass destructor executed");
+    Logger::dLog( "DbConnector destructor executed");
 }
 
-bool DbClass::readyConnection()
+bool DbConnector::readyConnection()
 {
     if(getInstance()== nullptr){
-        Logger::dLog("Space allocation for DbClass failed");
+        Logger::dLog("Space allocation for DbConnector failed");
         return false;
     }
     return openDBConnection();
 }
 
 
-DbClass* DbClass::getInstance()
+DbConnector* DbConnector::getInstance()
 {
-    if(dbClassPtr==nullptr){
-        dbClassPtr = new DbClass();
-        Logger::dLog("new DbClass");
+    if(DbConnectorPtr==nullptr){
+        DbConnectorPtr = new DbConnector();
+        Logger::dLog("new DbConnector");
     }
-    return dbClassPtr;
+    return DbConnectorPtr;
 }
-void DbClass::closeDBConnection()
+void DbConnector::closeDBConnection()
 {
-    if(dbClassPtr && dbClassPtr->phoneDB.isValid() && dbClassPtr->phoneDB.isOpen())
+    if(DbConnectorPtr && DbConnectorPtr->phoneDB.isValid() && DbConnectorPtr->phoneDB.isOpen())
     {
-        dbClassPtr->phoneDB.close();
+        DbConnectorPtr->phoneDB.close();
         Logger::dLog("Connection closed");
     }
 }
 
-bool DbClass::openDBConnection()
+bool DbConnector::openDBConnection()
 {
-    if(!dbClassPtr){
-        Logger::dLog("Run GetInstance to make an instance of DbClass then run openDBConnection");
+    if(!DbConnectorPtr){
+        Logger::dLog("Run GetInstance to make an instance of DbConnector then run openDBConnection");
         return false;
     }
-    if(dbClassPtr->phoneDB.isValid() && dbClassPtr->phoneDB.isOpen())
+    if(DbConnectorPtr->phoneDB.isValid() && DbConnectorPtr->phoneDB.isOpen())
     {
-        Logger::dLog("DB is connected in advanced: "+ dbClassPtr->phoneDB.databaseName());
+        Logger::dLog("DB is connected in advanced: "+ DbConnectorPtr->phoneDB.databaseName());
         return  true;
     }
-    else if(!dbClassPtr->phoneDB.isValid())
+    else if(!DbConnectorPtr->phoneDB.isValid())
     {
-        dbClassPtr->phoneDB = QSqlDatabase::addDatabase("QSQLITE");
-        dbClassPtr->phoneDB.setDatabaseName(dbPath);
+        DbConnectorPtr->phoneDB = QSqlDatabase::addDatabase("QSQLITE");
+        DbConnectorPtr->phoneDB.setDatabaseName(dbPath);
     }
 
-    if(!dbClassPtr->phoneDB.open())
+    if(!DbConnectorPtr->phoneDB.open())
     {
         Logger::dLog( "Failed to open database....");
         return false;
@@ -71,13 +71,13 @@ bool DbClass::openDBConnection()
 }
 
 
-int DbClass::ParseSqlScriptFile()
+int DbConnector::ParseSqlScriptFile()
 {
-    if(!(dbClassPtr->phoneDB.isValid() && dbClassPtr->phoneDB.isOpen())){
+    if(!(DbConnectorPtr->phoneDB.isValid() && DbConnectorPtr->phoneDB.isOpen())){
         Logger::dLog("Run readyConnection to make DB connection ready to use");
         return false;
     }
-    QSqlDatabase &db= dbClassPtr->phoneDB;
+    QSqlDatabase &db= DbConnectorPtr->phoneDB;
     const QString & fileName = tableCreationCommandsFileName;
     QFile file(fileName);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
