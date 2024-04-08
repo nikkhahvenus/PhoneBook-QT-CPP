@@ -17,8 +17,8 @@
    <widget class="QPushButton" name="btnSearch">
     <property name="geometry">
      <rect>
-      <x>430</x>
-      <y>20</y>
+      <x>440</x>
+      <y>60</y>
       <width>91</width>
       <height>41</height>
      </rect>
@@ -30,8 +30,8 @@
    <widget class="QLineEdit" name="lineEditSearch">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>20</y>
+      <x>40</x>
+      <y>60</y>
       <width>381</width>
       <height>31</height>
      </rect>
@@ -57,6 +57,14 @@
     <addaction name="actionLicense"/>
     <addaction name="actionCreate_Initialize_DB"/>
    </widget>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionLogin"/>
+    <addaction name="actionLogout"/>
+   </widget>
+   <addaction name="menuFile"/>
    <addaction name="menuHelp"/>
   </widget>
   <action name="actionCreate_Initialize_DB">
@@ -67,6 +75,16 @@
   <action name="actionLicense">
    <property name="text">
     <string>License</string>
+   </property>
+  </action>
+  <action name="actionLogin">
+   <property name="text">
+    <string>Login</string>
+   </property>
+  </action>
+  <action name="actionLogout">
+   <property name="text">
+    <string>Logout</string>
    </property>
   </action>
  </widget>

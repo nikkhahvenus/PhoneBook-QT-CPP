@@ -18,11 +18,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    Form/loginform.cpp \
     controller/dbclass.cpp \
     controller/logger.cpp \
     controller/repository.cpp \
     main.cpp \
     model/owner.cpp \
+    view/loginform.cpp \
     view/mainwindow.cpp
 
 HEADERS += \
@@ -30,9 +32,11 @@ HEADERS += \
     controller/logger.h \
     controller/repository.h \
     model/owner.h \
+    view/loginform.h \
     view/mainwindow.h
 
 FORMS += \
+    Form/loginform.ui \
     Form/mainwindow.ui
 
 # Default rules for deployment.

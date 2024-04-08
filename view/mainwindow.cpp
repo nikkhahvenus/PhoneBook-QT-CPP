@@ -14,6 +14,7 @@ MainWindow::MainWindow(QWidget *parent)
     }
     else
         ui->setupUi(this);
+
 }
 
 MainWindow::~MainWindow()
