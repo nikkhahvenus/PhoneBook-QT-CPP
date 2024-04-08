@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "../controller/dbclass.h"
+#include "../controller/logger.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -22,7 +23,11 @@ private slots:
     void on_actionCreate_Initialize_DB_triggered();
 
     void on_actionLicense_triggered();
+    void setItemsVisibilityBeforeLogin();
+    void setItemsVisibilityAfterLogin();
 
+
+    void on_btnLogin_clicked();
 
 private:
     Ui::MainWindow *ui;
