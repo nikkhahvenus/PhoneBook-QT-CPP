@@ -110,9 +110,10 @@ void MainWindow::on_btnLogout_clicked()
 
 void MainWindow::on_btnSearch_clicked()
 {
-    QString txtSearch = ui->lineEditSearch->text();
+    QString txtSearch = ui->lineEditSearch->text().toLower();
     if (txtSearch.length()==0) return;
 
     QSqlQueryModel* model = (DbInterface::getInstance())->searchText(txtSearch);
-    ui->tblView->setModel(model);
+    if(model)
+        ui->tblView->setModel(model);
 }

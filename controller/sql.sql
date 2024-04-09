@@ -69,15 +69,18 @@ CREATE TABLE IF NOT EXISTS `GroupMembersOfGeneralContacts` (
     FOREIGN KEY(`GeneralId`) REFERENCES `General`(`Id`)
 );
 
-INSERT INTO `Owner` (`Phone`,`FullName`) VALUES ('09171000000','Mohammad');
-INSERT INTO `Owner` (`Phone`,`FullName`) VALUES ('09172000000','Ali');
-INSERT INTO `Owner` (`Phone`,`FullName`) VALUES ('09173000000','Mehdi');
-INSERT INTO `Owner` (`Phone`,`FullName`) VALUES ('09177000000','Afshin');
+INSERT INTO `Owner` (`Phone`,`FullName`) VALUES ('09171000000','mohammad');
+INSERT INTO `Owner` (`Phone`,`FullName`) VALUES ('09172000000','ali');
+INSERT INTO `Owner` (`Phone`,`FullName`) VALUES ('09173000000','mehdi');
+INSERT INTO `Owner` (`Phone`,`FullName`) VALUES ('09177000000','afshin');
 
-INSERT INTO `Commercial` (`OwnerId`,`FullName`,`Phone`) VALUES (1,'Ali','09172000000');
-INSERT INTO `Commercial` (`OwnerId`,`FullName`,`Phone`) VALUES (1,'Ahmad Adib','09174000000');
-INSERT INTO `General` (`OwnerId`,`FullName`,`Phone`) VALUES (1,'Mehdi','09173000000');
-INSERT INTO `General` (`OwnerId`,`FullName`,`Phone`) VALUES (1,'Bagher Babaali','09175000000');
+INSERT INTO `Commercial` (`OwnerId`,`FullName`,`Phone`) VALUES (1,'ali','09172000000');
+INSERT INTO `Commercial` (`OwnerId`,`FullName`,`Phone`) VALUES (1,'ahmad','09174000000');
+INSERT INTO `Commercial` (`OwnerId`,`FullName`,`Phone`) VALUES (1,'bagher','09174500000');
+INSERT INTO `General` (`OwnerId`,`FullName`,`Phone`) VALUES (1,'mehdi','09173000000');
+INSERT INTO `General` (`OwnerId`,`FullName`,`Phone`) VALUES (1,'bagher','09175000000');
+INSERT INTO `General` (`OwnerId`,`FullName`,`Phone`) VALUES (1,'bagher','09178000000');
+INSERT INTO `General` (`OwnerId`,`FullName`,`Phone`) VALUES (1,'bagher','09179000000');
 
 INSERT INTO `Group` (`OwnerId`,`Name`,`Description`) VALUES (1,'Neighbours','Group of people in my neighbourhood');
 
@@ -86,14 +89,14 @@ INSERT INTO `GroupMembersOfCommercialContacts` (`OwnerId`,`GroupId`,`CommercialI
 INSERT INTO `GroupMembersOfGeneralContacts` (`OwnerId`,`GroupId`,`GeneralId`) VALUES (1,1,1);
 
 
-INSERT INTO `Commercial` (`OwnerId`,`FullName`,`Phone`) VALUES (2,'Mohammad Nikkhah','09171000000');
-INSERT INTO `Commercial` (`OwnerId`,`FullName`,`Phone`) VALUES (2,'Mohammad Bahrani','09176000000');
-INSERT INTO `General` (`OwnerId`,`FullName`,`Phone`) VALUES (2,'Bagher Babaali','09175000000');
-INSERT INTO `General` (`OwnerId`,`FullName`,`Phone`) VALUES (2,'Mehdi Nikkhah','09173000000');
+INSERT INTO `Commercial` (`OwnerId`,`FullName`,`Phone`) VALUES (2,'mohammad','09171000000');
+INSERT INTO `Commercial` (`OwnerId`,`FullName`,`Phone`) VALUES (2,'mohammad','09176000000');
+INSERT INTO `General` (`OwnerId`,`FullName`,`Phone`) VALUES (2,'bagher','09175000000');
+INSERT INTO `General` (`OwnerId`,`FullName`,`Phone`) VALUES (2,'mehdi','09173000000');
 
 
-INSERT INTO `Group` (`OwnerId`,`Name`,`Description`) VALUES (2,'Roomate','My Roomates');
-INSERT INTO `Group` (`OwnerId`,`Name`,`Description`) VALUES (2,'Friends','My Friends');
+INSERT INTO `Group` (`OwnerId`,`Name`,`Description`) VALUES (2,'roomate','My Roomates');
+INSERT INTO `Group` (`OwnerId`,`Name`,`Description`) VALUES (2,'friends','My Friends');
 
 INSERT INTO `GroupMembersOfCommercialContacts` (`OwnerId`,`GroupId`,`CommercialId`) VALUES (2,1,1);
 INSERT INTO `GroupMembersOfGeneralContacts` (`OwnerId`,`GroupId`,`GeneralId`) VALUES (2,1,2);
@@ -101,5 +104,5 @@ INSERT INTO `GroupMembersOfGeneralContacts` (`OwnerId`,`GroupId`,`GeneralId`) VA
 INSERT INTO `GroupMembersOfCommercialContacts` (`OwnerId`,`GroupId`,`CommercialId`) VALUES (2,2,2);
 INSERT INTO `GroupMembersOfGeneralContacts` (`OwnerId`,`GroupId`,`GeneralId`) VALUES (2,2,1);
 
-INSERT INTO `General` (`OwnerId`,`FullName`,`Phone`) VALUES (3,'Ali Nikkhah','09172000000');
-INSERT INTO `General` (`OwnerId`,`FullName`,`Phone`) VALUES (3,'Afshin Akbari','09177000000');
+INSERT INTO `General` (`OwnerId`,`FullName`,`Phone`) VALUES (3,'ali','09172000000');
+INSERT INTO `General` (`OwnerId`,`FullName`,`Phone`) VALUES (3,'afshin','09177000000');

@@ -60,7 +60,12 @@ QSqlQueryModel* Repository::searchInFullNameColomn(QString txtSearch, PhoneOwner
     QSqlQuery qry;
     QSqlQueryModel *model = new QSqlQueryModel();
 
-    qry.prepare("select * from owner where Id = (:id)" );
+    qry.prepare("select id, ownerId, fullname, phone, address, postalcode, email,marked from general "
+                "where ownerid = :id and fullname = :fullname"
+                " union "
+                "select id, ownerId, fullname, phone, address, postalcode, email,marked from commercial "
+                                "where ownerid = :id and fullname = :fullname");
+    qry.bindValue(":fullname", txtSearch);
     qry.bindValue(":id", owner.getId());
 
     if(qry.exec()){
