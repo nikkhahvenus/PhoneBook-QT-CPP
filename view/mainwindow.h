@@ -32,5 +32,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     void deleteDbConnectorInstance();
+    void deleteDbInterfaceInstance();
+    void deleteRepositoryInstance();
 };
 #endif // MAINWINDOW_H

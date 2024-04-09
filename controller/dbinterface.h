@@ -2,12 +2,14 @@
 #define DBINTERFACE_H
 #include "../model/phoneowner.h"
 #include "logger.h"
+#include "repository.h"
 
 class DbInterface
 {
 protected:
     static DbInterface* dbInterfacePtr;
     DbInterface();
+    Repository *repo;
 
 private:
     PhoneOwner phoneOwner;

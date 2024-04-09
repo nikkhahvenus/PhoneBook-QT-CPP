@@ -1,8 +1,42 @@
 #include "repository.h"
+Repository* Repository::repositoryPtr= nullptr;;
 
 Repository::Repository()
 {
 
+}
+
+Repository::~Repository()
+{
+    Logger::dLog( "Repository destructor executed");
+}
+
+Repository *Repository::getInstance()
+{
+    if(repositoryPtr==nullptr){
+        repositoryPtr = new Repository();
+        Logger::dLog("new Repository");
+    }
+    return repositoryPtr;
+}
+
+PhoneOwner Repository::fetchOwnerInformation(QString phone)
+{
+    QSqlQuery qry;
+    QSqlQueryModel *model = new QSqlQueryModel();
+    PhoneOwner owner;
+    qry.prepare("select * from owner where Phone = (:phone)" );
+    qry.bindValue(":phone",phone);
+
+    if(qry.exec()){
+        model->setQuery(qry);
+        Logger::dLog("Selected " + QString(model->rowCount()) + " rows");
+    }
+    else{
+        Logger::dLog("qry execution error" );
+        owner.setId("0");
+    }
+    return owner;
 }
 
 

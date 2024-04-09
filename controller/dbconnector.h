@@ -3,14 +3,12 @@
 
 
 #include <QtSql>
-#include <QDebug>
-#include <QMessageBox>
 #include "logger.h"
 
 class DbConnector
 {
 protected:
-    static DbConnector* DbConnectorPtr;
+    static DbConnector* dbConnectorPtr;
     DbConnector();
 
 private:

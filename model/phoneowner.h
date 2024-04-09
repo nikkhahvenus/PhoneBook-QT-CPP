@@ -15,6 +15,7 @@ public:
     QString getId();
     QString getPhone();
     QString getFullName();
+    bool setId(QString);
     bool setPhoneNumber(QString);
     bool setFullName(QString);
 };

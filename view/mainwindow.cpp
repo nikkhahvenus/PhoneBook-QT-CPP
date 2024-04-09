@@ -2,7 +2,7 @@
 #include "ui_mainwindow.h"
 #include "../controller/dbconnector.h"
 #include <QMessageBox>
-#include <QSharedPointer>
+#include "../controller/dbinterface.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -14,14 +14,21 @@ MainWindow::MainWindow(QWidget *parent)
     }
     else
     {
-        ui->setupUi(this);
-        setItemsVisibilityBeforeLogin(); 
+        if(!DbInterface::getInstance()){
+            QMessageBox::critical(this,"DB Interface Error:","main controller error");
+        }
+        else{
+            ui->setupUi(this);
+            setItemsVisibilityBeforeLogin();
+        }
     }
 }
 
 MainWindow::~MainWindow()
 {
     deleteDbConnectorInstance();
+    deleteDbInterfaceInstance();
+//    deleteRepositoryInstance();
     delete ui;
 }
 
@@ -30,6 +37,22 @@ void MainWindow::deleteDbConnectorInstance()
     DbConnector * db = DbConnector::getInstance();
     if(db){
         delete db;
+    }
+}
+
+void MainWindow::deleteDbInterfaceInstance()
+{
+    DbInterface * dbInterfacePtr = DbInterface::getInstance();
+    if(dbInterfacePtr){
+        delete dbInterfacePtr;
+    }
+}
+
+void MainWindow::deleteRepositoryInstance()
+{
+    Repository * repositoryPtr = Repository::getInstance();
+    if(repositoryPtr){
+        delete repositoryPtr;
     }
 }
 
@@ -79,5 +102,12 @@ void MainWindow::on_btnLogin_clicked()
 {
     QString phone = ui->lineEditLogin->text();
     Logger::dLog(phone);
-    setItemsVisibilityAfterLogin();
+    if(DbInterface::getInstance()->fetchOwnerInformation(phone)){
+        setItemsVisibilityAfterLogin();
+    }
+    else {
+        ui->lineEditLogin->clear();
+    }
+
+
 }

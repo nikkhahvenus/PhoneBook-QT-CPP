@@ -20,6 +20,13 @@ QString PhoneOwner::getFullName()
     return fullName;
 }
 
+bool PhoneOwner::setId(QString id)
+{
+    //first validate Id then assign
+    this->id = id;
+    return true;
+}
+
 bool PhoneOwner::setPhoneNumber(QString phoneNumber)
 {
     //first validate phoneNumber then assign
