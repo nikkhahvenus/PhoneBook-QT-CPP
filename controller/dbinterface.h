@@ -24,6 +24,7 @@ public:
     QString getPhoneOwner_s_FullName();
 
     bool fetchOwnerInformation(QString phoneNumber);
+    void reset();
 };
 
 #endif // DBINTERFACE_H

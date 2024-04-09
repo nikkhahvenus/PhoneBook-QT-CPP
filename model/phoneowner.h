@@ -16,7 +16,8 @@ public:
     QString getId();
     QString getPhone();
     QString getFullName();
-    bool setOwner(PhoneOwner);
+    bool setOwner(PhoneOwner*);
+    bool setOwner(PhoneOwner&);
     bool setOwner(QString id,QString phone,QString fullName);
     bool setId(QString);
     bool setPhone(QString);

@@ -51,3 +51,8 @@ bool DbInterface::fetchOwnerInformation(QString phoneNumber)
     }
     return false;
 }
+
+void DbInterface::reset()
+{
+    phoneOwner.setOwner(new PhoneOwner("0","",""));
+}

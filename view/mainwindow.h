@@ -29,6 +29,8 @@ private slots:
 
     void on_btnLogin_clicked();
 
+    void on_btnLogout_clicked();
+
 private:
     Ui::MainWindow *ui;
     void deleteDbConnectorInstance();

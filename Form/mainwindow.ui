@@ -578,7 +578,7 @@ Ex: 09171234567</string>
    <widget class="QFrame" name="frameUser">
     <property name="geometry">
      <rect>
-      <x>0</x>
+      <x>-10</x>
       <y>0</y>
       <width>761</width>
       <height>441</height>
@@ -593,8 +593,8 @@ Ex: 09171234567</string>
     <widget class="QLineEdit" name="lineEditSearch">
      <property name="geometry">
       <rect>
-       <x>40</x>
-       <y>20</y>
+       <x>120</x>
+       <y>220</y>
        <width>471</width>
        <height>31</height>
       </rect>
@@ -606,19 +606,30 @@ Ex: 09171234567</string>
     <widget class="QPushButton" name="btnSearch">
      <property name="geometry">
       <rect>
-       <x>550</x>
-       <y>20</y>
+       <x>630</x>
+       <y>210</y>
        <width>91</width>
        <height>41</height>
       </rect>
      </property>
      <property name="text">
-      <string>search</string>
+      <string>Search</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btnLogout">
+     <property name="geometry">
+      <rect>
+       <x>650</x>
+       <y>0</y>
+       <width>91</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Logout</string>
      </property>
     </widget>
    </widget>
-   <zorder>frameUser</zorder>
-   <zorder>frameLogin</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">

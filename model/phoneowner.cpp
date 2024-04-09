@@ -16,9 +16,16 @@ bool PhoneOwner::setOwner(QString id,QString phone,QString fullName)
     return setId(id) && setPhone(phone) && setFullName(fullName);
 }
 
-bool PhoneOwner::setOwner(PhoneOwner owner)
+bool PhoneOwner::setOwner(PhoneOwner& owner)
 {
     return setOwner(owner.id, owner.phone, owner.fullName);
+}
+
+bool PhoneOwner::setOwner(PhoneOwner *owner)
+{
+    if(owner)
+        return setOwner(*owner);
+    return false;
 }
 
 QString PhoneOwner::getId()
@@ -35,6 +42,8 @@ QString PhoneOwner::getFullName()
 {
     return fullName;
 }
+
+
 
 
 

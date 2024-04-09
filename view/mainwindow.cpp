@@ -72,6 +72,9 @@ void MainWindow::on_actionLicense_triggered()
 
 void MainWindow::setItemsVisibilityBeforeLogin()
 {
+    ui->lineEditErrorLogin->setText("");
+    ui->lineEditLogin->clear();
+
     ui->frameLogin->setVisible(true);
     ui->lineEditErrorLogin->setVisible(false);
 
@@ -103,4 +106,10 @@ void MainWindow::on_btnLogin_clicked()
     }
 
 
+}
+
+void MainWindow::on_btnLogout_clicked()
+{
+    setItemsVisibilityBeforeLogin();
+    (DbInterface::getInstance())->reset();
 }
