@@ -593,8 +593,8 @@ Ex: 09171234567</string>
     <widget class="QLineEdit" name="lineEditSearch">
      <property name="geometry">
       <rect>
-       <x>120</x>
-       <y>220</y>
+       <x>40</x>
+       <y>170</y>
        <width>471</width>
        <height>31</height>
       </rect>
@@ -607,7 +607,7 @@ Ex: 09171234567</string>
      <property name="geometry">
       <rect>
        <x>630</x>
-       <y>210</y>
+       <y>160</y>
        <width>91</width>
        <height>41</height>
       </rect>
@@ -627,6 +627,16 @@ Ex: 09171234567</string>
      </property>
      <property name="text">
       <string>Logout</string>
+     </property>
+    </widget>
+    <widget class="QTableView" name="tblView">
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>220</y>
+       <width>671</width>
+       <height>192</height>
+      </rect>
      </property>
     </widget>
    </widget>

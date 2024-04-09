@@ -25,6 +25,8 @@ public:
 
     bool fetchOwnerInformation(QString phoneNumber);
     void reset();
+
+    QSqlQueryModel* searchText(QString txtSearch);
 };
 
 #endif // DBINTERFACE_H

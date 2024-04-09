@@ -36,12 +36,6 @@ QString DbInterface::getPhoneOwner_s_FullName()
 
 bool DbInterface::fetchOwnerInformation(QString phoneNumber)
 {
-    if(!dbInterfacePtr)
-    {
-        Logger::log("create an instance of DbInterface, then call fetchOwnerInformation");
-        return  false;
-    }
-
     //validate phone number then fetch owner and then assign
     PhoneOwner owner = repo->fetchOwnerInformation(phoneNumber);
     if(owner.getPhone() == phoneNumber)
@@ -55,4 +49,10 @@ bool DbInterface::fetchOwnerInformation(QString phoneNumber)
 void DbInterface::reset()
 {
     phoneOwner.setOwner(new PhoneOwner("0","",""));
+}
+
+QSqlQueryModel* DbInterface::searchText(QString txtSearch)
+{
+    return repo->searchText(txtSearch, phoneOwner);
+
 }

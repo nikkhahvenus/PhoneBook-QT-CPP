@@ -13,7 +13,7 @@ protected:
     static Repository* repositoryPtr;
     Repository();
 private:
-
+    QSqlQueryModel* searchInFullNameColomn(QString txtSearch,PhoneOwner &owner);
 public:
     ~Repository();
     Repository(Repository &other) = delete;
@@ -22,6 +22,7 @@ public:
     static Repository *getInstance();
 
     PhoneOwner fetchOwnerInformation(QString );
+    QSqlQueryModel* searchText(QString txtSearch, PhoneOwner owner);
 };
 
 #endif // REPOSITORY_H

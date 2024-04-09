@@ -45,9 +45,37 @@ PhoneOwner Repository::fetchOwnerInformation(QString phone)
     else{
         Logger::log("query execution error" );
     }
+    delete model;
     return owner;
 }
 
+QSqlQueryModel* Repository::searchText(QString txtSearch, PhoneOwner owner)
+{
+    return searchInFullNameColomn(txtSearch,owner);
+}
+
+
+QSqlQueryModel* Repository::searchInFullNameColomn(QString txtSearch, PhoneOwner &owner)
+{
+    QSqlQuery qry;
+    QSqlQueryModel *model = new QSqlQueryModel();
+
+    qry.prepare("select * from owner where Id = (:id)" );
+    qry.bindValue(":id", owner.getId());
+
+    if(qry.exec()){
+        model->setQuery(qry);
+        if(model->rowCount() >0){
+            return model;
+        }
+        else
+            Logger::log("empty value returned from DB.");
+    }
+    else{
+        Logger::log("query execution error" );
+    }
+    return nullptr;
+}
 
 
 

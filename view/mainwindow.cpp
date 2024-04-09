@@ -55,10 +55,6 @@ void MainWindow::deleteRepositoryInstance()
     }
 }
 
-void MainWindow::on_btnSearch_clicked()
-{
-
-}
 
 void MainWindow::on_actionCreate_Initialize_DB_triggered()
 {
@@ -102,14 +98,21 @@ void MainWindow::on_btnLogin_clicked()
         ui->lineEditLogin->clear();
         ui->lineEditErrorLogin->setText("Invalid login information");
         ui->lineEditErrorLogin->setVisible(true);
-
     }
-
-
 }
 
 void MainWindow::on_btnLogout_clicked()
 {
     setItemsVisibilityBeforeLogin();
     (DbInterface::getInstance())->reset();
+}
+
+
+void MainWindow::on_btnSearch_clicked()
+{
+    QString txtSearch = ui->lineEditSearch->text();
+    if (txtSearch.length()==0) return;
+
+    QSqlQueryModel* model = (DbInterface::getInstance())->searchText(txtSearch);
+    ui->tblView->setModel(model);
 }
