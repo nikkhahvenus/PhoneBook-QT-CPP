@@ -8,14 +8,14 @@ Repository::Repository()
 
 Repository::~Repository()
 {
-    Logger::dLog( "Repository destructor executed");
+    Logger::log( "Repository destructor executed");
 }
 
 Repository *Repository::getInstance()
 {
     if(repositoryPtr==nullptr){
         repositoryPtr = new Repository();
-        Logger::dLog("new Repository");
+        Logger::log("new Repository");
     }
     return repositoryPtr;
 }
@@ -25,16 +25,25 @@ PhoneOwner Repository::fetchOwnerInformation(QString phone)
     QSqlQuery qry;
     QSqlQueryModel *model = new QSqlQueryModel();
     PhoneOwner owner;
+
     qry.prepare("select * from owner where Phone = (:phone)" );
-    qry.bindValue(":phone",phone);
+    qry.bindValue(":phone", phone);
 
     if(qry.exec()){
         model->setQuery(qry);
-        Logger::dLog("Selected " + QString(model->rowCount()) + " rows");
+        if(model->rowCount() == 1){
+            if(qry.first())
+            {
+                owner.setOwner(qry.value(0).toString(), qry.value(1).toString(), qry.value(2).toString());
+            }
+            else
+                Logger::log("empty value returned from DB.");
+        }
+        else if(model->rowCount() > 1)
+            Logger::log("more than one owner for a phone number in the DB" );
     }
     else{
-        Logger::dLog("qry execution error" );
-        owner.setId("0");
+        Logger::log("query execution error" );
     }
     return owner;
 }

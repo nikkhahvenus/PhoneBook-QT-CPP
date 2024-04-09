@@ -2,7 +2,23 @@
 
 PhoneOwner::PhoneOwner()
 {
+    setId("0");
+    setPhone("");
+    setFullName("");
+}
 
+PhoneOwner::PhoneOwner(QString id,QString phone,QString fullName)
+{
+    setOwner(id,phone,fullName);
+}
+bool PhoneOwner::setOwner(QString id,QString phone,QString fullName)
+{
+    return setId(id) && setPhone(phone) && setFullName(fullName);
+}
+
+bool PhoneOwner::setOwner(PhoneOwner owner)
+{
+    return setOwner(owner.id, owner.phone, owner.fullName);
 }
 
 QString PhoneOwner::getId()
@@ -20,6 +36,8 @@ QString PhoneOwner::getFullName()
     return fullName;
 }
 
+
+
 bool PhoneOwner::setId(QString id)
 {
     //first validate Id then assign
@@ -27,7 +45,7 @@ bool PhoneOwner::setId(QString id)
     return true;
 }
 
-bool PhoneOwner::setPhoneNumber(QString phoneNumber)
+bool PhoneOwner::setPhone(QString phoneNumber)
 {
     //first validate phoneNumber then assign
     this->phone = phoneNumber;
@@ -39,6 +57,11 @@ bool PhoneOwner::setFullName(QString fullName)
     //first validate fullName then assign
     this->fullName = fullName;
     return true;
+}
+
+QString PhoneOwner::toString()
+{
+    return getId() + " " + getPhone() + " " + getFullName();
 }
 
 

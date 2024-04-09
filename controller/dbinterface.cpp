@@ -12,14 +12,14 @@ DbInterface::~DbInterface()
     if(repo){
       delete repo;
     }
-    Logger::dLog( "DbInterface destructor executed");
+    Logger::log( "DbInterface destructor executed");
 }
 
 DbInterface *DbInterface::getInstance()
 {
     if(dbInterfacePtr== nullptr){
         dbInterfacePtr = new DbInterface();
-        Logger::dLog("new DbInterface");
+        Logger::log("new DbInterface");
     }
     return dbInterfacePtr;
 }
@@ -38,14 +38,16 @@ bool DbInterface::fetchOwnerInformation(QString phoneNumber)
 {
     if(!dbInterfacePtr)
     {
-        Logger::dLog("create an instance of DbInterface, then call fetchOwnerInformation");
+        Logger::log("create an instance of DbInterface, then call fetchOwnerInformation");
         return  false;
     }
 
-    //validate phone number then assign
+    //validate phone number then fetch owner and then assign
     PhoneOwner owner = repo->fetchOwnerInformation(phoneNumber);
-    Logger::dLog(owner.getId());
-
-    dbInterfacePtr->phoneOwner.setPhoneNumber( phoneNumber);
+    if(owner.getPhone() == phoneNumber)
+    {
+        dbInterfacePtr->phoneOwner.setOwner(owner);
+        return true;
+    }
     return false;
 }

@@ -28,7 +28,6 @@ MainWindow::~MainWindow()
 {
     deleteDbConnectorInstance();
     deleteDbInterfaceInstance();
-//    deleteRepositoryInstance();
     delete ui;
 }
 
@@ -73,40 +72,34 @@ void MainWindow::on_actionLicense_triggered()
 
 void MainWindow::setItemsVisibilityBeforeLogin()
 {
-//    ui->lineEditLogin->setVisible(true);
-//    ui->btnLogin->setVisible(true);
-//    ui->lblLogin->setVisible(true);
     ui->frameLogin->setVisible(true);
+    ui->lineEditErrorLogin->setVisible(false);
 
     ui->frameUser->setHidden(true);
     ui->menuBar->setHidden(true);
-//    ui->btnSearch->setHidden(true);
-//    ui->lineEditSearch->setHidden(true);
 }
 
 void MainWindow::setItemsVisibilityAfterLogin()
 {
-//    ui->lineEditLogin->setHidden(true);
-//    ui->btnLogin->setHidden(true);
-//    ui->lblLogin->setHidden(true);
     ui->frameLogin->setHidden(true);
 
     ui->frameUser->setVisible(true);
     ui->menuBar->setVisible(true);
-//    ui->btnSearch->setVisible(true);
-//    ui->lineEditSearch->setVisible(true);
 }
 
 
 void MainWindow::on_btnLogin_clicked()
 {
     QString phone = ui->lineEditLogin->text();
-    Logger::dLog(phone);
-    if(DbInterface::getInstance()->fetchOwnerInformation(phone)){
+    if(phone.length() == 0)
+        return;
+    else if(DbInterface::getInstance()->fetchOwnerInformation(phone))
         setItemsVisibilityAfterLogin();
-    }
     else {
         ui->lineEditLogin->clear();
+        ui->lineEditErrorLogin->setText("Invalid login information");
+        ui->lineEditErrorLogin->setVisible(true);
+
     }
 
 

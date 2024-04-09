@@ -12,13 +12,13 @@ DbConnector::DbConnector()
 }
 DbConnector::~DbConnector(){
     closeDBConnection();
-    Logger::dLog( "DbConnector destructor executed");
+    Logger::log( "DbConnector destructor executed");
 }
 
 bool DbConnector::readyConnection()
 {
     if(getInstance()== nullptr){
-        Logger::dLog("Space allocation for DbConnector failed");
+        Logger::log("Space allocation for DbConnector failed");
         return false;
     }
     return openDBConnection();
@@ -29,7 +29,7 @@ DbConnector* DbConnector::getInstance()
 {
     if(dbConnectorPtr==nullptr){
         dbConnectorPtr = new DbConnector();
-        Logger::dLog("new DbConnector");
+        Logger::log("new DbConnector");
     }
     return dbConnectorPtr;
 }
@@ -38,19 +38,19 @@ void DbConnector::closeDBConnection()
     if(dbConnectorPtr && dbConnectorPtr->phoneDB.isValid() && dbConnectorPtr->phoneDB.isOpen())
     {
         dbConnectorPtr->phoneDB.close();
-        Logger::dLog("Connection closed");
+        Logger::log("Connection closed");
     }
 }
 
 bool DbConnector::openDBConnection()
 {
     if(!dbConnectorPtr){
-        Logger::dLog("Run GetInstance to make an instance of DbConnector then run openDBConnection");
+        Logger::log("Run GetInstance to make an instance of DbConnector then run openDBConnection");
         return false;
     }
     if(dbConnectorPtr->phoneDB.isValid() && dbConnectorPtr->phoneDB.isOpen())
     {
-        Logger::dLog("DB is connected in advanced: "+ dbConnectorPtr->phoneDB.databaseName());
+        Logger::log("DB is connected in advanced: "+ dbConnectorPtr->phoneDB.databaseName());
         return  true;
     }
     else if(!dbConnectorPtr->phoneDB.isValid())
@@ -61,12 +61,12 @@ bool DbConnector::openDBConnection()
 
     if(!dbConnectorPtr->phoneDB.open())
     {
-        Logger::dLog( "Failed to open database....");
+        Logger::log( "Failed to open database....");
         return false;
     }
     else
     {
-        Logger::dLog( "Connected...!" );
+        Logger::log( "Connected...!" );
         return true;
     }
 }
@@ -75,7 +75,7 @@ bool DbConnector::openDBConnection()
 int DbConnector::ParseSqlScriptFile()
 {
     if(!(dbConnectorPtr->phoneDB.isValid() && dbConnectorPtr->phoneDB.isOpen())){
-        Logger::dLog("Run readyConnection to make DB connection ready to use");
+        Logger::log("Run readyConnection to make DB connection ready to use");
         return false;
     }
     QSqlDatabase &db= dbConnectorPtr->phoneDB;
@@ -83,7 +83,7 @@ int DbConnector::ParseSqlScriptFile()
     QFile file(fileName);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
-        Logger::dLog("Failed to open the input sql file");
+        Logger::log("Failed to open the input sql file");
         return  0;
     }
     QTextStream in(&file);
@@ -143,7 +143,7 @@ int DbConnector::ParseSqlScriptFile()
             if (query.exec(statement))
                 successCount++;
             else
-                Logger::dLog( "Failed:" + statement + "\nReason:" + query.lastError().text());
+                Logger::log( "Failed:" + statement + "\nReason:" + query.lastError().text());
         }
     }
 
