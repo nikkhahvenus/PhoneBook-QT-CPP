@@ -23,6 +23,9 @@ SOURCES += \
     controller/logger.cpp \
     controller/repository.cpp \
     main.cpp \
+    model/commercial.cpp \
+    model/contact.cpp \
+    model/general.cpp \
     model/phoneowner.cpp \
     view/mainwindow.cpp
 
@@ -31,7 +34,9 @@ HEADERS += \
     controller/dbinterface.h \
     controller/logger.h \
     controller/repository.h \
-    model/owner.h \
+    model/commercial.h \
+    model/contact.h \
+    model/general.h \
     model/phoneowner.h \
     view/mainwindow.h
 
