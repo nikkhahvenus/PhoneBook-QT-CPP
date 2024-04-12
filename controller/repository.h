@@ -8,6 +8,7 @@
 #include "../model/commercial.h"
 #include "../model/general.h"
 #include "../model/group.h"
+//#include "../model/commercialgroupmember.h"
 
 class Repository
 {
@@ -19,6 +20,8 @@ private:
     bool loadGeneralContacts(QString ownerId,QList<Contact*>&);
     bool loadCommercialContacts(QString ownerId,QList<Contact*>&);
 
+    Contact* pointerToContact( QString, QList<Contact *> &, QString );
+
 public:
     ~Repository();
     Repository(Repository &other) = delete;
@@ -26,9 +29,12 @@ public:
 
     static Repository *getInstance();
 
-    PhoneOwner fetchOwnerInformation(QString );
+    PhoneOwner fetchOwnerInformation(QString);
     QSqlQueryModel* searchText(QString txtSearch, PhoneOwner owner);
-    bool loadContacts(QString,QList<Contact*>&);
+    bool loadContacts(QString, QList<Contact*>&);
+    bool loadGroups(QString, QList<Group*>&);
+    bool loadCommercialGroupMembers(QString , Group& , QList<Contact*> &);
+    bool loadGeneralGroupMembers(QString , Group& , QList<Contact*> &);
 };
 
 #endif // REPOSITORY_H

@@ -10,11 +10,47 @@ Group::Group(QString id, QString name, QString description)
     setGroup(id, name, description);
 }
 
+Group::~Group()
+{
+    clearMemberList();
+}
+
+void Group::clearMemberList()
+{
+    memberList.clear();
+}
+
 void Group::setGroup(QString id, QString name, QString description)
 {
     setId(id);
     setName(name);
     setDescription(description);
+}
+
+QString Group::getId()
+{
+    return id;
+}
+
+bool Group::appendMemberList(Contact * contactPtr)
+{
+    memberList.append(contactPtr);
+    return true;
+}
+
+QString Group::toString()
+{
+    return id + " " + name + " " + description;
+}
+
+void Group::printGroupMembers()
+{
+    Logger::log("Group name: "+ name + " , Group description: "+ description);
+    for (int i=0; i < memberList.length() ; i++)
+    {
+        Contact * contact = memberList[i];
+        Logger::log(contact->toString());
+    }
 }
 
 void Group::setId(QString id)

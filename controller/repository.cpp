@@ -77,7 +77,99 @@ QSqlQueryModel* Repository::searchInFullNameColomn(QString txtSearch, PhoneOwner
             Logger::log("empty value returned from DB.");
     }
     else{
-        Logger::log("query execution error" );
+        Logger::log("query execution error " );
+    }
+    return nullptr;
+}
+
+bool Repository::loadGroups(QString ownerId, QList<Group *> &groupList)
+{
+    bool returnValue = false;
+    QSqlQuery qry;
+    qry.prepare("select id, name, description from groups where ownerid = :id");
+
+    qry.bindValue(":id", ownerId);
+
+    if(qry.exec()){
+            while(qry.next()){
+
+                Group *group = new Group(
+                            qry.value(0).toString(), //id
+                            qry.value(1).toString(), //name
+                            qry.value(2).toString()  //description
+                            );
+                groupList.append(group);
+            }
+        returnValue = true;
+    }
+    else{
+        Logger::log("query execution error for fetching groups" );
+    }
+
+    return returnValue;
+}
+
+bool Repository::loadCommercialGroupMembers(QString ownerId, Group& group, QList<Contact *> &contactList)
+{
+    bool returnValue = false;
+    QSqlQuery qry;
+    qry.prepare("select CommercialId from GroupMembersOfCommercialContacts "
+                "where ownerid = :ownerId and groupId = :groupId"
+                );
+
+    qry.bindValue(":ownerId", ownerId);
+    qry.bindValue(":groupId", group.getId());
+
+    if(qry.exec()){
+        while(qry.next()){
+            QString commercialId = qry.value(0).toString();
+            group.appendMemberList( pointerToContact(commercialId, contactList, "Commercial"));
+        }
+        returnValue = true;
+    }
+    else{
+        Logger::log("query execution error for loading commercial group members" );
+    }
+//    group.printGroupMembers();
+
+    return returnValue;
+
+}
+
+bool Repository::loadGeneralGroupMembers(QString ownerId, Group& group, QList<Contact *> &contactList)
+{
+    bool returnValue = false;
+    QSqlQuery qry;
+    qry.prepare("select GeneralId from GroupMembersOfGeneralContacts "
+                "where ownerid = :ownerId and groupId = :groupId"
+                );
+
+    qry.bindValue(":ownerId", ownerId);
+    qry.bindValue(":groupId", group.getId());
+
+    if(qry.exec()){
+        while(qry.next()){
+            QString generalId = qry.value(0).toString();
+            group.appendMemberList( pointerToContact(generalId, contactList, "General"));
+        }
+        returnValue = true;
+    }
+    else{
+        Logger::log("query execution error for loading general group members" );
+    }
+    group.printGroupMembers();
+
+    return returnValue;
+}
+
+Contact* Repository::pointerToContact( QString contactId, QList<Contact *> &contactList, QString ContactType)
+{
+    for ( int i = 0 ; i < contactList.length() ; i++ )
+    {
+        Contact * contact = contactList[i];
+        if(contact->getId() == contactId && contact->typeInfo() == ContactType ){
+            return contact;
+        }
     }
     return nullptr;
 }

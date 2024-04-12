@@ -30,6 +30,7 @@ protected:
 
 public:
     QString toString();
+    QString getId();
     virtual ~Contact();
     virtual QString typeInfo() = 0;
 };

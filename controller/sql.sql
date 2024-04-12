@@ -6,13 +6,6 @@ CREATE TABLE IF NOT EXISTS `Owner` (
     `FullName` VARCHAR(100) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS `Group` (
-    `Id` INTEGER PRIMARY KEY AUTOINCREMENT,
-    `OwnerId` INTEGER ,
-    `Name` VARCHAR(100) UNIQUE NOT NULL,
-    `Description` VARCHAR
-);
-
 CREATE TABLE IF NOT EXISTS `Commercial` (
     `Id` INTEGER PRIMARY KEY AUTOINCREMENT,
     `OwnerId` INTEGER NOT NULL,
@@ -41,13 +34,12 @@ CREATE TABLE IF NOT EXISTS `General` (
     FOREIGN KEY(`OwnerId`) REFERENCES `Owner`(`Id`)
 );
 
-CREATE TABLE IF NOT EXISTS `Group` (
+CREATE TABLE IF NOT EXISTS `Groups` (
     `Id` INTEGER PRIMARY KEY AUTOINCREMENT,
     `OwnerId` INTEGER NOT NULL,
     `name` VARCHAR UNIQUE NOT NULL,
     `Description` VARCHAR DEFAULT '',
-    FOREIGN KEY(`OwnerId`) REFERENCES Owner(`Id`),
-    FOREIGN KEY(`CommercialId`) REFERENCES `Commercial`(`Id`)
+    FOREIGN KEY(`OwnerId`) REFERENCES Owner(`Id`)
 );
 
 CREATE TABLE IF NOT EXISTS `GroupMembersOfCommercialContacts` (
@@ -56,7 +48,7 @@ CREATE TABLE IF NOT EXISTS `GroupMembersOfCommercialContacts` (
     `GroupId` INTEGER NOT NULL,
     `CommercialId` INTEGER NOT NULL,
     FOREIGN KEY(`OwnerId`) REFERENCES Owner(`Id`),
-    FOREIGN KEY(`GroupId`) REFERENCES `Group`(`Id`)
+    FOREIGN KEY(`GroupId`) REFERENCES `Groups`(`Id`)
     FOREIGN KEY(`CommercialId`) REFERENCES `Commercial`(`Id`)
 );
 CREATE TABLE IF NOT EXISTS `GroupMembersOfGeneralContacts` (
@@ -65,7 +57,7 @@ CREATE TABLE IF NOT EXISTS `GroupMembersOfGeneralContacts` (
     `GroupId` INTEGER NOT NULL,
     `GeneralId` INTEGER NOT NULL,
     FOREIGN KEY(`OwnerId`) REFERENCES `Owner`(`Id`),
-    FOREIGN KEY(`GroupId`) REFERENCES `Group`(`Id`)
+    FOREIGN KEY(`GroupId`) REFERENCES `Groups`(`Id`)
     FOREIGN KEY(`GeneralId`) REFERENCES `General`(`Id`)
 );
 
@@ -82,7 +74,7 @@ INSERT INTO `General` (`OwnerId`,`FullName`,`Phone`) VALUES (1,'bagher','0917500
 INSERT INTO `General` (`OwnerId`,`FullName`,`Phone`) VALUES (1,'bagher','09178000000');
 INSERT INTO `General` (`OwnerId`,`FullName`,`Phone`) VALUES (1,'bagher','09179000000');
 
-INSERT INTO `Group` (`OwnerId`,`Name`,`Description`) VALUES (1,'Neighbours','Group of people in my neighbourhood');
+INSERT INTO `Groups` (`OwnerId`,`Name`,`Description`) VALUES (1,'Neighbours','Group of people in my neighbourhood');
 
 INSERT INTO `GroupMembersOfCommercialContacts` (`OwnerId`,`GroupId`,`CommercialId`) VALUES (1,1,1);
 INSERT INTO `GroupMembersOfCommercialContacts` (`OwnerId`,`GroupId`,`CommercialId`) VALUES (1,1,2);
@@ -95,8 +87,8 @@ INSERT INTO `General` (`OwnerId`,`FullName`,`Phone`) VALUES (2,'bagher','0917500
 INSERT INTO `General` (`OwnerId`,`FullName`,`Phone`) VALUES (2,'mehdi','09173000000');
 
 
-INSERT INTO `Group` (`OwnerId`,`Name`,`Description`) VALUES (2,'roomate','My Roomates');
-INSERT INTO `Group` (`OwnerId`,`Name`,`Description`) VALUES (2,'friends','My Friends');
+INSERT INTO `Groups` (`OwnerId`,`Name`,`Description`) VALUES (2,'roomate','My Roomates');
+INSERT INTO `Groups` (`OwnerId`,`Name`,`Description`) VALUES (2,'friends','My Friends');
 
 INSERT INTO `GroupMembersOfCommercialContacts` (`OwnerId`,`GroupId`,`CommercialId`) VALUES (2,1,1);
 INSERT INTO `GroupMembersOfGeneralContacts` (`OwnerId`,`GroupId`,`GeneralId`) VALUES (2,1,2);

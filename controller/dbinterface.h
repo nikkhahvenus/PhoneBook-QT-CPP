@@ -29,10 +29,15 @@ public:
     bool fetchOwnerInformation(QString phoneNumber);
     void reset();
     bool fetchContacts();
+    bool fetchGroups();
+    bool fetchGroupMembers();
     void clearContactList();
+    void clearGroupList();
 
     QSqlQueryModel* searchText(QString txtSearch);
     void printContacts();
+    void printGroups();
+//    void clearCommercialGroupMemberList();
 };
 
 #endif // DBINTERFACE_H

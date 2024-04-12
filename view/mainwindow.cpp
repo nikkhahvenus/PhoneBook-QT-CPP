@@ -95,6 +95,8 @@ void MainWindow::on_btnLogin_clicked()
     else if(DbInterface::getInstance()->fetchOwnerInformation(phone))
     {
         (DbInterface::getInstance())->fetchContacts();
+        (DbInterface::getInstance())->fetchGroups();
+        (DbInterface::getInstance())->fetchGroupMembers();
         setItemsVisibilityAfterLogin();
     }
     else {
@@ -107,7 +109,6 @@ void MainWindow::on_btnLogin_clicked()
 void MainWindow::on_btnLogout_clicked()
 {
     setItemsVisibilityBeforeLogin();
-    (DbInterface::getInstance())->reset();
     (DbInterface::getInstance())->reset();
 }
 

@@ -1,4 +1,5 @@
 #include "dbinterface.h"
+#include "dbinterface.h"
 
 DbInterface* DbInterface::dbInterfacePtr= nullptr;;
 
@@ -6,6 +7,7 @@ DbInterface::DbInterface()
 {
     repo = Repository::getInstance();
     clearContactList();
+    clearGroupList();
 }
 
 DbInterface::~DbInterface()
@@ -13,9 +15,7 @@ DbInterface::~DbInterface()
     if(repo){
       delete repo;
     }
-    if(!contactList.isEmpty()){
-        clearContactList();
-    }
+    reset();
     Logger::log( "DbInterface destructor executed");
 }
 
@@ -54,6 +54,7 @@ void DbInterface::reset()
 {
     phoneOwner.setOwner(new PhoneOwner("0","",""));
     clearContactList();
+    clearGroupList();
 }
 
 bool DbInterface::fetchContacts()
@@ -62,6 +63,35 @@ bool DbInterface::fetchContacts()
     repo->loadContacts(phoneOwner.getId(), contactList);
     //    printContacts();
     return true;
+}
+
+bool DbInterface::fetchGroups()
+{
+    clearGroupList();
+    repo->loadGroups(phoneOwner.getId(), groupList);
+    printGroups();
+    return true;
+}
+
+bool DbInterface::fetchGroupMembers()
+{
+    for (int i=0; i< groupList.length(); i++)
+    {
+        Group * group = groupList[i];
+        repo->loadCommercialGroupMembers(phoneOwner.getId(), *group, contactList );
+        repo->loadGeneralGroupMembers(phoneOwner.getId(), *group, contactList );
+    }
+    return true;
+}
+
+void DbInterface::clearGroupList()
+{
+    if(groupList.isEmpty())
+        return;
+    for(int i = 0; i < groupList.length() ; i++)
+            delete groupList[i];
+
+    groupList.clear();
 }
 
 void DbInterface::clearContactList()
@@ -87,5 +117,15 @@ void DbInterface::printContacts()
     for(int i = 0; i < contactList.length() ; i++)
     {
         Logger::log(contactList[i]->toString());
+    }
+}
+
+void DbInterface::printGroups()
+{
+    Logger::log(" id name description");
+
+    for(int i = 0; i < groupList.length() ; i++)
+    {
+        Logger::log(groupList[i]->toString());
     }
 }
