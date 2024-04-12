@@ -66,8 +66,8 @@
 --        QDateTime lastupdate = query.value(3).toDateTime();
 --        qDebug() << id << " " << filename << " " << filesize << " " << lastupdate;
 --    }
-
 --CREATE TABLE IF NOT EXISTS `table1` (
+
 --    `id` INTEGER,
 --    `bla1` TEXT,
 --    PRIMARY KEY(`id`)

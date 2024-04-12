@@ -26,6 +26,7 @@ SOURCES += \
     model/commercial.cpp \
     model/contact.cpp \
     model/general.cpp \
+    model/group.cpp \
     model/phoneowner.cpp \
     view/mainwindow.cpp
 
@@ -37,6 +38,7 @@ HEADERS += \
     model/commercial.h \
     model/contact.h \
     model/general.h \
+    model/group.h \
     model/phoneowner.h \
     view/mainwindow.h
 

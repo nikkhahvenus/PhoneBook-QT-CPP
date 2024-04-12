@@ -82,8 +82,76 @@ QSqlQueryModel* Repository::searchInFullNameColomn(QString txtSearch, PhoneOwner
     return nullptr;
 }
 
+bool Repository::loadContacts(QString ownerId, QList<Contact*> &contactList)
+{
+    return loadGeneralContacts(ownerId, contactList) && loadCommercialContacts(ownerId, contactList);
+}
 
+bool Repository::loadGeneralContacts(QString ownerId, QList<Contact*> &contactList)
+{
+    bool returnValue = false;
+    QSqlQuery qry;
+    qry.prepare("select id, fullname, phone, address, postalcode, email,marked, comment from general "
+                "where ownerid = :id");
 
+    qry.bindValue(":id", ownerId);
+
+    if(qry.exec()){
+            while(qry.next()){
+
+                General * general = new General(
+                            qry.value(0).toString(), //id
+                            qry.value(1).toString(), //fullname
+                            qry.value(2).toString(), //phone
+                            qry.value(3).toString(), //address
+                            qry.value(4).toString(), //postalcode
+                            qry.value(5).toString(), //email
+                            qry.value(6).toBool(),   //marked
+                            qry.value(7).toString()  //comment
+                            );
+                contactList.append(general);
+            }
+        returnValue = true;
+    }
+    else{
+        Logger::log("query execution error for fetching general contacts" );
+    }
+
+    return returnValue;
+}
+
+bool Repository::loadCommercialContacts(QString ownerId, QList<Contact*> &contactList)
+{
+    bool returnValue = false;
+    QSqlQuery qry;
+    qry.prepare("select id, fullname, phone, address, postalcode, email,marked, comment from commercial "
+                "where ownerid = :id");
+
+    qry.bindValue(":id", ownerId);
+
+    if(qry.exec()){
+            while(qry.next()){
+
+                Commercial * commercial = new Commercial(
+                            qry.value(0).toString(), //id
+                            qry.value(1).toString(), //fullname
+                            qry.value(2).toString(), //phone
+                            qry.value(3).toString(), //address
+                            qry.value(4).toString(), //postalcode
+                            qry.value(5).toString(), //email
+                            qry.value(6).toBool(),   //marked
+                            qry.value(7).toString()  //comment
+                            );
+                contactList.append(commercial);
+            }
+        returnValue = true;
+    }
+    else{
+        Logger::log("query execution error for fetching commercial contacts" );
+    }
+
+    return returnValue;
+}
 
 //void MainWindow::on_pushButton_2_clicked()
 //{

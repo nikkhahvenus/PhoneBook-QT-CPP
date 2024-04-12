@@ -8,7 +8,8 @@ class General : public Contact
 {
 public:
     General();
-    General(QString ,QString ,QString ,QString ,QString , QString, QString ,bool );
+    General(QString id, QString fullName, QString phoneNumber, QString address,
+            QString postalcode, QString email, bool marked, QString comment);
     QString typeInfo();
 };
 

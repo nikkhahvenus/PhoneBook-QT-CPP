@@ -14,7 +14,6 @@ protected:
     QString email;
     QString phoneNumber;
     QString comment;
-    QString toString();
     bool marked;
 
     Contact();
@@ -29,7 +28,9 @@ protected:
     bool setMarked();
     bool resetMarked();
 
-    ~Contact();
+public:
+    QString toString();
+    virtual ~Contact();
     virtual QString typeInfo() = 0;
 };
 

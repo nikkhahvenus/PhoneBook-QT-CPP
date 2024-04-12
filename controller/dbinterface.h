@@ -4,6 +4,7 @@
 #include "logger.h"
 #include "repository.h"
 
+
 class DbInterface
 {
 protected:
@@ -13,6 +14,8 @@ protected:
 
 private:
     PhoneOwner phoneOwner;
+    QList<Contact*> contactList;
+    QList<Group*> groupList;
 
 public:
     ~DbInterface();
@@ -25,8 +28,11 @@ public:
 
     bool fetchOwnerInformation(QString phoneNumber);
     void reset();
+    bool fetchContacts();
+    void clearContactList();
 
     QSqlQueryModel* searchText(QString txtSearch);
+    void printContacts();
 };
 
 #endif // DBINTERFACE_H

@@ -4,7 +4,6 @@ Contact::~Contact()
 {
 
 }
-
 Contact::Contact()
 {
     setFullName("") ;
@@ -96,7 +95,7 @@ bool Contact::resetMarked()
 
 QString Contact::toString()
 {
-    return id + " " + fullName + " " + address + " " + postalcode + " " + email + " " + phoneNumber + " " + marked + " " + comment;
+    return id + " " + fullName + " " + phoneNumber + " " + address + " " + postalcode + " " + email + " " + (marked == 1 ? "Marked" : "Unmarked") + " " + comment;
 }
 
 

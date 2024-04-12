@@ -5,12 +5,16 @@ DbInterface* DbInterface::dbInterfacePtr= nullptr;;
 DbInterface::DbInterface()
 {
     repo = Repository::getInstance();
+    clearContactList();
 }
 
 DbInterface::~DbInterface()
 {
     if(repo){
       delete repo;
+    }
+    if(!contactList.isEmpty()){
+        clearContactList();
     }
     Logger::log( "DbInterface destructor executed");
 }
@@ -49,10 +53,39 @@ bool DbInterface::fetchOwnerInformation(QString phoneNumber)
 void DbInterface::reset()
 {
     phoneOwner.setOwner(new PhoneOwner("0","",""));
+    clearContactList();
+}
+
+bool DbInterface::fetchContacts()
+{
+    clearContactList();
+    repo->loadContacts(phoneOwner.getId(), contactList);
+    //    printContacts();
+    return true;
+}
+
+void DbInterface::clearContactList()
+{
+    if(contactList.isEmpty())
+        return;
+    for(int i = 0; i < contactList.length() ; i++)
+            delete contactList[i];
+
+    contactList.clear();
 }
 
 QSqlQueryModel* DbInterface::searchText(QString txtSearch)
 {
     return repo->searchText(txtSearch, phoneOwner);
 
+}
+
+void DbInterface::printContacts()
+{
+    Logger::log(" id  fullName  phoneNumber  address  postalcode  email  marked  comment");
+
+    for(int i = 0; i < contactList.length() ; i++)
+    {
+        Logger::log(contactList[i]->toString());
+    }
 }

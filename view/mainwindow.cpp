@@ -93,7 +93,10 @@ void MainWindow::on_btnLogin_clicked()
     if(phone.length() == 0)
         return;
     else if(DbInterface::getInstance()->fetchOwnerInformation(phone))
+    {
+        (DbInterface::getInstance())->fetchContacts();
         setItemsVisibilityAfterLogin();
+    }
     else {
         ui->lineEditLogin->clear();
         ui->lineEditErrorLogin->setText("Invalid login information");
@@ -104,6 +107,7 @@ void MainWindow::on_btnLogin_clicked()
 void MainWindow::on_btnLogout_clicked()
 {
     setItemsVisibilityBeforeLogin();
+    (DbInterface::getInstance())->reset();
     (DbInterface::getInstance())->reset();
 }
 

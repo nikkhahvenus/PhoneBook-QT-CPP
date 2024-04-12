@@ -8,7 +8,8 @@ class Commercial : public Contact
 {
 public:
     Commercial();
-    Commercial(QString ,QString ,QString ,QString ,QString , QString, QString ,bool);
+    Commercial(QString id, QString fullName, QString phoneNumber, QString address,
+               QString postalcode, QString email, bool marked, QString comment);
     QString typeInfo();
 };
 

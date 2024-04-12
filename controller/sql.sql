@@ -74,7 +74,7 @@ INSERT INTO `Owner` (`Phone`,`FullName`) VALUES ('09172000000','ali');
 INSERT INTO `Owner` (`Phone`,`FullName`) VALUES ('09173000000','mehdi');
 INSERT INTO `Owner` (`Phone`,`FullName`) VALUES ('09177000000','afshin');
 
-INSERT INTO `Commercial` (`OwnerId`,`FullName`,`Phone`) VALUES (1,'ali','09172000000');
+INSERT INTO `Commercial` (`OwnerId`,`FullName`,`Phone`, `Address`, `Email`, `Marked`, `Comment`) VALUES (1,'ali','09172000000', 'Iran Shiraz','ali@gmail.com', true, 'Ali is my best brother' );
 INSERT INTO `Commercial` (`OwnerId`,`FullName`,`Phone`) VALUES (1,'ahmad','09174000000');
 INSERT INTO `Commercial` (`OwnerId`,`FullName`,`Phone`) VALUES (1,'bagher','09174500000');
 INSERT INTO `General` (`OwnerId`,`FullName`,`Phone`) VALUES (1,'mehdi','09173000000');
