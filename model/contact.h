@@ -3,6 +3,7 @@
 
 #include <QString>
 #include "../controller/logger.h"
+#include "ContactInfo.h"
 
 class Contact
 {

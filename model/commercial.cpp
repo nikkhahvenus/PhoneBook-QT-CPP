@@ -16,3 +16,10 @@ QString Commercial::typeInfo()
 {
     return "Commercial";
 }
+
+Commercial::Commercial(ContactInfo *contactInfo):
+    Contact(contactInfo->getId(), contactInfo->getFullName(), contactInfo->getAddress(),
+            contactInfo->getPostalcode(), contactInfo->getEmail(), contactInfo->getPhoneNumber(), contactInfo->getComment(), false)
+{
+
+}

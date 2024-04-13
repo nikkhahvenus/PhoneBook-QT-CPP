@@ -3,7 +3,7 @@
 #include "../model/phoneowner.h"
 #include "logger.h"
 #include "repository.h"
-
+#include "../model/ContactInfo.h"
 
 class DbInterface
 {
@@ -45,6 +45,10 @@ public:
     QString getTypeOfContactInPlaceOfIndexInContactList(int);
     Contact *getContactPtr(int);
     bool appendNewMemberForGroup(int , QString );
+
+    //addContact
+    bool addContact(ContactInfo *contactInfo);
+//    bool addContactToContactList(ContactInfo *contactInfo);
 };
 
 #endif // DBINTERFACE_H

@@ -1,5 +1,6 @@
 #include "repository.h"
 #include "dbinterface.h"
+#include <QSqlError>
 
 Repository* Repository::repositoryPtr= nullptr;;
 
@@ -177,6 +178,7 @@ bool Repository::loadGeneralGroupMembers(QString ownerId, QString groupId)
     return returnValue;
 }
 
+
 int Repository::indexOfContactInContactList( QString contactId, QString ContactType)
 {
     int CLlength = (DbInterface::getInstance())->getLengthOfContactList();
@@ -259,6 +261,47 @@ bool Repository::loadCommercialContacts(QString ownerId)
     }
     else{
         Logger::log("query execution error for fetching commercial contacts" );
+        returnValue = false;
+    }
+
+    return returnValue;
+}
+
+bool Repository::inserContactIntoCommertialTable(QString ownerId, ContactInfo *contactInfo)
+{
+    bool returnValue = true;
+    QSqlQuery qry;
+    if(contactInfo->getTypeInfo() != "Commercial")
+        return false;
+    qry.prepare("insert into commercial (OwnerId, FullName, Phone, Address, PostalCode, Email,Comment) values (:OwnerId, :FullName, :Phone, :Address, :PostalCode, :Email, :Comment)");
+
+    qry.bindValue(":OwnerId", ownerId);
+    qry.bindValue(":FullName", contactInfo->getFullName());
+    qry.bindValue(":Phone", contactInfo->getPhoneNumber());
+    qry.bindValue(":Address", contactInfo->getAddress());
+    qry.bindValue(":PostalCode", contactInfo->getPostalcode());
+    qry.bindValue(":Email", contactInfo->getEmail());
+    qry.bindValue(":Comment", contactInfo->getComment());
+
+    if(qry.exec()){
+        QString id = qry.lastInsertId().toString();
+
+        Commercial * commercial = new Commercial(
+                    id, //id
+                    contactInfo->getFullName(),     //fullname
+                    contactInfo->getPhoneNumber(),  //phone
+                    contactInfo->getAddress(),      //address
+                    contactInfo->getPostalcode(),   //postalcode
+                    contactInfo->getEmail(),        //email
+                    false,                          //marked
+                    contactInfo->getComment()       //comment
+                    );
+        Logger::log(commercial->toString());
+        (DbInterface::getInstance())->appendContact(commercial);
+
+    }
+    else{
+        Logger::log("Saving commercial contact error: "+ qry.lastError().text() );
         returnValue = false;
     }
 

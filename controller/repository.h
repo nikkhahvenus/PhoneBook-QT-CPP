@@ -34,6 +34,9 @@ public:
     bool loadGroups(QString);
     bool loadCommercialGroupMembers(QString , QString);
     bool loadGeneralGroupMembers(QString , QString);
+
+    //add Contact
+    bool inserContactIntoCommertialTable(QString ,ContactInfo*);
 };
 
 #endif // REPOSITORY_H

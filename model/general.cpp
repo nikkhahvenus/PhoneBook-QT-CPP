@@ -16,3 +16,10 @@ QString General::typeInfo()
 {
     return "General";
 }
+
+General::General(ContactInfo *contactInfo):
+    Contact(contactInfo->getId(), contactInfo->getFullName(), contactInfo->getAddress(),
+            contactInfo->getPostalcode(), contactInfo->getEmail(), contactInfo->getPhoneNumber(), contactInfo->getComment(), false)
+{
+
+}

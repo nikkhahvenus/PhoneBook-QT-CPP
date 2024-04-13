@@ -3,6 +3,7 @@
 #include "../controller/dbconnector.h"
 #include <QMessageBox>
 #include "../controller/dbinterface.h"
+#include "../model/ContactInfo.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -68,14 +69,18 @@ void MainWindow::on_actionLicense_triggered()
 
 void MainWindow::setItemsVisibilityBeforeLogin()
 {
+
+
+    ui->frameUser->setHidden(true);
+    ui->menuBar->setHidden(true);
+
     ui->lineEditErrorLogin->setText("");
     ui->lineEditLogin->clear();
 
     ui->frameLogin->setVisible(true);
     ui->lineEditErrorLogin->setVisible(false);
 
-    ui->frameUser->setHidden(true);
-    ui->menuBar->setHidden(true);
+    ui->frameLogin->show();
 }
 
 void MainWindow::setItemsVisibilityAfterLogin()
@@ -84,6 +89,16 @@ void MainWindow::setItemsVisibilityAfterLogin()
 
     ui->frameUser->setVisible(true);
     ui->menuBar->setVisible(true);
+
+    ui->radioButtonGeneral->setAutoExclusive(false);
+    ui->radioButtonGeneral->setChecked(true);
+    ui->radioButtonGeneral->setAutoExclusive(true);
+
+    ui->radioButtonCommercial->setAutoExclusive(false);
+    ui->radioButtonCommercial->setChecked(false);
+    ui->radioButtonCommercial->setAutoExclusive(true);
+
+    ui->frameUser->show();
 }
 
 
@@ -128,3 +143,48 @@ void MainWindow::on_btnSearch_clicked()
     if(model)
         ui->tblView->setModel(model);
 }
+
+void MainWindow::on_btnAddContact_clicked()
+{
+    QString fullName = ui->lineEditFullName->text();
+    QString address = ui->lineEditAddress->text();
+    QString postalcode = ui->lineEditPostalCode->text();
+    QString email = ui->lineEditEmail->text();
+    QString phoneNumber = ui->lineEditPhone->text();
+    QString comment = ui->lineEditComment->text();
+    QString typeInfo ;
+    if(ui->radioButtonGeneral->isChecked())
+        typeInfo = "General";
+    else
+        typeInfo = "Commercial";
+
+    //Validate input values before save, like:
+    if(phoneNumber == "" || fullName == "")
+        return;
+
+    ContactInfo* contactInfo = new ContactInfo(
+                fullName, address, postalcode, email, phoneNumber, comment, typeInfo);
+    if((DbInterface::getInstance())->addContact(contactInfo))
+        QMessageBox::information(this,"Success","New contact added successfully");
+    else
+        QMessageBox::critical(this,"Failure","Fail to add New contact");
+    delete contactInfo;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

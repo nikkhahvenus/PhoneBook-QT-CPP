@@ -11,6 +11,7 @@ public:
     Commercial(QString id, QString fullName, QString phoneNumber, QString address,
                QString postalcode, QString email, bool marked, QString comment);
     QString typeInfo();
+    Commercial(ContactInfo *contactInfo);
 };
 
 #endif // COMMERCIAL_H

@@ -31,6 +31,8 @@ private slots:
 
     void on_btnLogout_clicked();
 
+    void on_btnAddContact_clicked();
+
 private:
     Ui::MainWindow *ui;
     void deleteDbConnectorInstance();

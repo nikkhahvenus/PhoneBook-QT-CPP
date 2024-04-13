@@ -23,6 +23,7 @@ SOURCES += \
     controller/logger.cpp \
     controller/repository.cpp \
     main.cpp \
+    model/ContactInfo.cpp \
     model/commercial.cpp \
     model/contact.cpp \
     model/general.cpp \
@@ -35,6 +36,7 @@ HEADERS += \
     controller/dbinterface.h \
     controller/logger.h \
     controller/repository.h \
+    model/ContactInfo.h \
     model/commercial.h \
     model/contact.h \
     model/general.h \
