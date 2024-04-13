@@ -38,7 +38,13 @@ public:
     void printContacts();
     void printGroups();
     bool InitializeForCurrentLogin();
-//    void clearCommercialGroupMemberList();
+    bool appendContact(Contact *);
+    bool appendGroup(Group *);
+    int getLengthOfContactList();
+    QString getIdOfContactInPlaceOfIndexInContactList(int );
+    QString getTypeOfContactInPlaceOfIndexInContactList(int);
+    Contact *getContactPtr(int);
+    bool appendNewMemberForGroup(int , QString );
 };
 
 #endif // DBINTERFACE_H

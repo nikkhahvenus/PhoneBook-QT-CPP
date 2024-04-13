@@ -1,4 +1,6 @@
 #include "repository.h"
+#include "dbinterface.h"
+
 Repository* Repository::repositoryPtr= nullptr;;
 
 Repository::Repository()
@@ -82,7 +84,7 @@ QSqlQueryModel* Repository::searchInFullNameColomn(QString txtSearch, PhoneOwner
     return nullptr;
 }
 
-bool Repository::loadGroups(QString ownerId, QList<Group *> &groupList)
+bool Repository::loadGroups(QString ownerId)
 {
     bool returnValue = true;
     QSqlQuery qry;
@@ -98,7 +100,7 @@ bool Repository::loadGroups(QString ownerId, QList<Group *> &groupList)
                             qry.value(1).toString(), //name
                             qry.value(2).toString()  //description
                             );
-                groupList.append(group);
+                (DbInterface::getInstance())->appendGroup(group);
             }
     }
     else{
@@ -109,7 +111,7 @@ bool Repository::loadGroups(QString ownerId, QList<Group *> &groupList)
     return returnValue;
 }
 
-bool Repository::loadCommercialGroupMembers(QString ownerId, Group& group, QList<Contact *> &contactList)
+bool Repository::loadCommercialGroupMembers(QString ownerId, QString groupId)
 {
     bool returnValue = true;
     QSqlQuery qry;
@@ -118,14 +120,14 @@ bool Repository::loadCommercialGroupMembers(QString ownerId, Group& group, QList
                 );
 
     qry.bindValue(":ownerId", ownerId);
-    qry.bindValue(":groupId", group.getId());
+    qry.bindValue(":groupId", groupId);
 
     if(qry.exec()){
         while(qry.next()){
             QString commercialId = qry.value(0).toString();
-            Contact * CPtr = pointerToContact(commercialId, contactList, "Commercial");
-            if( CPtr )
-                group.appendMemberList(CPtr );
+            int index = indexOfContactInContactList(commercialId, "General");
+            if( index >= 0 )
+                (DbInterface::getInstance())->appendNewMemberForGroup(index, groupId);
             else
             {
                 returnValue = false;
@@ -143,7 +145,7 @@ bool Repository::loadCommercialGroupMembers(QString ownerId, Group& group, QList
 
 }
 
-bool Repository::loadGeneralGroupMembers(QString ownerId, Group& group, QList<Contact *> &contactList)
+bool Repository::loadGeneralGroupMembers(QString ownerId, QString groupId)
 {
     bool returnValue = true;
     QSqlQuery qry;
@@ -152,14 +154,14 @@ bool Repository::loadGeneralGroupMembers(QString ownerId, Group& group, QList<Co
                 );
 
     qry.bindValue(":ownerId", ownerId);
-    qry.bindValue(":groupId", group.getId());
+    qry.bindValue(":groupId", groupId);
 
     if(qry.exec()){
         while(qry.next()){
             QString generalId = qry.value(0).toString();
-            Contact * CPtr = pointerToContact(generalId, contactList, "General");
-            if( CPtr )
-                group.appendMemberList(CPtr );
+            int index = indexOfContactInContactList(generalId, "General");
+            if( index >= 0 )
+                (DbInterface::getInstance())->appendNewMemberForGroup(index, groupId);
             else
             {
                 returnValue = false;
@@ -175,25 +177,27 @@ bool Repository::loadGeneralGroupMembers(QString ownerId, Group& group, QList<Co
     return returnValue;
 }
 
-Contact* Repository::pointerToContact( QString contactId, QList<Contact *> &contactList, QString ContactType)
+int Repository::indexOfContactInContactList( QString contactId, QString ContactType)
 {
-    for ( int i = 0 ; i < contactList.length() ; i++ )
+    int CLlength = (DbInterface::getInstance())->getLengthOfContactList();
+    for ( int i = 0 ; i < CLlength ; i++ )
     {
-        Contact * contact = contactList[i];
-        if(contact->getId() == contactId && contact->typeInfo() == ContactType ){
-            return contact;
+        QString CId = (DbInterface::getInstance())->getIdOfContactInPlaceOfIndexInContactList(i);
+        QString CType = (DbInterface::getInstance())->getTypeOfContactInPlaceOfIndexInContactList(i);
+        if(CId == contactId && CType == ContactType ){
+            return i;
         }
     }
     Logger::log("Can not find "+contactId + " contactId with " + ContactType + " type");
-    return nullptr;
+    return -1;
 }
 
-bool Repository::loadContacts(QString ownerId, QList<Contact*> &contactList)
+bool Repository::loadContacts(QString ownerId)
 {
-    return loadGeneralContacts(ownerId, contactList) && loadCommercialContacts(ownerId, contactList);
+    return loadGeneralContacts(ownerId) && loadCommercialContacts(ownerId);
 }
 
-bool Repository::loadGeneralContacts(QString ownerId, QList<Contact*> &contactList)
+bool Repository::loadGeneralContacts(QString ownerId)
 {
     bool returnValue = true;
     QSqlQuery qry;
@@ -215,7 +219,7 @@ bool Repository::loadGeneralContacts(QString ownerId, QList<Contact*> &contactLi
                             qry.value(6).toBool(),   //marked
                             qry.value(7).toString()  //comment
                             );
-                contactList.append(general);
+                (DbInterface::getInstance())->appendContact(general);
             }
 
     }
@@ -227,7 +231,7 @@ bool Repository::loadGeneralContacts(QString ownerId, QList<Contact*> &contactLi
     return returnValue;
 }
 
-bool Repository::loadCommercialContacts(QString ownerId, QList<Contact*> &contactList)
+bool Repository::loadCommercialContacts(QString ownerId)
 {
     bool returnValue = true;
     QSqlQuery qry;
@@ -249,7 +253,7 @@ bool Repository::loadCommercialContacts(QString ownerId, QList<Contact*> &contac
                             qry.value(6).toBool(),   //marked
                             qry.value(7).toString()  //comment
                             );
-                contactList.append(commercial);
+                (DbInterface::getInstance())->appendContact(commercial);
             }
 
     }

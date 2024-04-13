@@ -17,10 +17,9 @@ protected:
     Repository();
 private:
     QSqlQueryModel* searchInFullNameColomn(QString txtSearch,PhoneOwner &owner);
-    bool loadGeneralContacts(QString ownerId,QList<Contact*>&);
-    bool loadCommercialContacts(QString ownerId,QList<Contact*>&);
-
-    Contact* pointerToContact( QString, QList<Contact *> &, QString );
+    bool loadGeneralContacts(QString ownerId);
+    bool loadCommercialContacts(QString ownerId);
+    int indexOfContactInContactList(QString , QString );
 
 public:
     ~Repository();
@@ -31,10 +30,10 @@ public:
 
     PhoneOwner fetchOwnerInformation(QString);
     QSqlQueryModel* searchText(QString txtSearch, PhoneOwner owner);
-    bool loadContacts(QString, QList<Contact*>&);
-    bool loadGroups(QString, QList<Group*>&);
-    bool loadCommercialGroupMembers(QString , Group& , QList<Contact*> &);
-    bool loadGeneralGroupMembers(QString , Group& , QList<Contact*> &);
+    bool loadContacts(QString);
+    bool loadGroups(QString);
+    bool loadCommercialGroupMembers(QString , QString);
+    bool loadGeneralGroupMembers(QString , QString);
 };
 
 #endif // REPOSITORY_H

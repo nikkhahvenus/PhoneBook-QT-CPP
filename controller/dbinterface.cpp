@@ -61,7 +61,7 @@ bool DbInterface::fetchContacts()
 {
     bool returnValue = false;
     clearContactList();
-    returnValue = repo->loadContacts(phoneOwner.getId(), contactList);
+    returnValue = repo->loadContacts(phoneOwner.getId());
 //    printContacts();
     return returnValue;
 }
@@ -70,7 +70,7 @@ bool DbInterface::fetchGroups()
 {
     bool returnValue = false;
     clearGroupList();
-    returnValue = repo->loadGroups(phoneOwner.getId(), groupList);
+    returnValue = repo->loadGroups(phoneOwner.getId());
 //    printGroups();
     return returnValue;
 }
@@ -81,8 +81,8 @@ bool DbInterface::fetchGroupMembers()
     for (int i=0; i< groupList.length(); i++)
     {
         Group * group = groupList[i];
-        if(!(repo->loadCommercialGroupMembers(phoneOwner.getId(), *group, contactList ) &&
-             repo->loadGeneralGroupMembers(phoneOwner.getId(), *group, contactList  ))
+        if(!(repo->loadCommercialGroupMembers(phoneOwner.getId(), group->getId() ) &&
+             repo->loadGeneralGroupMembers(phoneOwner.getId(), group->getId()  ))
                 )
         {
                 returnValue = false;
@@ -143,4 +143,52 @@ bool DbInterface::InitializeForCurrentLogin()
     (DbInterface::getInstance())->fetchContacts() &&
     (DbInterface::getInstance())->fetchGroups()&&
     (DbInterface::getInstance())->fetchGroupMembers();
+}
+
+bool DbInterface::appendContact(Contact * newContact)
+{
+    contactList.append (newContact);
+    return true;
+}
+
+bool DbInterface::appendGroup(Group * newGroup)
+{
+    groupList.append (newGroup);
+    return true;
+}
+
+int DbInterface::getLengthOfContactList()
+{
+    return contactList.length();
+}
+
+QString DbInterface::getIdOfContactInPlaceOfIndexInContactList(int indexInContactList)
+{
+    return contactList[indexInContactList]->getId();
+}
+QString DbInterface::getTypeOfContactInPlaceOfIndexInContactList(int indexInContactList)
+{
+    return contactList[indexInContactList]->typeInfo();
+}
+
+Contact* DbInterface::getContactPtr(int indexInContactList)
+{
+    return contactList[indexInContactList];
+}
+
+bool DbInterface::appendNewMemberForGroup(int index, QString groupId)
+{
+    bool returnValue = false;
+    bool exitLoop = false;
+    for (int i=0; i< groupList.length() && !exitLoop; i++)
+    {
+        Group * group = groupList[i];
+        if(group->getId() == groupId)
+        {
+            group->appendMemberList(contactList[index]);
+            returnValue = true;
+            exitLoop = true;
+        }
+    }
+    return returnValue;
 }
