@@ -13,7 +13,7 @@ Contact::Contact()
     setPhoneNumber("") ;
     setComment("") ;
     resetMarked();
-    Logger::log("No argument constructor of Contact executed");
+//    Logger::log("No argument constructor of Contact executed");
 }
 
 Contact::Contact(QString id, QString fullName, QString address, QString postalcode,
@@ -28,7 +28,7 @@ Contact::Contact(QString id, QString fullName, QString address, QString postalco
     setComment(comment) ;
     if(marked) setMarked();
     else resetMarked();
-    Logger::log("With argument constructor of Contact executed");
+//    Logger::log("With argument constructor of Contact executed");
 }
 
 bool Contact::setId(QString id)

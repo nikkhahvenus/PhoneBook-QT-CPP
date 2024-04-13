@@ -90,11 +90,11 @@ INSERT INTO `General` (`OwnerId`,`FullName`,`Phone`) VALUES (2,'mehdi','09173000
 INSERT INTO `Groups` (`OwnerId`,`Name`,`Description`) VALUES (2,'roomate','My Roomates');
 INSERT INTO `Groups` (`OwnerId`,`Name`,`Description`) VALUES (2,'friends','My Friends');
 
-INSERT INTO `GroupMembersOfCommercialContacts` (`OwnerId`,`GroupId`,`CommercialId`) VALUES (2,1,1);
-INSERT INTO `GroupMembersOfGeneralContacts` (`OwnerId`,`GroupId`,`GeneralId`) VALUES (2,1,2);
+INSERT INTO `GroupMembersOfCommercialContacts` (`OwnerId`,`GroupId`,`CommercialId`) VALUES (2,1,4);
+INSERT INTO `GroupMembersOfGeneralContacts` (`OwnerId`,`GroupId`,`GeneralId`) VALUES (2,1,6);
 
-INSERT INTO `GroupMembersOfCommercialContacts` (`OwnerId`,`GroupId`,`CommercialId`) VALUES (2,2,2);
-INSERT INTO `GroupMembersOfGeneralContacts` (`OwnerId`,`GroupId`,`GeneralId`) VALUES (2,2,1);
+INSERT INTO `GroupMembersOfCommercialContacts` (`OwnerId`,`GroupId`,`CommercialId`) VALUES (2,2,5);
+INSERT INTO `GroupMembersOfGeneralContacts` (`OwnerId`,`GroupId`,`GeneralId`) VALUES (2,2,5);
 
 INSERT INTO `General` (`OwnerId`,`FullName`,`Phone`) VALUES (3,'ali','09172000000');
 INSERT INTO `General` (`OwnerId`,`FullName`,`Phone`) VALUES (3,'afshin','09177000000');

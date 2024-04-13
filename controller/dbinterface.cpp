@@ -62,7 +62,7 @@ bool DbInterface::fetchContacts()
     bool returnValue = false;
     clearContactList();
     returnValue = repo->loadContacts(phoneOwner.getId(), contactList);
-    //    printContacts();
+//    printContacts();
     return returnValue;
 }
 
@@ -71,7 +71,7 @@ bool DbInterface::fetchGroups()
     bool returnValue = false;
     clearGroupList();
     returnValue = repo->loadGroups(phoneOwner.getId(), groupList);
-    //    printGroups();
+//    printGroups();
     return returnValue;
 }
 
@@ -82,7 +82,8 @@ bool DbInterface::fetchGroupMembers()
     {
         Group * group = groupList[i];
         if(!(repo->loadCommercialGroupMembers(phoneOwner.getId(), *group, contactList ) &&
-             repo->loadGeneralGroupMembers(phoneOwner.getId(), *group, contactList  )))
+             repo->loadGeneralGroupMembers(phoneOwner.getId(), *group, contactList  ))
+                )
         {
                 returnValue = false;
         }
@@ -140,6 +141,6 @@ bool DbInterface::InitializeForCurrentLogin()
 {
     return
     (DbInterface::getInstance())->fetchContacts() &&
-    (DbInterface::getInstance())->fetchGroups() &&
+    (DbInterface::getInstance())->fetchGroups()&&
     (DbInterface::getInstance())->fetchGroupMembers();
 }
