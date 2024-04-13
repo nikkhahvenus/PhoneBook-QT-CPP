@@ -92,12 +92,18 @@ void MainWindow::on_btnLogin_clicked()
     QString phone = ui->lineEditLogin->text();
     if(phone.length() == 0)
         return;
-    else if(DbInterface::getInstance()->fetchOwnerInformation(phone))
+    else if((DbInterface::getInstance())->fetchOwnerInformation(phone))
     {
-        (DbInterface::getInstance())->fetchContacts();
-        (DbInterface::getInstance())->fetchGroups();
-        (DbInterface::getInstance())->fetchGroupMembers();
-        setItemsVisibilityAfterLogin();
+        if((DbInterface::getInstance())->InitializeForCurrentLogin())
+        {
+            setItemsVisibilityAfterLogin();
+        }
+        else
+        {
+            ui->lineEditLogin->clear();
+            ui->lineEditErrorLogin->setText("Initialization Failed");
+            ui->lineEditErrorLogin->setVisible(true);
+        }
     }
     else {
         ui->lineEditLogin->clear();

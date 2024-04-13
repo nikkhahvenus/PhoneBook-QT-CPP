@@ -37,6 +37,7 @@ public:
     QSqlQueryModel* searchText(QString txtSearch);
     void printContacts();
     void printGroups();
+    bool InitializeForCurrentLogin();
 //    void clearCommercialGroupMemberList();
 };
 

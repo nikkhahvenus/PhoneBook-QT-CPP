@@ -59,29 +59,35 @@ void DbInterface::reset()
 
 bool DbInterface::fetchContacts()
 {
+    bool returnValue = false;
     clearContactList();
-    repo->loadContacts(phoneOwner.getId(), contactList);
+    returnValue = repo->loadContacts(phoneOwner.getId(), contactList);
     //    printContacts();
-    return true;
+    return returnValue;
 }
 
 bool DbInterface::fetchGroups()
 {
+    bool returnValue = false;
     clearGroupList();
-    repo->loadGroups(phoneOwner.getId(), groupList);
-    printGroups();
-    return true;
+    returnValue = repo->loadGroups(phoneOwner.getId(), groupList);
+    //    printGroups();
+    return returnValue;
 }
 
 bool DbInterface::fetchGroupMembers()
 {
+    bool returnValue = true;
     for (int i=0; i< groupList.length(); i++)
     {
         Group * group = groupList[i];
-        repo->loadCommercialGroupMembers(phoneOwner.getId(), *group, contactList );
-        repo->loadGeneralGroupMembers(phoneOwner.getId(), *group, contactList );
+        if(!(repo->loadCommercialGroupMembers(phoneOwner.getId(), *group, contactList ) &&
+             repo->loadGeneralGroupMembers(phoneOwner.getId(), *group, contactList  )))
+        {
+                returnValue = false;
+        }
     }
-    return true;
+    return returnValue;
 }
 
 void DbInterface::clearGroupList()
@@ -128,4 +134,12 @@ void DbInterface::printGroups()
     {
         Logger::log(groupList[i]->toString());
     }
+}
+
+bool DbInterface::InitializeForCurrentLogin()
+{
+    return
+    (DbInterface::getInstance())->fetchContacts() &&
+    (DbInterface::getInstance())->fetchGroups() &&
+    (DbInterface::getInstance())->fetchGroupMembers();
 }
