@@ -198,26 +198,9 @@ bool DbInterface::addContact(ContactInfo *contactInfo)
     bool returnValue = true;
     if (contactInfo->getTypeInfo() == "Commercial")
         returnValue = repo->inserContactIntoCommertialTable(phoneOwner.getId(),contactInfo);
-//    else
-//        returnValue = repo->inserContactIntoGeneralTable(phoneOwner.getId(),contactInfo);
+    else
+        returnValue = repo->inserContactIntoGeneralTable(phoneOwner.getId(),contactInfo);
 
-//     if(returnValue)
-//          returnValue = addContactToContactList(contactInfo);
     return returnValue;
 
 }
-
-//bool DbInterface::addContactToContactList(ContactInfo *contactInfo)
-//{
-//    Contact * contact;
-//    if (contactInfo->getTypeInfo() == "Commercial")
-//    {
-//        contact = new Commercial(contactInfo);
-//    }
-//    else {
-//        contact = new General(contactInfo);
-//    }
-
-//    contactList.append(contact);
-//    return true;
-//}

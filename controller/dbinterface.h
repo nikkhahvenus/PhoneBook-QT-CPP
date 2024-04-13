@@ -48,7 +48,6 @@ public:
 
     //addContact
     bool addContact(ContactInfo *contactInfo);
-//    bool addContactToContactList(ContactInfo *contactInfo);
 };
 
 #endif // DBINTERFACE_H

@@ -308,6 +308,47 @@ bool Repository::inserContactIntoCommertialTable(QString ownerId, ContactInfo *c
     return returnValue;
 }
 
+bool Repository::inserContactIntoGeneralTable(QString ownerId, ContactInfo *contactInfo)
+{
+    bool returnValue = true;
+    QSqlQuery qry;
+    if(contactInfo->getTypeInfo() != "General")
+        return false;
+    qry.prepare("insert into general (OwnerId, FullName, Phone, Address, PostalCode, Email,Comment) values (:OwnerId, :FullName, :Phone, :Address, :PostalCode, :Email, :Comment)");
+
+    qry.bindValue(":OwnerId", ownerId);
+    qry.bindValue(":FullName", contactInfo->getFullName());
+    qry.bindValue(":Phone", contactInfo->getPhoneNumber());
+    qry.bindValue(":Address", contactInfo->getAddress());
+    qry.bindValue(":PostalCode", contactInfo->getPostalcode());
+    qry.bindValue(":Email", contactInfo->getEmail());
+    qry.bindValue(":Comment", contactInfo->getComment());
+
+    if(qry.exec()){
+        QString id = qry.lastInsertId().toString();
+
+        General * general = new General(
+                    id, //id
+                    contactInfo->getFullName(),     //fullname
+                    contactInfo->getPhoneNumber(),  //phone
+                    contactInfo->getAddress(),      //address
+                    contactInfo->getPostalcode(),   //postalcode
+                    contactInfo->getEmail(),        //email
+                    false,                          //marked
+                    contactInfo->getComment()       //comment
+                    );
+        Logger::log(general->toString());
+        (DbInterface::getInstance())->appendContact(general);
+
+    }
+    else{
+        Logger::log("Saving general contact error: "+ qry.lastError().text() );
+        returnValue = false;
+    }
+
+    return returnValue;
+}
+
 //void MainWindow::on_pushButton_2_clicked()
 //{
 //    QString id,family,name;

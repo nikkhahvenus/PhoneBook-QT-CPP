@@ -37,6 +37,7 @@ public:
 
     //add Contact
     bool inserContactIntoCommertialTable(QString ,ContactInfo*);
+    bool inserContactIntoGeneralTable(QString ,ContactInfo*);
 };
 
 #endif // REPOSITORY_H
