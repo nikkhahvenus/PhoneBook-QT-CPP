@@ -29,6 +29,7 @@ SOURCES += \
     model/general.cpp \
     model/group.cpp \
     model/phoneowner.cpp \
+    model/search.cpp \
     view/mainwindow.cpp
 
 HEADERS += \
@@ -42,6 +43,7 @@ HEADERS += \
     model/general.h \
     model/group.h \
     model/phoneowner.h \
+    model/search.h \
     view/mainwindow.h
 
 FORMS += \

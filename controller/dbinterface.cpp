@@ -111,10 +111,10 @@ void DbInterface::clearContactList()
     contactList.clear();
 }
 
-QSqlQueryModel* DbInterface::searchText(QString txtSearch)
+bool DbInterface::searchText(QString txtSearch)
 {
-    return repo->searchText(txtSearch, phoneOwner);
-
+//    return searchInFullName(txtSearch, phoneOwner);
+    return true;
 }
 
 void DbInterface::printContacts()

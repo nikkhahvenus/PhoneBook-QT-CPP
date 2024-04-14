@@ -4,6 +4,7 @@
 #include "logger.h"
 #include "repository.h"
 #include "../model/ContactInfo.h"
+#include "../model/search.h"
 
 class DbInterface
 {
@@ -16,6 +17,7 @@ private:
     PhoneOwner phoneOwner;
     QList<Contact*> contactList;
     QList<Group*> groupList;
+//    QList<int, Contact*> contactList;
 
 public:
     ~DbInterface();
@@ -34,7 +36,7 @@ public:
     void clearContactList();
     void clearGroupList();
 
-    QSqlQueryModel* searchText(QString txtSearch);
+    bool searchText(QString txtSearch);
     void printContacts();
     void printGroups();
     bool InitializeForCurrentLogin();

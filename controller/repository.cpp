@@ -52,38 +52,38 @@ PhoneOwner Repository::fetchOwnerInformation(QString phone)
     return owner;
 }
 
-QSqlQueryModel* Repository::searchText(QString txtSearch, PhoneOwner owner)
-{
-    return searchInFullNameColomn(txtSearch,owner);
-}
+//QSqlQueryModel* Repository::searchText(QString txtSearch, PhoneOwner owner)
+//{
+//    return searchInFullNameColomn(txtSearch,owner);
+//}
 
 
-QSqlQueryModel* Repository::searchInFullNameColomn(QString txtSearch, PhoneOwner &owner)
-{
-    QSqlQuery qry;
-    QSqlQueryModel *model = new QSqlQueryModel();
+//QSqlQueryModel* Repository::searchInFullNameColomn(QString txtSearch, PhoneOwner &owner)
+//{
+//    QSqlQuery qry;
+//    QSqlQueryModel *model = new QSqlQueryModel();
 
-    qry.prepare("select id, ownerId, fullname, phone, address, postalcode, email,marked from general "
-                "where ownerid = :id and fullname = :fullname"
-                " union "
-                "select id, ownerId, fullname, phone, address, postalcode, email,marked from commercial "
-                                "where ownerid = :id and fullname = :fullname");
-    qry.bindValue(":fullname", txtSearch);
-    qry.bindValue(":id", owner.getId());
+//    qry.prepare("select id, ownerId, fullname, phone, address, postalcode, email,marked from general "
+//                "where ownerid = :id and fullname = :fullname"
+//                " union "
+//                "select id, ownerId, fullname, phone, address, postalcode, email,marked from commercial "
+//                                "where ownerid = :id and fullname = :fullname");
+//    qry.bindValue(":fullname", txtSearch);
+//    qry.bindValue(":id", owner.getId());
 
-    if(qry.exec()){
-        model->setQuery(qry);
-        if(model->rowCount() >0){
-            return model;
-        }
-        else
-            Logger::log("empty value returned from DB.");
-    }
-    else{
-        Logger::log("query execution error " );
-    }
-    return nullptr;
-}
+//    if(qry.exec()){
+//        model->setQuery(qry);
+//        if(model->rowCount() >0){
+//            return model;
+//        }
+//        else
+//            Logger::log("empty value returned from DB.");
+//    }
+//    else{
+//        Logger::log("query execution error " );
+//    }
+//    return nullptr;
+//}
 
 bool Repository::loadGroups(QString ownerId)
 {

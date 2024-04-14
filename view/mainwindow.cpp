@@ -139,9 +139,8 @@ void MainWindow::on_btnSearch_clicked()
     QString txtSearch = ui->lineEditSearch->text().toLower();
     if (txtSearch.length()==0) return;
 
-    QSqlQueryModel* model = (DbInterface::getInstance())->searchText(txtSearch);
-    if(model)
-        ui->tblView->setModel(model);
+    bool returnValue = (DbInterface::getInstance())->searchText(txtSearch);
+
 }
 
 void MainWindow::on_btnAddContact_clicked()

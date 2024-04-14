@@ -24,7 +24,7 @@
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>0</y>
+      <y>10</y>
       <width>751</width>
       <height>621</height>
      </rect>
@@ -40,8 +40,8 @@
       <rect>
        <x>20</x>
        <y>20</y>
-       <width>551</width>
-       <height>351</height>
+       <width>561</width>
+       <height>341</height>
       </rect>
      </property>
      <property name="frameShape">
@@ -314,9 +314,9 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>410</y>
-       <width>731</width>
-       <height>251</height>
+       <y>450</y>
+       <width>721</width>
+       <height>151</height>
       </rect>
      </property>
      <property name="frameShape">
@@ -325,14 +325,17 @@
      <property name="frameShadow">
       <enum>QFrame::Raised</enum>
      </property>
-     <widget class="QTableView" name="tblView">
+     <widget class="QPushButton" name="btnSearch">
       <property name="geometry">
        <rect>
-        <x>20</x>
-        <y>70</y>
-        <width>691</width>
-        <height>101</height>
+        <x>610</x>
+        <y>10</y>
+        <width>91</width>
+        <height>41</height>
        </rect>
+      </property>
+      <property name="text">
+       <string>Search</string>
       </property>
      </widget>
      <widget class="QLineEdit" name="lineEditSearch">
@@ -346,19 +349,6 @@
       </property>
       <property name="maxLength">
        <number>100</number>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="btnSearch">
-      <property name="geometry">
-       <rect>
-        <x>610</x>
-        <y>10</y>
-        <width>91</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Search</string>
       </property>
      </widget>
     </widget>
