@@ -22,6 +22,7 @@ SOURCES += \
     controller/dbinterface.cpp \
     controller/logger.cpp \
     controller/repository.cpp \
+    controller/searchengine.cpp \
     main.cpp \
     model/ContactInfo.cpp \
     model/commercial.cpp \
@@ -29,7 +30,7 @@ SOURCES += \
     model/general.cpp \
     model/group.cpp \
     model/phoneowner.cpp \
-    model/search.cpp \
+    model/result.cpp \
     view/mainwindow.cpp
 
 HEADERS += \
@@ -37,13 +38,14 @@ HEADERS += \
     controller/dbinterface.h \
     controller/logger.h \
     controller/repository.h \
+    controller/searchengine.h \
     model/ContactInfo.h \
     model/commercial.h \
     model/contact.h \
     model/general.h \
     model/group.h \
     model/phoneowner.h \
-    model/search.h \
+    model/result.h \
     view/mainwindow.h
 
 FORMS += \

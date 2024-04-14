@@ -111,12 +111,6 @@ void DbInterface::clearContactList()
     contactList.clear();
 }
 
-bool DbInterface::searchText(QString txtSearch)
-{
-//    return searchInFullName(txtSearch, phoneOwner);
-    return true;
-}
-
 void DbInterface::printContacts()
 {
     Logger::log(" id  fullName  phoneNumber  address  postalcode  email  marked  comment");
@@ -203,4 +197,9 @@ bool DbInterface::addContact(ContactInfo *contactInfo)
 
     return returnValue;
 
+}
+
+bool DbInterface::searchText(QString txtSearch)
+{
+    return searchInFullName(txtSearch, contactList, resultList);
 }
