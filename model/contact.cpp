@@ -19,6 +19,13 @@ Contact::Contact()
 Contact::Contact(QString id, QString fullName, QString address, QString postalcode,
                  QString email, QString phoneNumber, QString comment, bool marked)
 {
+    setValues(id, fullName, address, postalcode, email, phoneNumber, comment, marked);
+    //    Logger::log("With argument constructor of Contact executed");
+}
+
+bool Contact::setValues(QString id, QString fullName, QString address, QString postalcode,
+                        QString email, QString phoneNumber, QString comment, bool marked)
+{
     setId(id);
     setFullName(fullName) ;
     setAddress(address) ;
@@ -28,7 +35,7 @@ Contact::Contact(QString id, QString fullName, QString address, QString postalco
     setComment(comment) ;
     if(marked) setMarked();
     else resetMarked();
-//    Logger::log("With argument constructor of Contact executed");
+    return true;
 }
 
 bool Contact::setId(QString id)
@@ -95,7 +102,7 @@ bool Contact::resetMarked()
 
 QString Contact::toString()
 {
-    return id + " " + fullName + " " + phoneNumber + " " + address + " " + postalcode + " " + email + " " + (marked == 1 ? "Marked" : "Unmarked") + " " + comment + " " + typeInfo();
+    return id + " " + fullName + " " + phoneNumber + " " + address + " " + postalcode + " " + email + " " + (marked == 1 ? "Marked" : "Unmarked") + " " + comment + " " + getTypeInfo();
 }
 
 QString Contact::getId()

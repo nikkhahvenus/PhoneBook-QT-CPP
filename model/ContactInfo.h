@@ -14,13 +14,14 @@ private:
     QString phoneNumber;
     QString comment;
     QString typeInfo;
+    bool valid = false;
 
 public:
     ContactInfo();
 
     ~ContactInfo();
     ContactInfo(QString fullName, QString address, QString postalcode, QString email,
-                QString phoneNumber, QString comment,  QString typeInfo, QString id = "");
+                QString phoneNumber, QString comment,  QString typeInfo, QString id = "", bool valid = true);
     void setId(QString id);
     QString getId();
     QString getFullName();
@@ -30,6 +31,9 @@ public:
     QString getPhoneNumber();
     QString getComment();
     QString getTypeInfo();
+    void setValues(QString fullName, QString address, QString postalcode, QString email,
+                   QString phoneNumber, QString comment,  QString typeInfo, QString id , bool valid);
+//    void operator=(ContactInfo);
 
 };
 

@@ -12,19 +12,13 @@ ContactInfo::ContactInfo()
     phoneNumber = "";
     comment = "";
     typeInfo = "";
+    valid = false;
 }
 
 ContactInfo::ContactInfo(QString fullName, QString address, QString postalcode,
-          QString email, QString phoneNumber, QString comment, QString typeInfo, QString id )
+          QString email, QString phoneNumber, QString comment, QString typeInfo, QString id, bool valid )
 {
-    this->fullName = fullName;
-    this->address = address;
-    this->postalcode = postalcode;
-    this->email = email;
-    this->phoneNumber = phoneNumber;
-    this->comment = comment;
-    this->typeInfo = typeInfo;
-    this->id = id;
+    setValues(fullName, address, postalcode, email, phoneNumber, comment, typeInfo, id, valid);
 }
 
 void ContactInfo::setId(QString id)
@@ -76,4 +70,17 @@ QString ContactInfo::getComment()
 QString ContactInfo::getTypeInfo()
 {
     return typeInfo;
+}
+
+void ContactInfo::setValues(QString fullName, QString address, QString postalcode, QString email, QString phoneNumber, QString comment, QString typeInfo, QString id, bool valid)
+{
+    this->fullName = fullName;
+    this->address = address;
+    this->postalcode = postalcode;
+    this->email = email;
+    this->phoneNumber = phoneNumber;
+    this->comment = comment;
+    this->typeInfo = typeInfo;
+    this->id = id;
+    this->valid = valid;
 }

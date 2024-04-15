@@ -6,11 +6,10 @@ class Result
 {
 public:
     int indexInContactList;
-    Contact* contactPtr;
 
 public:
     Result();
-    Result(int,Contact*);
+    Result(int);
     QString toString();
 
 };

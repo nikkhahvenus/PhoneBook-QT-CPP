@@ -2,21 +2,22 @@
 #define DBINTERFACE_H
 #include "../model/phoneowner.h"
 #include "repository.h"
-#include "../model/ContactInfo.h"
 #include "searchengine.h"
+#include "../model/ContactInfo.h"
 
-class DbInterface : public SearchEngine
+class DbInterface
 {
 protected:
     static DbInterface* dbInterfacePtr;
     DbInterface();
-    Repository *repo;
+    Repository *repositoryPtr;
+    SearchEngine *searchEnginePtr;
 
 private:
     PhoneOwner phoneOwner;
     QList<Contact*> contactList;
     QList<Group*> groupList;
-    QList<Result*> resultList;
+
 
 public:
     ~DbInterface();
@@ -34,7 +35,6 @@ public:
     bool fetchGroupMembers();
     void clearContactList();
     void clearGroupList();
-    void clearResultList();
     void printContacts();
     void printGroups();
     bool InitializeForCurrentLogin();
@@ -50,8 +50,8 @@ public:
     bool addContact(ContactInfo *contactInfo);
 
     //search
-    bool searchText(QString txtSearch);
-    void printResults();
+    bool searchText(QString txtSearch);    
+    ContactInfo getContactInfoOf(int index);
 };
 
 #endif // DBINTERFACE_H

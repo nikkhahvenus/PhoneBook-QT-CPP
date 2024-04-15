@@ -3,7 +3,6 @@
 
 #include <QString>
 #include "logger.h"
-#include "../model/phoneowner.h"
 #include "../model/commercial.h"
 #include "../model/general.h"
 #include "../model/result.h"
@@ -11,12 +10,28 @@
 class SearchEngine
 {
 protected:
-    bool searchInSensitive(QString txtSearch, QList<Contact*> &contactList, QList<Result*> &resultList);
-
-public:
+    static SearchEngine* searchEnginePtr;
     SearchEngine();
 
 
+protected:
+    QList<Result*> resultList;
+    int currentShowIndexOfResultList = 0;
+
+
+public:
+    bool searchInSensitive(QString txtSearch, QList<Contact*> &contactList);
+    ~SearchEngine();
+    SearchEngine(SearchEngine &other) = delete;
+    void operator=(const SearchEngine &) = delete;
+    static SearchEngine *getInstance();
+
+
+    void clearResultList();
+    void printResults();
+
+
+    ContactInfo getCurrentResultItem();
 };
 
 #endif // SEARCHENGINE_H

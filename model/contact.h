@@ -19,6 +19,7 @@ protected:
 
     Contact();
     Contact(QString ,QString ,QString ,QString ,QString , QString, QString ,bool );
+    bool setValues(QString ,QString ,QString ,QString ,QString , QString, QString ,bool );
     bool setId(QString);
     bool setFullName(QString);
     bool setAddress(QString);
@@ -39,7 +40,7 @@ public:
     QString getPhoneNumber();
     QString getComment();
     virtual ~Contact();
-    virtual QString typeInfo() = 0;
+    virtual QString getTypeInfo() = 0;
 };
 
 #endif // CONTACT_H

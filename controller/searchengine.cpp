@@ -1,6 +1,28 @@
-#include "searchengine.h"
+﻿#include "searchengine.h"
+#include "dbinterface.h"
 
-bool SearchEngine::searchInSensitive(QString txtSearch, QList<Contact *> &contactList, QList<Result*> &resultList)
+SearchEngine* SearchEngine::searchEnginePtr= nullptr;;
+
+SearchEngine::SearchEngine()
+{
+
+}
+
+SearchEngine::~SearchEngine()
+{
+    clearResultList();
+}
+
+SearchEngine *SearchEngine::getInstance()
+{
+    if(searchEnginePtr== nullptr){
+        searchEnginePtr = new SearchEngine();
+//        Logger::log("new SearchEngine");
+    }
+    return searchEnginePtr;
+}
+
+bool SearchEngine::searchInSensitive(QString txtSearch, QList<Contact *> &contactList)
 {
     QString txtSearchLower = txtSearch.toLower();
     bool returnValue = false;
@@ -17,20 +39,50 @@ bool SearchEngine::searchInSensitive(QString txtSearch, QList<Contact *> &contac
                 || (contact->getComment()).toLower().contains(txtSearchLower)
           )
         {
-            Logger::log("done");
-            Result * result = new Result(i,contact);
+            Result * result = new Result(i);
             resultList.append(result);
             returnValue = true;
         }
     }
-
+    currentShowIndexOfResultList = 0;
     return returnValue;
 }
 
-
-SearchEngine::SearchEngine()
+void SearchEngine::clearResultList()
 {
+    if(resultList.isEmpty())
+        return;
+    for(int i = 0; i < resultList.length() ; i++)
+            delete resultList[i];
 
+    resultList.clear();
 }
 
+void SearchEngine::printResults()
+{
+    for(int i =0; i < resultList.length() ; i++)
+        Logger::log(resultList[i]->toString());
+}
 
+ContactInfo SearchEngine::getCurrentResultItem()
+{
+    ContactInfo contactInfo;
+    if(resultList.length() > 0)
+    {
+        return (DbInterface::getInstance())->getContactInfoOf(currentShowIndexOfResultList);
+    }
+    return contactInfo;
+}
+
+//ContactInfo SearchEngine::getCurrentResultItem()
+//{
+//    ContactInfo contactInfo;
+//    if(resultList.length() > 0)
+//    {
+//        Contact* contact = (DbInterface::getInstance())->getContactOfContactListIn(currentShowIndexOfResultList);
+//        contactInfo.setValues(contact->getFullName(),  contact->getAddress, contact->getPostalcode, email,
+//                          phoneNumber, comment,  typeInfo, id, valid);
+//    }
+//    delete contact;
+//    return contactInfo;
+//}

@@ -10,8 +10,10 @@ public:
     General();
     General(QString id, QString fullName, QString phoneNumber, QString address,
             QString postalcode, QString email, bool marked, QString comment);
-    QString typeInfo();
-    General(ContactInfo *contactInfo);
+    QString getTypeInfo();
+//    General(ContactInfo *contactInfo);
+//    General &operator =(General general);
+//    General(General *general);
 };
 
 #endif // GENERAL_H

@@ -5,13 +5,12 @@ Result::Result()
 
 }
 
-Result::Result(int index, Contact * contactPtr)
+Result::Result(int index)
 {
     this->indexInContactList = index;
-    this->contactPtr = contactPtr;
 }
 
 QString Result::toString()
 {
-    return QString(indexInContactList) + " : " + contactPtr->toString();
+    return QString(indexInContactList);
 }

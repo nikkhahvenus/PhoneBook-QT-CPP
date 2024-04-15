@@ -91,18 +91,23 @@ void MainWindow::setItemsVisibilityAfterLogin()
     ui->frameUser->setVisible(true);
     ui->menuBar->setVisible(true);
 
-    ui->radioButtonGeneral->setAutoExclusive(false);
-    ui->radioButtonGeneral->setChecked(true);
-    ui->radioButtonGeneral->setAutoExclusive(true);
+    setViewCommercialTypeTo(false);
 
-    ui->radioButtonCommercial->setAutoExclusive(false);
-    ui->radioButtonCommercial->setChecked(false);
-    ui->radioButtonCommercial->setAutoExclusive(true);
     setItemsVisiblityBeforeSearch();
 
     ui->frameUser->show();
 }
 
+void MainWindow::setViewCommercialTypeTo(bool flag)
+{
+    ui->radioButtonGeneral->setAutoExclusive(false);
+    ui->radioButtonGeneral->setChecked(!flag);
+    ui->radioButtonGeneral->setAutoExclusive(true);
+
+    ui->radioButtonCommercial->setAutoExclusive(false);
+    ui->radioButtonCommercial->setChecked(flag);
+    ui->radioButtonCommercial->setAutoExclusive(true);
+}
 
 void MainWindow::on_btnLogin_clicked()
 {
@@ -133,6 +138,8 @@ void MainWindow::on_btnLogout_clicked()
 {
     setItemsVisibilityBeforeLogin();
     (DbInterface::getInstance())->reset();
+    clearFrameSearchItems();
+    clearFrameContactInfoItems();
 }
 
 void MainWindow::on_btnAddContact_clicked()
@@ -171,6 +178,8 @@ void MainWindow::on_btnSearch_clicked()
     if(returnValue)
     {
         setItemsVisiblityAfterSearch();
+        ContactInfo contactInfo = (SearchEngine::getInstance())->getCurrentResultItem();
+        showContactInfoOnFrame(contactInfo);
     }
 }
 
@@ -190,6 +199,38 @@ void MainWindow::setItemsVisiblityBeforeSearch()
 void MainWindow::on_btnCancel_clicked()
 {
     setItemsVisiblityBeforeSearch();
-    (DbInterface::getInstance())->clearResultList();
+    (SearchEngine::getInstance())->clearResultList();
+
+    clearFrameSearchItems();
+    clearFrameContactInfoItems();
+}
+
+void MainWindow::showContactInfoOnFrame(ContactInfo contactInfo)
+{
+    ui->lineEditFullName->setText( contactInfo.getFullName());
+    ui->lineEditAddress->setText( contactInfo.getAddress());
+    ui->lineEditPostalCode->setText( contactInfo.getPostalcode());
+    ui->lineEditEmail->setText( contactInfo.getEmail());
+    ui->lineEditPhone->setText( contactInfo.getPhoneNumber());
+    ui->lineEditComment->setText( contactInfo.getComment());
+    setViewCommercialTypeTo(contactInfo.getTypeInfo() == "Commercial");
+}
+
+void MainWindow::clearFrameContactInfoItems()
+{
+    ui->lineEditFullName->clear();
+    ui->lineEditAddress->clear();
+    ui->lineEditPostalCode->clear();
+    ui->lineEditEmail->clear();
+    ui->lineEditPhone->clear();
+    ui->lineEditComment->clear();
+    setViewCommercialTypeTo(false);
+
+}
+
+void MainWindow::clearFrameSearchItems()
+{
     ui->lineEditSearch->clear();
 }
+
+

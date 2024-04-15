@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "../controller/dbconnector.h"
 #include "../controller/logger.h"
+#include "../model/ContactInfo.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -17,6 +18,7 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+
 private slots:
     void on_btnSearch_clicked();
 
@@ -28,7 +30,7 @@ private slots:
 
     void setItemsVisiblityAfterSearch();
     void setItemsVisiblityBeforeSearch();
-
+    void showContactInfoOnFrame(ContactInfo);
     void on_btnLogin_clicked();
 
     void on_btnLogout_clicked();
@@ -42,5 +44,8 @@ private:
     void deleteDbConnectorInstance();
     void deleteDbInterfaceInstance();
     void deleteRepositoryInstance();
+    void setViewCommercialTypeTo(bool flag);
+    void clearFrameContactInfoItems();
+    void clearFrameSearchItems();
 };
 #endif // MAINWINDOW_H

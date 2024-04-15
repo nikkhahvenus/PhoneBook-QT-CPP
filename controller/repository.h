@@ -3,7 +3,6 @@
 
 #include <QSqlQuery>
 #include <QSqlQueryModel>
-#include "logger.h"
 #include "../model/phoneowner.h"
 #include "../model/commercial.h"
 #include "../model/general.h"

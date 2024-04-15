@@ -1,29 +1,31 @@
 #include "dbinterface.h"
-#include "dbinterface.h"
 
 DbInterface* DbInterface::dbInterfacePtr= nullptr;;
 
 DbInterface::DbInterface()
 {
-    repo = Repository::getInstance();
-    clearContactList();
-    clearGroupList();
+    repositoryPtr = Repository::getInstance();
+    searchEnginePtr = SearchEngine::getInstance();
 }
 
 DbInterface::~DbInterface()
 {
-    if(repo){
-      delete repo;
+    if(repositoryPtr){
+      delete repositoryPtr;
     }
+    if(searchEnginePtr){
+      delete searchEnginePtr;
+    }
+
     reset();
-    Logger::log( "DbInterface destructor executed");
+//    Logger::log( "DbInterface destructor executed");
 }
 
 DbInterface *DbInterface::getInstance()
 {
     if(dbInterfacePtr== nullptr){
         dbInterfacePtr = new DbInterface();
-        Logger::log("new DbInterface");
+//        Logger::log("new DbInterface");
     }
     return dbInterfacePtr;
 }
@@ -41,7 +43,7 @@ QString DbInterface::getPhoneOwner_s_FullName()
 bool DbInterface::fetchOwnerInformation(QString phoneNumber)
 {
     //validate phone number then fetch owner and then assign
-    PhoneOwner owner = repo->fetchOwnerInformation(phoneNumber);
+    PhoneOwner owner = repositoryPtr->fetchOwnerInformation(phoneNumber);
     if(owner.getPhone() == phoneNumber)
     {
         dbInterfacePtr->phoneOwner.setOwner(owner);
@@ -55,14 +57,14 @@ void DbInterface::reset()
     phoneOwner.setOwner(new PhoneOwner("0","",""));
     clearContactList();
     clearGroupList();
-    clearResultList();
+    searchEnginePtr->clearResultList();
 }
 
 bool DbInterface::fetchContacts()
 {
     bool returnValue = false;
     clearContactList();
-    returnValue = repo->loadContacts(phoneOwner.getId());
+    returnValue = repositoryPtr->loadContacts(phoneOwner.getId());
 //    printContacts();
     return returnValue;
 }
@@ -71,7 +73,7 @@ bool DbInterface::fetchGroups()
 {
     bool returnValue = false;
     clearGroupList();
-    returnValue = repo->loadGroups(phoneOwner.getId());
+    returnValue = repositoryPtr->loadGroups(phoneOwner.getId());
 //    printGroups();
     return returnValue;
 }
@@ -82,8 +84,8 @@ bool DbInterface::fetchGroupMembers()
     for (int i=0; i< groupList.length(); i++)
     {
         Group * group = groupList[i];
-        if(!(repo->loadCommercialGroupMembers(phoneOwner.getId(), group->getId() ) &&
-             repo->loadGeneralGroupMembers(phoneOwner.getId(), group->getId()  ))
+        if(!(repositoryPtr->loadCommercialGroupMembers(phoneOwner.getId(), group->getId() ) &&
+             repositoryPtr->loadGeneralGroupMembers(phoneOwner.getId(), group->getId()  ))
                 )
         {
                 returnValue = false;
@@ -100,16 +102,6 @@ void DbInterface::clearGroupList()
             delete groupList[i];
 
     groupList.clear();
-}
-
-void DbInterface::clearResultList()
-{
-    if(resultList.isEmpty())
-        return;
-    for(int i = 0; i < resultList.length() ; i++)
-            delete resultList[i];
-
-    resultList.clear();
 }
 
 void DbInterface::clearContactList()
@@ -173,7 +165,7 @@ QString DbInterface::getIdOfContactInPlaceOfIndexInContactList(int indexInContac
 }
 QString DbInterface::getTypeOfContactInPlaceOfIndexInContactList(int indexInContactList)
 {
-    return contactList[indexInContactList]->typeInfo();
+    return contactList[indexInContactList]->getTypeInfo();
 }
 
 Contact* DbInterface::getContactPtr(int indexInContactList)
@@ -202,9 +194,9 @@ bool DbInterface::addContact(ContactInfo *contactInfo)
 {
     bool returnValue = true;
     if (contactInfo->getTypeInfo() == "Commercial")
-        returnValue = repo->inserContactIntoCommertialTable(phoneOwner.getId(),contactInfo);
+        returnValue = repositoryPtr->inserContactIntoCommertialTable(phoneOwner.getId(),contactInfo);
     else
-        returnValue = repo->inserContactIntoGeneralTable(phoneOwner.getId(),contactInfo);
+        returnValue = repositoryPtr->inserContactIntoGeneralTable(phoneOwner.getId(),contactInfo);
 
     return returnValue;
 }
@@ -212,14 +204,29 @@ bool DbInterface::addContact(ContactInfo *contactInfo)
 bool DbInterface::searchText(QString txtSearch)
 {
     bool returnValue = false;
-    clearResultList();
-    returnValue = searchInSensitive(txtSearch, contactList, resultList);
+    searchEnginePtr->clearResultList();
+    returnValue = searchEnginePtr->searchInSensitive(txtSearch, contactList);
     //    printResults();
     return returnValue;
 }
 
-void DbInterface::printResults()
+ContactInfo DbInterface::getContactInfoOf(int index)
 {
-    for(int i =0; i < resultList.length() ; i++)
-        Logger::log(resultList[i]->toString());
+    ContactInfo contactInfo;
+
+    if(index >= 0 && index < contactList.length())
+    {
+        Contact * contact = contactList[index];
+        if(contact->getTypeInfo() == "Commercial")
+        {
+            contactInfo.setValues(contact->getFullName(), contact->getAddress(), contact->getPostalcode(), contact->getEmail(),
+                               contact->getPhoneNumber(), contact->getComment(),  contact->getTypeInfo(), contact->getId() , true);
+        }
+        else
+            contactInfo.setValues(contact->getFullName(), contact->getAddress(), contact->getPostalcode(), contact->getEmail(),
+                               contact->getPhoneNumber(), contact->getComment(),  contact->getTypeInfo(), contact->getId() , true);
+    }
+    return contactInfo;
 }
+
+
