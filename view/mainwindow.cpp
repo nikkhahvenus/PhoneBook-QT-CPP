@@ -254,3 +254,11 @@ void MainWindow::checkNextAndPreviousButtons()
     else
         ui->btnNext->setEnabled(true);
 }
+
+void MainWindow::on_btnPrevious_clicked()
+{
+    (SearchEngine::getInstance())->decreaseResultIndex();
+    ContactInfo contactInfo = (SearchEngine::getInstance())->getCurrentResultItem();
+    showContactInfoOnFrame(contactInfo);
+    checkNextAndPreviousButtons();
+}

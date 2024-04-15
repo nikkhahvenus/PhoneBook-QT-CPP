@@ -41,6 +41,8 @@ private slots:
 
     void on_btnNext_clicked();
 
+    void on_btnPrevious_clicked();
+
 private:
     Ui::MainWindow *ui;
     void deleteDbConnectorInstance();
