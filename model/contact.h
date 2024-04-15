@@ -32,6 +32,12 @@ protected:
 public:
     QString toString();
     QString getId();
+    QString getFullName();
+    QString getAddress();
+    QString getPostalcode();
+    QString getEmail();
+    QString getPhoneNumber();
+    QString getComment();
     virtual ~Contact();
     virtual QString typeInfo() = 0;
 };

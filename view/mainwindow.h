@@ -26,6 +26,8 @@ private slots:
     void setItemsVisibilityBeforeLogin();
     void setItemsVisibilityAfterLogin();
 
+    void setSearchButtons();
+    void resetSearchButtons();
 
     void on_btnLogin_clicked();
 

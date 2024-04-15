@@ -55,6 +55,7 @@ void DbInterface::reset()
     phoneOwner.setOwner(new PhoneOwner("0","",""));
     clearContactList();
     clearGroupList();
+    clearResultList();
 }
 
 bool DbInterface::fetchContacts()
@@ -99,6 +100,16 @@ void DbInterface::clearGroupList()
             delete groupList[i];
 
     groupList.clear();
+}
+
+void DbInterface::clearResultList()
+{
+    if(resultList.isEmpty())
+        return;
+    for(int i = 0; i < resultList.length() ; i++)
+            delete resultList[i];
+
+    resultList.clear();
 }
 
 void DbInterface::clearContactList()
@@ -196,10 +207,19 @@ bool DbInterface::addContact(ContactInfo *contactInfo)
         returnValue = repo->inserContactIntoGeneralTable(phoneOwner.getId(),contactInfo);
 
     return returnValue;
-
 }
 
 bool DbInterface::searchText(QString txtSearch)
 {
-    return searchInFullName(txtSearch, contactList, resultList);
+    bool returnValue = false;
+    clearResultList();
+    returnValue = searchInSensitive(txtSearch, contactList, resultList);
+    //    printResults();
+    return returnValue;
+}
+
+void DbInterface::printResults()
+{
+    for(int i =0; i < resultList.length() ; i++)
+        Logger::log(resultList[i]->toString());
 }

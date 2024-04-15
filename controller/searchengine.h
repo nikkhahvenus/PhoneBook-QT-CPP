@@ -11,7 +11,7 @@
 class SearchEngine
 {
 protected:
-    bool searchInFullName(QString txtSearch, QList<Contact*> &contactList, QList<Result> &resultList);
+    bool searchInSensitive(QString txtSearch, QList<Contact*> &contactList, QList<Result*> &resultList);
 
 public:
     SearchEngine();

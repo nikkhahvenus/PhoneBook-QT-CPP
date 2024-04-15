@@ -103,6 +103,36 @@ QString Contact::getId()
     return id;
 }
 
+QString Contact::getFullName()
+{
+    return fullName;
+}
+
+QString Contact::getAddress()
+{
+    return address;
+}
+
+QString Contact::getPostalcode()
+{
+    return postalcode;
+}
+
+QString Contact::getEmail()
+{
+    return email;
+}
+
+QString Contact::getPhoneNumber()
+{
+    return phoneNumber;
+}
+
+QString Contact::getComment()
+{
+    return comment;
+}
+
 
 
 

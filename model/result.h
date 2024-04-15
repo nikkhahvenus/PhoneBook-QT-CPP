@@ -5,9 +5,14 @@
 class Result
 {
 public:
-    Result();
     int indexInContactList;
     Contact* contactPtr;
+
+public:
+    Result();
+    Result(int,Contact*);
+    QString toString();
+
 };
 
 #endif // RESULT_H

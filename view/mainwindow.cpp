@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+#include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "../controller/dbconnector.h"
 #include <QMessageBox>
@@ -133,16 +134,6 @@ void MainWindow::on_btnLogout_clicked()
     (DbInterface::getInstance())->reset();
 }
 
-
-void MainWindow::on_btnSearch_clicked()
-{
-    QString txtSearch = ui->lineEditSearch->text().toLower();
-    if (txtSearch.length()==0) return;
-
-    bool returnValue = (DbInterface::getInstance())->searchText(txtSearch);
-
-}
-
 void MainWindow::on_btnAddContact_clicked()
 {
     QString fullName = ui->lineEditFullName->text();
@@ -170,9 +161,27 @@ void MainWindow::on_btnAddContact_clicked()
     delete contactInfo;
 }
 
+void MainWindow::on_btnSearch_clicked()
+{
+    QString txtSearch = ui->lineEditSearch->text();
+    if (txtSearch.length()==0) return;
 
+    bool returnValue = (DbInterface::getInstance())->searchText(txtSearch);
+    if(returnValue)
+    {
+        setSearchButtons();
+    }
+}
 
+void MainWindow::setSearchButtons()
+{
 
+}
+
+void MainWindow::resetSearchButtons()
+{
+
+}
 
 
 

@@ -16,7 +16,7 @@ private:
     PhoneOwner phoneOwner;
     QList<Contact*> contactList;
     QList<Group*> groupList;
-    QList<Result> resultList;
+    QList<Result*> resultList;
 
 public:
     ~DbInterface();
@@ -34,7 +34,7 @@ public:
     bool fetchGroupMembers();
     void clearContactList();
     void clearGroupList();
-
+    void clearResultList();
     void printContacts();
     void printGroups();
     bool InitializeForCurrentLogin();
@@ -51,7 +51,7 @@ public:
 
     //search
     bool searchText(QString txtSearch);
-
+    void printResults();
 };
 
 #endif // DBINTERFACE_H
