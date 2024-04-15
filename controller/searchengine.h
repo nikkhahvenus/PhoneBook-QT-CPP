@@ -32,6 +32,10 @@ public:
 
 
     ContactInfo getCurrentResultItem();
+    void increaseResultIndex();
+    void decreaseResultIndex();
+    bool lastIndex();
+    bool firstIndex();
 };
 
 #endif // SEARCHENGINE_H

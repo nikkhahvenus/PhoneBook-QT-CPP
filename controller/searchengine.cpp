@@ -74,6 +74,35 @@ ContactInfo SearchEngine::getCurrentResultItem()
     return contactInfo;
 }
 
+void SearchEngine::increaseResultIndex()
+{
+    if(currentShowIndexOfResultList < resultList.length()-1)
+    {
+        ++currentShowIndexOfResultList;
+    }
+}
+
+void SearchEngine::decreaseResultIndex()
+{
+    if(currentShowIndexOfResultList > 0)
+    {
+        --currentShowIndexOfResultList;
+    }
+}
+
+bool SearchEngine::lastIndex()
+{
+    if(currentShowIndexOfResultList == resultList.length()-1)
+        return true;
+    return false;
+}
+
+bool SearchEngine::firstIndex()
+{
+    if(currentShowIndexOfResultList == 0)
+        return true;
+    return false;
+}
 //ContactInfo SearchEngine::getCurrentResultItem()
 //{
 //    ContactInfo contactInfo;

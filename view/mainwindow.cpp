@@ -180,6 +180,7 @@ void MainWindow::on_btnSearch_clicked()
         setItemsVisiblityAfterSearch();
         ContactInfo contactInfo = (SearchEngine::getInstance())->getCurrentResultItem();
         showContactInfoOnFrame(contactInfo);
+        checkNextAndPreviousButtons();
     }
 }
 
@@ -233,4 +234,23 @@ void MainWindow::clearFrameSearchItems()
     ui->lineEditSearch->clear();
 }
 
+void MainWindow::on_btnNext_clicked()
+{
+    (SearchEngine::getInstance())->increaseResultIndex();
+    ContactInfo contactInfo = (SearchEngine::getInstance())->getCurrentResultItem();
+    showContactInfoOnFrame(contactInfo);
+    checkNextAndPreviousButtons();
+}
 
+void MainWindow::checkNextAndPreviousButtons()
+{
+    if((SearchEngine::getInstance())->firstIndex())
+        ui->btnPrevious->setEnabled(false);
+    else
+        ui->btnPrevious->setEnabled(true);
+
+    if((SearchEngine::getInstance())->lastIndex())
+        ui->btnNext->setEnabled(false);
+    else
+        ui->btnNext->setEnabled(true);
+}

@@ -39,6 +39,8 @@ private slots:
 
     void on_btnCancel_clicked();
 
+    void on_btnNext_clicked();
+
 private:
     Ui::MainWindow *ui;
     void deleteDbConnectorInstance();
@@ -47,5 +49,6 @@ private:
     void setViewCommercialTypeTo(bool flag);
     void clearFrameContactInfoItems();
     void clearFrameSearchItems();
+    void checkNextAndPreviousButtons();
 };
 #endif // MAINWINDOW_H
