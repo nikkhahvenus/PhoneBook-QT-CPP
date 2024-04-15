@@ -14,3 +14,8 @@ QString Result::toString()
 {
     return QString(indexInContactList);
 }
+
+int Result::getIndex()
+{
+    return indexInContactList;
+}

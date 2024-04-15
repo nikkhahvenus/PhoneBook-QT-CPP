@@ -4,7 +4,7 @@
 
 class Result
 {
-public:
+private:
     int indexInContactList;
 
 public:
@@ -12,6 +12,7 @@ public:
     Result(int);
     QString toString();
 
+    int getIndex();
 };
 
 #endif // RESULT_H

@@ -39,11 +39,16 @@ bool SearchEngine::searchInSensitive(QString txtSearch, QList<Contact *> &contac
                 || (contact->getComment()).toLower().contains(txtSearchLower)
           )
         {
+//            Logger::log("in "+ QString(i)+ " "+contact->toString());
             Result * result = new Result(i);
+//            Logger::log(result->toString());
             resultList.append(result);
             returnValue = true;
         }
     }
+//    Logger::log("************");
+//    printResults();
+//    Logger::log("************");
     currentShowIndexOfResultList = 0;
     return returnValue;
 }
@@ -61,7 +66,9 @@ void SearchEngine::clearResultList()
 void SearchEngine::printResults()
 {
     for(int i =0; i < resultList.length() ; i++)
+    {
         Logger::log(resultList[i]->toString());
+    }
 }
 
 ContactInfo SearchEngine::getCurrentResultItem()
@@ -69,7 +76,7 @@ ContactInfo SearchEngine::getCurrentResultItem()
     ContactInfo contactInfo;
     if(resultList.length() > 0)
     {
-        return (DbInterface::getInstance())->getContactInfoOf(currentShowIndexOfResultList);
+        return (DbInterface::getInstance())->getContactInfoOf(resultList[ currentShowIndexOfResultList]->getIndex());
     }
     return contactInfo;
 }
@@ -103,15 +110,3 @@ bool SearchEngine::firstIndex()
         return true;
     return false;
 }
-//ContactInfo SearchEngine::getCurrentResultItem()
-//{
-//    ContactInfo contactInfo;
-//    if(resultList.length() > 0)
-//    {
-//        Contact* contact = (DbInterface::getInstance())->getContactOfContactListIn(currentShowIndexOfResultList);
-//        contactInfo.setValues(contact->getFullName(),  contact->getAddress, contact->getPostalcode, email,
-//                          phoneNumber, comment,  typeInfo, id, valid);
-//    }
-//    delete contact;
-//    return contactInfo;
-//}
