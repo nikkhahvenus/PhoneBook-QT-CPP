@@ -26,14 +26,16 @@ private slots:
     void setItemsVisibilityBeforeLogin();
     void setItemsVisibilityAfterLogin();
 
-    void setSearchButtons();
-    void resetSearchButtons();
+    void setItemsVisiblityAfterSearch();
+    void setItemsVisiblityBeforeSearch();
 
     void on_btnLogin_clicked();
 
     void on_btnLogout_clicked();
 
     void on_btnAddContact_clicked();
+
+    void on_btnCancel_clicked();
 
 private:
     Ui::MainWindow *ui;

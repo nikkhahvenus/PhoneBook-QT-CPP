@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>801</width>
-    <height>719</height>
+    <height>668</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -41,7 +41,7 @@
        <x>20</x>
        <y>20</y>
        <width>561</width>
-       <height>341</height>
+       <height>401</height>
       </rect>
      </property>
      <property name="frameShape">
@@ -267,6 +267,81 @@
        </property>
       </widget>
      </widget>
+     <widget class="QFrame" name="frameSearchButtons">
+      <property name="geometry">
+       <rect>
+        <x>50</x>
+        <y>290</y>
+        <width>451</width>
+        <height>91</height>
+       </rect>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <widget class="QWidget" name="layoutWidget">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>10</y>
+         <width>391</width>
+         <height>32</height>
+        </rect>
+       </property>
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <item>
+         <widget class="QPushButton" name="btnPrevious">
+          <property name="text">
+           <string>&lt;&lt;       Previous</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnNext">
+          <property name="text">
+           <string>Next       &gt;&gt;</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="layoutWidget">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>50</y>
+         <width>391</width>
+         <height>32</height>
+        </rect>
+       </property>
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <widget class="QPushButton" name="btnDelete">
+          <property name="text">
+           <string>Delete</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnEdit">
+          <property name="text">
+           <string>Edit</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnCancel">
+          <property name="text">
+           <string>Cancel</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
     </widget>
     <widget class="QFrame" name="frameButtons">
      <property name="geometry">
@@ -274,7 +349,7 @@
        <x>610</x>
        <y>10</y>
        <width>120</width>
-       <height>351</height>
+       <height>411</height>
       </rect>
      </property>
      <property name="frameShape">
@@ -313,10 +388,10 @@
     <widget class="QFrame" name="frameSearch">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>450</y>
-       <width>721</width>
-       <height>151</height>
+       <x>20</x>
+       <y>430</y>
+       <width>711</width>
+       <height>121</height>
       </rect>
      </property>
      <property name="frameShape">
@@ -328,9 +403,9 @@
      <widget class="QPushButton" name="btnSearch">
       <property name="geometry">
        <rect>
-        <x>610</x>
-        <y>10</y>
-        <width>91</width>
+        <x>590</x>
+        <y>50</y>
+        <width>111</width>
         <height>41</height>
        </rect>
       </property>
@@ -342,7 +417,7 @@
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>20</y>
+        <y>50</y>
         <width>531</width>
         <height>31</height>
        </rect>

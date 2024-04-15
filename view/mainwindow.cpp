@@ -98,6 +98,7 @@ void MainWindow::setItemsVisibilityAfterLogin()
     ui->radioButtonCommercial->setAutoExclusive(false);
     ui->radioButtonCommercial->setChecked(false);
     ui->radioButtonCommercial->setAutoExclusive(true);
+    setItemsVisiblityBeforeSearch();
 
     ui->frameUser->show();
 }
@@ -169,30 +170,26 @@ void MainWindow::on_btnSearch_clicked()
     bool returnValue = (DbInterface::getInstance())->searchText(txtSearch);
     if(returnValue)
     {
-        setSearchButtons();
+        setItemsVisiblityAfterSearch();
     }
 }
 
-void MainWindow::setSearchButtons()
+void MainWindow::setItemsVisiblityAfterSearch()
 {
+    ui->frameSearchButtons->setVisible(true);
+    ui->btnAddContact->setHidden(true);
+}
+
+void MainWindow::setItemsVisiblityBeforeSearch()
+{
+    ui->frameSearchButtons->setHidden(true);
+    ui->btnAddContact->setVisible(true);
 
 }
 
-void MainWindow::resetSearchButtons()
+void MainWindow::on_btnCancel_clicked()
 {
-
+    setItemsVisiblityBeforeSearch();
+    (DbInterface::getInstance())->clearResultList();
+    ui->lineEditSearch->clear();
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
