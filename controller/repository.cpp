@@ -58,33 +58,6 @@ PhoneOwner Repository::fetchOwnerInformation(QString phone)
 //}
 
 
-//QSqlQueryModel* Repository::searchInFullNameColomn(QString txtSearch, PhoneOwner &owner)
-//{
-//    QSqlQuery qry;
-//    QSqlQueryModel *model = new QSqlQueryModel();
-
-//    qry.prepare("select id, ownerId, fullname, phone, address, postalcode, email,marked from general "
-//                "where ownerid = :id and fullname = :fullname"
-//                " union "
-//                "select id, ownerId, fullname, phone, address, postalcode, email,marked from commercial "
-//                                "where ownerid = :id and fullname = :fullname");
-//    qry.bindValue(":fullname", txtSearch);
-//    qry.bindValue(":id", owner.getId());
-
-//    if(qry.exec()){
-//        model->setQuery(qry);
-//        if(model->rowCount() >0){
-//            return model;
-//        }
-//        else
-//            Logger::log("empty value returned from DB.");
-//    }
-//    else{
-//        Logger::log("query execution error " );
-//    }
-//    return nullptr;
-//}
-
 bool Repository::loadGroups(QString ownerId)
 {
     bool returnValue = true;
@@ -353,6 +326,7 @@ bool Repository::deleteCommercialGroupContactRelation(QString ownerId, QString g
 {
     bool returnValue = true;
     QSqlQuery qry;
+    Logger::log("deleteCommercialGroupContactRelation ownerId = "+ QString(ownerId)+ " groupId= " + QString(groupId) + " commercialId= "+ QString(commercialId));
 
     qry.prepare("delete from GroupMembersOfCommercialContacts"
                 " where ownerid = :ownerId and groupId = :groupId and commercialId = :commercialId");
@@ -375,6 +349,8 @@ bool Repository::deleteGeneralGroupContactRelation(QString ownerId, QString grou
 {
     bool returnValue = true;
     QSqlQuery qry;
+
+    Logger::log("deleteGeneralGroupContactRelation ownerId = "+ QString(ownerId)+ " groupId= " + QString(groupId) + " generalId= "+ QString(generalId));
 
     qry.prepare("delete from GroupMembersOfGeneralContacts"
                 " where ownerid = :ownerId and groupId = :groupId and generalId = :generalId");
@@ -418,9 +394,9 @@ bool Repository::deleteCommercialContact(QString ownerId,QString commercialId)
 {
     bool returnValue = true;
     QSqlQuery qry;
+    Logger::log("deleteCommercialContact ownerId = "+ QString(ownerId)+ " commercialId= "+ QString(commercialId));
 
-    qry.prepare("delete from commercial"
-                " where ownerid = :ownerId and commercialId = :commercialId");
+    qry.prepare("delete from commercial where ownerid = :ownerId and id = :commercialId");
 
     qry.bindValue(":ownerId", ownerId);
     qry.bindValue(":commercialId", commercialId );
@@ -440,8 +416,8 @@ bool Repository::deleteGeneralContact(QString ownerId,QString generalId)
     bool returnValue = true;
     QSqlQuery qry;
 
-    qry.prepare("delete from General"
-                " where ownerid = :ownerId and generalId = :generalId");
+    Logger::log("deleteGeneralContact ownerId = "+ QString(ownerId)+ " generalId= "+ QString(generalId));
+    qry.prepare("delete from general where ownerId= :ownerId and id= :generalId");
 
     qry.bindValue(":ownerId", ownerId);
     qry.bindValue(":generalId", generalId );
