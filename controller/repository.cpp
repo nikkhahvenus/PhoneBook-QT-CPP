@@ -349,101 +349,109 @@ bool Repository::inserContactIntoGeneralTable(QString ownerId, ContactInfo *cont
     return returnValue;
 }
 
-bool Repository::deleteCommercialGroupContactRelation(QString ownerId, QString groupId, QString comercialId)
+bool Repository::deleteCommercialGroupContactRelation(QString ownerId, QString groupId, QString commercialId)
 {
     bool returnValue = true;
+    QSqlQuery qry;
 
+    qry.prepare("delete from GroupMembersOfCommercialContacts"
+                " where ownerid = :ownerId and groupId = :groupId and commercialId = :commercialId");
+
+    qry.bindValue(":ownerId", ownerId);
+    qry.bindValue(":groupId", groupId );
+    qry.bindValue(":commercialId", commercialId);
+
+    if(qry.exec()){
+        Logger::log("commercial contact relation to group deleted");
+    }
+    else{
+        Logger::log("deleting commercial contact error: "+ qry.lastError().text() );
+        returnValue = false;
+    }
     return returnValue;
 }
 
 bool Repository::deleteGeneralGroupContactRelation(QString ownerId, QString groupId, QString generalId)
 {
     bool returnValue = true;
+    QSqlQuery qry;
 
+    qry.prepare("delete from GroupMembersOfGeneralContacts"
+                " where ownerid = :ownerId and groupId = :groupId and generalId = :generalId");
+
+    qry.bindValue(":ownerId", ownerId);
+    qry.bindValue(":groupId", groupId );
+    qry.bindValue(":generalId", generalId);
+
+    if(qry.exec()){
+        Logger::log("general contact relation to group deleted");
+    }
+    else{
+        Logger::log("deleting general contact error: "+ qry.lastError().text() );
+        returnValue = false;
+    }
     return returnValue;
 }
 
 bool Repository::deleteGroupFromDB(QString ownerId, QString groupId)
 {
     bool returnValue = true;
+    QSqlQuery qry;
 
+    qry.prepare("delete from Groups"
+                " where ownerid = :ownerId and groupId = :groupId");
+
+    qry.bindValue(":ownerId", ownerId);
+    qry.bindValue(":groupId", groupId );
+
+    if(qry.exec()){
+        Logger::log("group deleted");
+    }
+    else{
+        Logger::log("deleting group error: "+ qry.lastError().text() );
+        returnValue = false;
+    }
     return returnValue;
 }
 
-//void MainWindow::on_pushButton_2_clicked()
-//{
-//    QString id,family,name;
-//    id = ui->txt_id->text();
-//    name = ui->txt_name->text();
-//    family = ui->txt_family->text();
-//    if(!conopen()){
-//        qDebug() << "Failed to open database";
-//        return;
-//    }
-//    else {
-//        QSqlQuery qry;
-//        qry.prepare("update tbl set name= '"+name+"',family= '"+family+"' where id = '"+id+"' " );
-//        if(qry.exec()){
-//            QMessageBox::critical(this,"update","updated");
-//            conclose();
-//        }
-//        else{
-//            QMessageBox::critical(this,"error:",qry.lastError().text());
-//            conclose();
-//        }
-//    }
-//}
+bool Repository::deleteCommercialContact(QString ownerId,QString commercialId)
+{
+    bool returnValue = true;
+    QSqlQuery qry;
 
-//void MainWindow::on_pushButton_3_clicked()
-//{
-//    QString id,family,name;
-//    id = ui->txt_id->text();
-//    name = ui->txt_name->text();
-//    family = ui->txt_family->text();
-//    if(!conopen()){
-//        qDebug() << "Failed to open database";
-//        return;
-//    }
-//    else {
-//        QSqlQuery qry;
-//        qry.prepare("delete from tbl  where id = '"+id+"' " );
-//        if(qry.exec()){
-//            QMessageBox::critical(this,"delete","deleted");
-//            conclose();
-//        }
-//        else{
-//            QMessageBox::critical(this,"error:",qry.lastError().text());
-//            conclose();
-//        }
-//    }
-//}
+    qry.prepare("delete from commercial"
+                " where ownerid = :ownerId and commercialId = :commercialId");
 
-//void MainWindow::on_pushButton_4_clicked()
-//{
-//    QSqlQueryModel *model = new QSqlQueryModel();
-//    QString id,family,name;
-//    id = ui->txt_id->text();
-//    name = ui->txt_name->text();
-//    family = ui->txt_family->text();
-//    if(!conopen()){
-//        qDebug() << "Failed to open database";
-//        return;
-//    }
-//    else {
-//        QSqlQuery qry;
-//        qry.prepare("select * from tbl" );
+    qry.bindValue(":ownerId", ownerId);
+    qry.bindValue(":commercialId", commercialId );
 
-//        if(qry.exec()){
-//            model->setQuery(qry);
-//            ui->tableView->setModel(model);
-//            qDebug() << model->rowCount();
-//            QMessageBox::critical(this,"select","selected");
-//            conclose();
-//        }
-//        else{
-//            QMessageBox::critical(this,"error:",qry.lastError().text());
-//            conclose();
-//        }
-//    }
-//}
+    if(qry.exec()){
+        Logger::log("commercial contact deleted");
+    }
+    else{
+        Logger::log("deleting commercial contact error: "+ qry.lastError().text() );
+        returnValue = false;
+    }
+    return returnValue;
+}
 
+bool Repository::deleteGeneralContact(QString ownerId,QString generalId)
+{
+    bool returnValue = true;
+    QSqlQuery qry;
+
+    qry.prepare("delete from General"
+                " where ownerid = :ownerId and generalId = :generalId");
+
+    qry.bindValue(":ownerId", ownerId);
+    qry.bindValue(":generalId", generalId );
+
+    if(qry.exec()){
+        Logger::log("general contact deleted");
+    }
+    else{
+        Logger::log("deleting general contact error: "+ qry.lastError().text() );
+        returnValue = false;
+    }
+    return returnValue;
+}

@@ -235,16 +235,23 @@ bool DbInterface::deleteContactFromMemory(int index)
     if(index < 0 || index >= contactList.length())
         return returnValue;
     Contact * contact = contactList[index];
-    deleteContactFromAllGroups( contact);
+    returnValue = true;
+    returnValue &= deleteContactFromAllGroups( contact);
 
     if(contact->getTypeInfo() == "Commercial")
     {
-
+        returnValue &= (Repository::getInstance())->deleteCommercialContact(phoneOwner.getId(),contact->getId());
     }
     else
     {
-
+        returnValue &= (Repository::getInstance())->deleteGeneralContact(phoneOwner.getId(),contact->getId());
     }
+    if( returnValue)
+    {
+        delete contact;
+        contactList.removeAt(index);
+    }
+
     return returnValue;
 }
 
@@ -255,10 +262,10 @@ bool DbInterface::deleteContactFromAllGroups(Contact * contact)
     for(int i=0; i< groupLength; i++ )
     {
         Group *group = groupList[i];
-        group->deleteContactFromMemberList(contact, phoneOwner.getId());
+        returnValue &= group->deleteContactFromMemberList(contact, phoneOwner.getId());
         if(group->getMemberListLength() == 0)
         {
-            (Repository::getInstance())->deleteGroupFromDB(phoneOwner.getId(),groupList[i]->getId());
+            returnValue &= (Repository::getInstance())->deleteGroupFromDB(phoneOwner.getId(),groupList[i]->getId());
             groupList.removeAt(i);
             i--;
             groupLength--;

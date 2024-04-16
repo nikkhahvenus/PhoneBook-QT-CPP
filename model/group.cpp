@@ -80,9 +80,9 @@ bool Group::deleteContactFromMemberList(Contact *contact, QString ownerId)
         if(memberList[i] == contact)
         {
             if (contact->getTypeInfo() == "Commercial")
-                (Repository::getInstance())->deleteCommercialGroupContactRelation(ownerId, id, contact->getId());
+                returnValue &= (Repository::getInstance())->deleteCommercialGroupContactRelation(ownerId, id, contact->getId());
             else
-                (Repository::getInstance())->deleteGeneralGroupContactRelation(ownerId, id, contact->getId());
+                returnValue &= (Repository::getInstance())->deleteGeneralGroupContactRelation(ownerId, id, contact->getId());
 
             memberList.removeAt(i);
             i--;
