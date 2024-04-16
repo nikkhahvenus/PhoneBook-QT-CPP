@@ -1,4 +1,5 @@
 #include "group.h"
+#include "../controller/repository.h"
 
 Group::Group()
 {
@@ -69,4 +70,29 @@ void Group::setDescription(QString description)
 {
     //validate it before assignment
     this->description = description;
+}
+
+bool Group::deleteContactFromMemberList(Contact *contact, QString ownerId)
+{
+    bool returnValue = true;
+    int memberLength = memberList.length();
+    for(int i=0 ; i < memberLength ; i++){
+        if(memberList[i] == contact)
+        {
+            if (contact->getTypeInfo() == "Commercial")
+                (Repository::getInstance())->deleteCommercialGroupContactRelation(ownerId, id, contact->getId());
+            else
+                (Repository::getInstance())->deleteGeneralGroupContactRelation(ownerId, id, contact->getId());
+
+            memberList.removeAt(i);
+            i--;
+            memberLength--;
+        }
+    }
+    return returnValue;
+}
+
+int Group::getMemberListLength()
+{
+    return memberList.length();
 }

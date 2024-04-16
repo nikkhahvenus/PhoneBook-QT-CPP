@@ -52,6 +52,9 @@ public:
     //search
     bool searchText(QString txtSearch);    
     ContactInfo getContactInfoOf(int index);
+    bool deleteContactFromMemory(int index);
+    bool deleteContactFromAllGroups(Contact * contact);
+
 };
 
 #endif // DBINTERFACE_H

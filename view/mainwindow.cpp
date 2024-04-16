@@ -179,7 +179,7 @@ void MainWindow::on_btnSearch_clicked()
     {
         setItemsVisiblityAfterSearch();
         ContactInfo contactInfo = (SearchEngine::getInstance())->getCurrentResultItem();
-        showContactInfoOnFrame(contactInfo);
+        checkValidityOfContactInfoToShowOnFrame(contactInfo);
         checkNextAndPreviousButtons();
     }
 }
@@ -238,7 +238,7 @@ void MainWindow::on_btnNext_clicked()
 {
     (SearchEngine::getInstance())->increaseResultIndex();
     ContactInfo contactInfo = (SearchEngine::getInstance())->getCurrentResultItem();
-    showContactInfoOnFrame(contactInfo);
+    checkValidityOfContactInfoToShowOnFrame(contactInfo);
     checkNextAndPreviousButtons();
 }
 
@@ -259,6 +259,33 @@ void MainWindow::on_btnPrevious_clicked()
 {
     (SearchEngine::getInstance())->decreaseResultIndex();
     ContactInfo contactInfo = (SearchEngine::getInstance())->getCurrentResultItem();
-    showContactInfoOnFrame(contactInfo);
+    checkValidityOfContactInfoToShowOnFrame(contactInfo);
     checkNextAndPreviousButtons();
+}
+
+void MainWindow::on_btnDelete_clicked()
+{
+    QMessageBox msgBox;
+    msgBox.setWindowTitle("Delete");
+    msgBox.setText("Are you sure that you want to delete the contact?");
+    msgBox.setStandardButtons(QMessageBox::Yes);
+    msgBox.addButton(QMessageBox::No);
+    msgBox.setDefaultButton(QMessageBox::No);
+    if(msgBox.exec() == QMessageBox::No)
+        return;
+    if(! (SearchEngine::getInstance())->deleteCurrentResultItem())
+    {
+        QMessageBox::critical(this,"Contact Deletion Error:","Error occured while deleting the selected contact");
+    }
+    ContactInfo contactInfo = (SearchEngine::getInstance())->getCurrentResultItem();
+    checkValidityOfContactInfoToShowOnFrame(contactInfo);
+    checkNextAndPreviousButtons();
+}
+
+void MainWindow::checkValidityOfContactInfoToShowOnFrame(ContactInfo &contactInfo)
+{
+//    if(contactInfo.isValid())
+//    {
+        showContactInfoOnFrame(contactInfo);
+//    }
 }

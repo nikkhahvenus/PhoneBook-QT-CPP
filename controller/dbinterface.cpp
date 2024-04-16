@@ -229,4 +229,41 @@ ContactInfo DbInterface::getContactInfoOf(int index)
     return contactInfo;
 }
 
+bool DbInterface::deleteContactFromMemory(int index)
+{
+    bool returnValue = false;
+    if(index < 0 || index >= contactList.length())
+        return returnValue;
+    Contact * contact = contactList[index];
+    deleteContactFromAllGroups( contact);
+
+    if(contact->getTypeInfo() == "Commercial")
+    {
+
+    }
+    else
+    {
+
+    }
+    return returnValue;
+}
+
+bool DbInterface::deleteContactFromAllGroups(Contact * contact)
+{
+    bool returnValue = true;
+    int groupLength = groupList.length();
+    for(int i=0; i< groupLength; i++ )
+    {
+        Group *group = groupList[i];
+        group->deleteContactFromMemberList(contact, phoneOwner.getId());
+        if(group->getMemberListLength() == 0)
+        {
+            (Repository::getInstance())->deleteGroupFromDB(phoneOwner.getId(),groupList[i]->getId());
+            groupList.removeAt(i);
+            i--;
+            groupLength--;
+        }
+    }
+    return returnValue;
+}
 

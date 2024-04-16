@@ -349,6 +349,27 @@ bool Repository::inserContactIntoGeneralTable(QString ownerId, ContactInfo *cont
     return returnValue;
 }
 
+bool Repository::deleteCommercialGroupContactRelation(QString ownerId, QString groupId, QString comercialId)
+{
+    bool returnValue = true;
+
+    return returnValue;
+}
+
+bool Repository::deleteGeneralGroupContactRelation(QString ownerId, QString groupId, QString generalId)
+{
+    bool returnValue = true;
+
+    return returnValue;
+}
+
+bool Repository::deleteGroupFromDB(QString ownerId, QString groupId)
+{
+    bool returnValue = true;
+
+    return returnValue;
+}
+
 //void MainWindow::on_pushButton_2_clicked()
 //{
 //    QString id,family,name;

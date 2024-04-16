@@ -81,6 +81,57 @@ ContactInfo SearchEngine::getCurrentResultItem()
     return contactInfo;
 }
 
+bool SearchEngine::deleteCurrentResultItem()
+{
+    bool returnValue = false;
+    if(resultList.length() <= 0)
+    {
+        Logger::log("Empty result list. Can not delete from it.");
+        return returnValue;
+    }
+
+    returnValue = (DbInterface::getInstance())->deleteContactFromMemory(resultList[ currentShowIndexOfResultList]->getIndex());
+
+    if(returnValue)
+    {
+        resultList.removeAt(currentShowIndexOfResultList);
+        if(currentShowIndexOfResultList == resultList.length() && resultList.length() > 0)
+            currentShowIndexOfResultList--;
+
+        if(currentShowIndexOfResultList == -1)
+        {
+           Logger::log("******** Unpredicted situation");
+        }
+    }
+    return returnValue;
+}
+
+//ContactInfo SearchEngine::deleteCurrentResultItem()
+//{
+//    ContactInfo contactInfo;
+//    if(resultList.length() <= 0)
+//    {
+//        Logger::log("Empty result list. Can not delete from it.");
+//        return contactInfo; //Invalid contact info is returned
+//    }
+
+//    (DbInterface::getInstance())->deleteContactFromMemory(resultList[ currentShowIndexOfResultList]->getIndex());
+
+//    resultList.removeAt(currentShowIndexOfResultList);
+//    if(currentShowIndexOfResultList == resultList.length() && resultList.length() > 0)
+//        currentShowIndexOfResultList--;
+//    else if(currentShowIndexOfResultList == 0)
+//        return contactInfo; //Invalid contact info is returned
+
+//    if(currentShowIndexOfResultList == -1)
+//    {
+//       Logger::log("******** Unpredicted situation");
+//    }
+
+//    contactInfo = (DbInterface::getInstance())->getContactInfoOf(resultList[ currentShowIndexOfResultList]->getIndex());
+//    return contactInfo;
+//}
+
 void SearchEngine::increaseResultIndex()
 {
     if(currentShowIndexOfResultList < resultList.length()-1)

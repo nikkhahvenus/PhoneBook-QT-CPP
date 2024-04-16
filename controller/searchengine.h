@@ -36,6 +36,7 @@ public:
     void decreaseResultIndex();
     bool lastIndex();
     bool firstIndex();
+    bool deleteCurrentResultItem();
 };
 
 #endif // SEARCHENGINE_H

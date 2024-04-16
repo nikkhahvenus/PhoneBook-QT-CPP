@@ -84,3 +84,8 @@ void ContactInfo::setValues(QString fullName, QString address, QString postalcod
     this->id = id;
     this->valid = valid;
 }
+
+bool ContactInfo::isValid()
+{
+    return valid;
+}

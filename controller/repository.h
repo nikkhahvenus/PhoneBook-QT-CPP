@@ -14,7 +14,6 @@ protected:
     static Repository* repositoryPtr;
     Repository();
 private:
-//    QSqlQueryModel* searchInFullNameColomn(QString txtSearch,PhoneOwner &owner);
     bool loadGeneralContacts(QString ownerId);
     bool loadCommercialContacts(QString ownerId);
     int indexOfContactInContactList(QString , QString );
@@ -27,7 +26,6 @@ public:
     static Repository *getInstance();
 
     PhoneOwner fetchOwnerInformation(QString);
-//    QSqlQueryModel* searchText(QString txtSearch, PhoneOwner owner);
     bool loadContacts(QString);
     bool loadGroups(QString);
     bool loadCommercialGroupMembers(QString , QString);
@@ -36,6 +34,10 @@ public:
     //add Contact
     bool inserContactIntoCommertialTable(QString ,ContactInfo*);
     bool inserContactIntoGeneralTable(QString ,ContactInfo*);
+    //delete Contact
+    bool deleteCommercialGroupContactRelation(QString , QString , QString );
+    bool deleteGeneralGroupContactRelation(QString , QString , QString );
+    bool deleteGroupFromDB(QString ownerId, QString groupId);
 };
 
 #endif // REPOSITORY_H
