@@ -6,19 +6,19 @@ Repository* Repository::repositoryPtr= nullptr;;
 
 Repository::Repository()
 {
-
+    Logger::log( "Repository constructor executed");
 }
 
 Repository::~Repository()
 {
-//    Logger::log( "Repository destructor executed");
+    Logger::log( "Repository destructor executed");
 }
 
 Repository *Repository::getInstance()
 {
     if(repositoryPtr==nullptr){
         repositoryPtr = new Repository();
-//        Logger::log("new Repository");
+        Logger::log("new Repository created using getInstance");
     }
     return repositoryPtr;
 }

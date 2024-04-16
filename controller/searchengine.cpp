@@ -5,21 +5,23 @@ SearchEngine* SearchEngine::searchEnginePtr= nullptr;;
 
 SearchEngine::SearchEngine()
 {
+    Logger::log("searchEngine construtor executed");
 
 }
 
 SearchEngine::~SearchEngine()
 {
     clearResultList();
+    Logger::log("searchEngine destrutor executed");
 }
 
 SearchEngine *SearchEngine::getInstance()
 {
-    if(searchEnginePtr== nullptr){
-        searchEnginePtr = new SearchEngine();
-//        Logger::log("new SearchEngine");
+    if(SearchEngine::searchEnginePtr== nullptr){
+        SearchEngine::searchEnginePtr = new SearchEngine();
+        Logger::log("new SearchEngine created using getInstance");
     }
-    return searchEnginePtr;
+    return SearchEngine::searchEnginePtr;
 }
 
 bool SearchEngine::searchInSensitive(QString txtSearch, QList<Contact *> &contactList)
@@ -39,24 +41,26 @@ bool SearchEngine::searchInSensitive(QString txtSearch, QList<Contact *> &contac
                 || (contact->getComment()).toLower().contains(txtSearchLower)
           )
         {
-//            Logger::log("in "+ QString(i)+ " "+contact->toString());
             Result * result = new Result(i);
-//            Logger::log(result->toString());
             resultList.append(result);
             returnValue = true;
         }
     }
-//    Logger::log("************");
-//    printResults();
-//    Logger::log("************");
+
     currentShowIndexOfResultList = 0;
     return returnValue;
 }
 
 void SearchEngine::clearResultList()
 {
+    Logger::log("clear resultList");
     if(resultList.isEmpty())
+    {
+        Logger::log("Empty ResultList, can not clear it");
         return;
+    }
+    Logger::log("Non Empty ResultList, go to clear it. Its leangth = "+ QString(resultList.length()));
+
     for(int i = 0; i < resultList.length() ; i++)
             delete resultList[i];
 
@@ -94,7 +98,10 @@ bool SearchEngine::deleteCurrentResultItem()
 
     if(returnValue)
     {
+
+        delete resultList[currentShowIndexOfResultList];
         resultList.removeAt(currentShowIndexOfResultList);
+
         if(currentShowIndexOfResultList == resultList.length() && resultList.length() > 0)
             currentShowIndexOfResultList--;
 
@@ -105,32 +112,6 @@ bool SearchEngine::deleteCurrentResultItem()
     }
     return returnValue;
 }
-
-//ContactInfo SearchEngine::deleteCurrentResultItem()
-//{
-//    ContactInfo contactInfo;
-//    if(resultList.length() <= 0)
-//    {
-//        Logger::log("Empty result list. Can not delete from it.");
-//        return contactInfo; //Invalid contact info is returned
-//    }
-
-//    (DbInterface::getInstance())->deleteContactFromMemory(resultList[ currentShowIndexOfResultList]->getIndex());
-
-//    resultList.removeAt(currentShowIndexOfResultList);
-//    if(currentShowIndexOfResultList == resultList.length() && resultList.length() > 0)
-//        currentShowIndexOfResultList--;
-//    else if(currentShowIndexOfResultList == 0)
-//        return contactInfo; //Invalid contact info is returned
-
-//    if(currentShowIndexOfResultList == -1)
-//    {
-//       Logger::log("******** Unpredicted situation");
-//    }
-
-//    contactInfo = (DbInterface::getInstance())->getContactInfoOf(resultList[ currentShowIndexOfResultList]->getIndex());
-//    return contactInfo;
-//}
 
 void SearchEngine::increaseResultIndex()
 {

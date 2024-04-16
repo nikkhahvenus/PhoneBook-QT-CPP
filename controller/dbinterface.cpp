@@ -4,30 +4,35 @@ DbInterface* DbInterface::dbInterfacePtr= nullptr;;
 
 DbInterface::DbInterface()
 {
+    Logger::log( "DbInterface constructor executed");
+
     repositoryPtr = Repository::getInstance();
     searchEnginePtr = SearchEngine::getInstance();
+
 }
 
 DbInterface::~DbInterface()
 {
     if(repositoryPtr){
-      delete repositoryPtr;
+        delete repositoryPtr;
+        repositoryPtr = nullptr;
     }
     if(searchEnginePtr){
-      delete searchEnginePtr;
+        delete searchEnginePtr;
+        searchEnginePtr = nullptr;
     }
 
     reset();
-//    Logger::log( "DbInterface destructor executed");
+    Logger::log( "DbInterface destructor executed");
 }
 
 DbInterface *DbInterface::getInstance()
 {
-    if(dbInterfacePtr== nullptr){
-        dbInterfacePtr = new DbInterface();
-//        Logger::log("new DbInterface");
+    if(DbInterface::dbInterfacePtr == nullptr){
+        DbInterface::dbInterfacePtr = new DbInterface();
+        Logger::log("new DbInterface created using getInstance");
     }
-    return dbInterfacePtr;
+    return DbInterface::dbInterfacePtr;
 }
 
 QString DbInterface::getPhoneOwner_s_Phone()
@@ -57,7 +62,8 @@ void DbInterface::reset()
     phoneOwner.setOwner(new PhoneOwner("0","",""));
     clearContactList();
     clearGroupList();
-    searchEnginePtr->clearResultList();
+    if(searchEnginePtr)
+        searchEnginePtr->clearResultList();
 }
 
 bool DbInterface::fetchContacts()

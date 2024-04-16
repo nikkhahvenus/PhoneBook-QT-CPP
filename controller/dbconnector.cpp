@@ -7,12 +7,11 @@ QString DbConnector::dbPath= "/Users/mohammadnikkhah/QT/phoneBookProject/phoneBo
 
 DbConnector::DbConnector()
 {
-
-
+    Logger::log( "DbConnector constructor executed");
 }
 DbConnector::~DbConnector(){
     closeDBConnection();
-//    Logger::log( "DbConnector destructor executed");
+    Logger::log( "DbConnector destructor executed");
 }
 
 bool DbConnector::readyConnection()
@@ -29,7 +28,7 @@ DbConnector* DbConnector::getInstance()
 {
     if(dbConnectorPtr==nullptr){
         dbConnectorPtr = new DbConnector();
-//        Logger::log("new DbConnector");
+        Logger::log("new DbConnector created using getInstance");
     }
     return dbConnectorPtr;
 }

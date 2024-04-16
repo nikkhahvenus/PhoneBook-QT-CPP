@@ -28,8 +28,8 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
-    deleteDbConnectorInstance();
     deleteDbInterfaceInstance();
+    deleteDbConnectorInstance();
     delete ui;
 }
 
@@ -138,6 +138,8 @@ void MainWindow::on_btnLogout_clicked()
 {
     setItemsVisibilityBeforeLogin();
     (DbInterface::getInstance())->reset();
+    //(SearchEngine::getInstance)->clearResultList();
+
     clearFrameSearchItems();
     clearFrameContactInfoItems();
 }
