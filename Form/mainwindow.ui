@@ -1064,11 +1064,26 @@ Ex: 09171234567</string>
   </action>
  </widget>
  <tabstops>
-  <tabstop>lineEditLogin</tabstop>
-  <tabstop>btnLogin</tabstop>
-  <tabstop>lineEditErrorLogin</tabstop>
+  <tabstop>lineEditFullName</tabstop>
+  <tabstop>lineEditPhone</tabstop>
+  <tabstop>lineEditAddress</tabstop>
+  <tabstop>lineEditPostalCode</tabstop>
+  <tabstop>lineEditEmail</tabstop>
+  <tabstop>lineEditComment</tabstop>
+  <tabstop>radioButtonGeneral</tabstop>
+  <tabstop>radioButtonCommercial</tabstop>
+  <tabstop>btnPrevious</tabstop>
+  <tabstop>btnNext</tabstop>
+  <tabstop>btnDelete</tabstop>
+  <tabstop>btnEdit</tabstop>
+  <tabstop>btnCancel</tabstop>
+  <tabstop>btnAddContact</tabstop>
   <tabstop>lineEditSearch</tabstop>
   <tabstop>btnSearch</tabstop>
+  <tabstop>btnLogout</tabstop>
+  <tabstop>btnLogin</tabstop>
+  <tabstop>lineEditLogin</tabstop>
+  <tabstop>lineEditErrorLogin</tabstop>
  </tabstops>
  <resources/>
  <connections/>

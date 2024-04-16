@@ -169,6 +169,8 @@ void MainWindow::on_btnAddContact_clicked()
     else
         QMessageBox::critical(this,"Failure","Fail to add New contact");
     delete contactInfo;
+    clearFrameContactInfoItems();
+    ui->lineEditFullName->setFocus();
 }
 
 void MainWindow::on_btnSearch_clicked()
@@ -184,6 +186,7 @@ void MainWindow::on_btnSearch_clicked()
         checkValidityOfContactInfoToShowOnFrame(contactInfo);
         checkNextAndPreviousButtons();
         showNumberOfSearchResults();
+        ui->btnNext->setFocus();
     }
 }
 
