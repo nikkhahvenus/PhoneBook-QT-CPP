@@ -299,7 +299,6 @@ void MainWindow::checkValidityOfContactInfoToShowOnFrame(ContactInfo &contactInf
 {
 //    if(contactInfo.isValid())
 //    {
-        Logger::log("*****   Show ContactInfo on the frame");
         showContactInfoOnFrame(contactInfo);
 //    }
 }

@@ -4,7 +4,6 @@ DbInterface* DbInterface::dbInterfacePtr= nullptr;;
 
 DbInterface::DbInterface()
 {
-    Logger::log( "DbInterface constructor executed");
 
     repositoryPtr = Repository::getInstance();
     searchEnginePtr = SearchEngine::getInstance();
@@ -23,14 +22,12 @@ DbInterface::~DbInterface()
     }
 
     reset();
-    Logger::log( "DbInterface destructor executed");
 }
 
 DbInterface *DbInterface::getInstance()
 {
     if(DbInterface::dbInterfacePtr == nullptr){
         DbInterface::dbInterfacePtr = new DbInterface();
-        Logger::log("new DbInterface created using getInstance");
     }
     return DbInterface::dbInterfacePtr;
 }
@@ -80,7 +77,6 @@ bool DbInterface::fetchGroups()
     bool returnValue = false;
     clearGroupList();
     returnValue = repositoryPtr->loadGroups(phoneOwner.getId());
-//    printGroups();
     return returnValue;
 }
 
@@ -224,7 +220,6 @@ ContactInfo DbInterface::getContactInfoOf(int index)
 
     Contact * contact = contactList[index];
 
-    Logger::log("getContactInfo from "+ contact->toString());
     contactInfo.setValues(contact->getFullName(), contact->getAddress(), contact->getPostalcode(), contact->getEmail(),
                 contact->getPhoneNumber(), contact->getComment(),  contact->getTypeInfo(), contact->getId() , true);
 

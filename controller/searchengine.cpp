@@ -5,21 +5,18 @@ SearchEngine* SearchEngine::searchEnginePtr= nullptr;;
 
 SearchEngine::SearchEngine()
 {
-    Logger::log("searchEngine construtor executed");
 
 }
 
 SearchEngine::~SearchEngine()
 {
     clearResultList();
-    Logger::log("searchEngine destrutor executed");
 }
 
 SearchEngine *SearchEngine::getInstance()
 {
     if(SearchEngine::searchEnginePtr== nullptr){
         SearchEngine::searchEnginePtr = new SearchEngine();
-        Logger::log("new SearchEngine created using getInstance");
     }
     return SearchEngine::searchEnginePtr;
 }
@@ -53,13 +50,10 @@ bool SearchEngine::searchInSensitive(QString txtSearch, QList<Contact *> &contac
 
 void SearchEngine::clearResultList()
 {
-    Logger::log("clear resultList");
     if(resultList.isEmpty())
     {
-        Logger::log("Empty ResultList, can not clear it");
         return;
     }
-    Logger::log("Non Empty ResultList, go to clear it. Its leangth = "+ QString(resultList.length()));
 
     for(int i = 0; i < resultList.length() ; i++)
             delete resultList[i];
@@ -80,7 +74,6 @@ ContactInfo SearchEngine::getCurrentResultItem()
     ContactInfo contactInfo;
     if(resultList.length() > 0)
     {
-        Logger::log("getCurrentResultItem  resultindex: " + QVariant(currentShowIndexOfResultList).toString() + " resultNumbers: " + QVariant(resultList.length()).toString() + " contactListIndex " + QVariant(resultList[ currentShowIndexOfResultList]->getIndex()).toString());
         return (DbInterface::getInstance())->getContactInfoOf(resultList[ currentShowIndexOfResultList]->getIndex());
     }
     return contactInfo;
