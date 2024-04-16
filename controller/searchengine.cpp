@@ -80,6 +80,7 @@ ContactInfo SearchEngine::getCurrentResultItem()
     ContactInfo contactInfo;
     if(resultList.length() > 0)
     {
+        Logger::log("getCurrentResultItem  resultindex: " + QVariant(currentShowIndexOfResultList).toString() + " resultNumbers: " + QVariant(resultList.length()).toString() + " contactListIndex " + QVariant(resultList[ currentShowIndexOfResultList]->getIndex()).toString());
         return (DbInterface::getInstance())->getContactInfoOf(resultList[ currentShowIndexOfResultList]->getIndex());
     }
     return contactInfo;
@@ -94,6 +95,7 @@ bool SearchEngine::deleteCurrentResultItem()
         return returnValue;
     }
 
+    int currentItemIndexInContactListThatIsDeleting = resultList[ currentShowIndexOfResultList]->getIndex();
     returnValue = (DbInterface::getInstance())->deleteContactFromMemory(resultList[ currentShowIndexOfResultList]->getIndex());
 
     if(returnValue)
@@ -106,11 +108,18 @@ bool SearchEngine::deleteCurrentResultItem()
             currentShowIndexOfResultList--;
 
         if(currentShowIndexOfResultList == -1)
-        {
            Logger::log("******** Unpredicted situation");
-        }
+
+        for(int i =0 ; i < resultList.length() ; i++)
+            if(resultList[i]->getIndex() >= currentItemIndexInContactListThatIsDeleting)
+                resultList[i]->decreaseIndex();
     }
     return returnValue;
+}
+
+int SearchEngine::getNumberOfResuls()
+{
+    return resultList.length();
 }
 
 void SearchEngine::increaseResultIndex()
@@ -131,6 +140,8 @@ void SearchEngine::decreaseResultIndex()
 
 bool SearchEngine::lastIndex()
 {
+    if( resultList.length() == 0 )
+        return true;
     if(currentShowIndexOfResultList == resultList.length()-1)
         return true;
     return false;
@@ -138,6 +149,8 @@ bool SearchEngine::lastIndex()
 
 bool SearchEngine::firstIndex()
 {
+    if( resultList.length() == 0 )
+        return true;
     if(currentShowIndexOfResultList == 0)
         return true;
     return false;

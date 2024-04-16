@@ -16,7 +16,6 @@ CREATE TABLE IF NOT EXISTS `Commercial` (
     `Email` VARCHAR DEFAULT '',
     `Marked` BOOLEAN DEFAULT FALSE,
     `Comment` VARCHAR DEFAULT '',
-    UNIQUE(OwnerId,phone),
     FOREIGN KEY(`OwnerId`) REFERENCES `Owner`(`Id`)
 );
 
@@ -30,7 +29,6 @@ CREATE TABLE IF NOT EXISTS `General` (
     `Email` VARCHAR DEFAULT '',
     `Marked` BOOLEAN DEFAULT FALSE,
     `Comment` VARCHAR DEFAULT '',
-    UNIQUE(OwnerId,phone),
     FOREIGN KEY(`OwnerId`) REFERENCES `Owner`(`Id`)
 );
 

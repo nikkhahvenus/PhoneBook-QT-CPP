@@ -219,19 +219,15 @@ bool DbInterface::searchText(QString txtSearch)
 ContactInfo DbInterface::getContactInfoOf(int index)
 {
     ContactInfo contactInfo;
+    if(index < 0 && index >= contactList.length())
+        return contactInfo;
 
-    if(index >= 0 && index < contactList.length())
-    {
-        Contact * contact = contactList[index];
-        if(contact->getTypeInfo() == "Commercial")
-        {
-            contactInfo.setValues(contact->getFullName(), contact->getAddress(), contact->getPostalcode(), contact->getEmail(),
-                               contact->getPhoneNumber(), contact->getComment(),  contact->getTypeInfo(), contact->getId() , true);
-        }
-        else
-            contactInfo.setValues(contact->getFullName(), contact->getAddress(), contact->getPostalcode(), contact->getEmail(),
-                               contact->getPhoneNumber(), contact->getComment(),  contact->getTypeInfo(), contact->getId() , true);
-    }
+    Contact * contact = contactList[index];
+
+    Logger::log("getContactInfo from "+ contact->toString());
+    contactInfo.setValues(contact->getFullName(), contact->getAddress(), contact->getPostalcode(), contact->getEmail(),
+                contact->getPhoneNumber(), contact->getComment(),  contact->getTypeInfo(), contact->getId() , true);
+
     return contactInfo;
 }
 

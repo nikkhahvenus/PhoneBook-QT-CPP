@@ -19,3 +19,11 @@ int Result::getIndex()
 {
     return indexInContactList;
 }
+
+void Result::decreaseIndex()
+{
+    if(indexInContactList>0)
+        indexInContactList--;
+    else
+        Logger::log("Unpredicted situation, indexInContactList = "+ QVariant(indexInContactList).toString());
+}

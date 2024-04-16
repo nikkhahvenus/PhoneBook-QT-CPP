@@ -37,6 +37,7 @@ public:
     bool lastIndex();
     bool firstIndex();
     bool deleteCurrentResultItem();
+    int getNumberOfResuls();
 };
 
 #endif // SEARCHENGINE_H

@@ -6,19 +6,16 @@ Repository* Repository::repositoryPtr= nullptr;;
 
 Repository::Repository()
 {
-    Logger::log( "Repository constructor executed");
 }
 
 Repository::~Repository()
 {
-    Logger::log( "Repository destructor executed");
 }
 
 Repository *Repository::getInstance()
 {
     if(repositoryPtr==nullptr){
         repositoryPtr = new Repository();
-        Logger::log("new Repository created using getInstance");
     }
     return repositoryPtr;
 }
@@ -51,11 +48,6 @@ PhoneOwner Repository::fetchOwnerInformation(QString phone)
     delete model;
     return owner;
 }
-
-//QSqlQueryModel* Repository::searchText(QString txtSearch, PhoneOwner owner)
-//{
-//    return searchInFullNameColomn(txtSearch,owner);
-//}
 
 
 bool Repository::loadGroups(QString ownerId)
@@ -113,7 +105,6 @@ bool Repository::loadCommercialGroupMembers(QString ownerId, QString groupId)
         Logger::log("query execution error for loading commercial group members" );
         returnValue = false;
     }
-//    group.printGroupMembers();
 
     return returnValue;
 
@@ -260,7 +251,7 @@ bool Repository::inserContactIntoCommertialTable(QString ownerId, ContactInfo *c
         QString id = qry.lastInsertId().toString();
 
         Commercial * commercial = new Commercial(
-                    id, //id
+                    id,                             //id
                     contactInfo->getFullName(),     //fullname
                     contactInfo->getPhoneNumber(),  //phone
                     contactInfo->getAddress(),      //address
@@ -269,7 +260,6 @@ bool Repository::inserContactIntoCommertialTable(QString ownerId, ContactInfo *c
                     false,                          //marked
                     contactInfo->getComment()       //comment
                     );
-        Logger::log(commercial->toString());
         (DbInterface::getInstance())->appendContact(commercial);
 
     }
@@ -301,7 +291,7 @@ bool Repository::inserContactIntoGeneralTable(QString ownerId, ContactInfo *cont
         QString id = qry.lastInsertId().toString();
 
         General * general = new General(
-                    id, //id
+                    id,                             //id
                     contactInfo->getFullName(),     //fullname
                     contactInfo->getPhoneNumber(),  //phone
                     contactInfo->getAddress(),      //address
@@ -310,7 +300,6 @@ bool Repository::inserContactIntoGeneralTable(QString ownerId, ContactInfo *cont
                     false,                          //marked
                     contactInfo->getComment()       //comment
                     );
-        Logger::log(general->toString());
         (DbInterface::getInstance())->appendContact(general);
 
     }
@@ -326,7 +315,6 @@ bool Repository::deleteCommercialGroupContactRelation(QString ownerId, QString g
 {
     bool returnValue = true;
     QSqlQuery qry;
-    Logger::log("deleteCommercialGroupContactRelation ownerId = "+ QString(ownerId)+ " groupId= " + QString(groupId) + " commercialId= "+ QString(commercialId));
 
     qry.prepare("delete from GroupMembersOfCommercialContacts"
                 " where ownerid = :ownerId and groupId = :groupId and commercialId = :commercialId");
@@ -335,10 +323,7 @@ bool Repository::deleteCommercialGroupContactRelation(QString ownerId, QString g
     qry.bindValue(":groupId", groupId );
     qry.bindValue(":commercialId", commercialId);
 
-    if(qry.exec()){
-        Logger::log("commercial contact relation to group deleted");
-    }
-    else{
+    if(!qry.exec()){
         Logger::log("deleting commercial contact error: "+ qry.lastError().text() );
         returnValue = false;
     }
@@ -350,8 +335,6 @@ bool Repository::deleteGeneralGroupContactRelation(QString ownerId, QString grou
     bool returnValue = true;
     QSqlQuery qry;
 
-    Logger::log("deleteGeneralGroupContactRelation ownerId = "+ QString(ownerId)+ " groupId= " + QString(groupId) + " generalId= "+ QString(generalId));
-
     qry.prepare("delete from GroupMembersOfGeneralContacts"
                 " where ownerid = :ownerId and groupId = :groupId and generalId = :generalId");
 
@@ -359,10 +342,7 @@ bool Repository::deleteGeneralGroupContactRelation(QString ownerId, QString grou
     qry.bindValue(":groupId", groupId );
     qry.bindValue(":generalId", generalId);
 
-    if(qry.exec()){
-        Logger::log("general contact relation to group deleted");
-    }
-    else{
+    if(!qry.exec()){
         Logger::log("deleting general contact error: "+ qry.lastError().text() );
         returnValue = false;
     }
@@ -380,10 +360,7 @@ bool Repository::deleteGroupFromDB(QString ownerId, QString groupId)
     qry.bindValue(":ownerId", ownerId);
     qry.bindValue(":groupId", groupId );
 
-    if(qry.exec()){
-        Logger::log("group deleted");
-    }
-    else{
+    if(!qry.exec()){
         Logger::log("deleting group error: "+ qry.lastError().text() );
         returnValue = false;
     }
@@ -394,17 +371,13 @@ bool Repository::deleteCommercialContact(QString ownerId,QString commercialId)
 {
     bool returnValue = true;
     QSqlQuery qry;
-    Logger::log("deleteCommercialContact ownerId = "+ QString(ownerId)+ " commercialId= "+ QString(commercialId));
 
     qry.prepare("delete from commercial where ownerid = :ownerId and id = :commercialId");
 
     qry.bindValue(":ownerId", ownerId);
     qry.bindValue(":commercialId", commercialId );
 
-    if(qry.exec()){
-        Logger::log("commercial contact deleted");
-    }
-    else{
+    if(!qry.exec()){
         Logger::log("deleting commercial contact error: "+ qry.lastError().text() );
         returnValue = false;
     }
@@ -416,16 +389,12 @@ bool Repository::deleteGeneralContact(QString ownerId,QString generalId)
     bool returnValue = true;
     QSqlQuery qry;
 
-    Logger::log("deleteGeneralContact ownerId = "+ QString(ownerId)+ " generalId= "+ QString(generalId));
     qry.prepare("delete from general where ownerId= :ownerId and id= :generalId");
 
     qry.bindValue(":ownerId", ownerId);
     qry.bindValue(":generalId", generalId );
 
-    if(qry.exec()){
-        Logger::log("general contact deleted");
-    }
-    else{
+    if(!qry.exec()){
         Logger::log("deleting general contact error: "+ qry.lastError().text() );
         returnValue = false;
     }

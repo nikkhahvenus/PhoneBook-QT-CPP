@@ -13,6 +13,8 @@ public:
     QString toString();
 
     int getIndex();
+    void decreaseIndex();
+
 };
 
 #endif // RESULT_H

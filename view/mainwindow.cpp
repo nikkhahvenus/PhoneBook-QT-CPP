@@ -81,7 +81,7 @@ void MainWindow::setItemsVisibilityBeforeLogin()
     ui->frameLogin->setVisible(true);
     ui->lineEditErrorLogin->setVisible(false);
 
-    ui->frameLogin->show();
+    //ui->frameLogin->show();
 }
 
 void MainWindow::setItemsVisibilityAfterLogin()
@@ -95,7 +95,7 @@ void MainWindow::setItemsVisibilityAfterLogin()
 
     setItemsVisiblityBeforeSearch();
 
-    ui->frameUser->show();
+//    ui->frameUser->show();
 }
 
 void MainWindow::setViewCommercialTypeTo(bool flag)
@@ -183,20 +183,30 @@ void MainWindow::on_btnSearch_clicked()
         ContactInfo contactInfo = (SearchEngine::getInstance())->getCurrentResultItem();
         checkValidityOfContactInfoToShowOnFrame(contactInfo);
         checkNextAndPreviousButtons();
+        showNumberOfSearchResults();
     }
+}
+
+void MainWindow::showNumberOfSearchResults()
+{
+    int numberOfResults = (SearchEngine::getInstance())->getNumberOfResuls();
+    ui->lblResultNumber->setText(QStringLiteral("Result#: %1 ").arg(numberOfResults));
 }
 
 void MainWindow::setItemsVisiblityAfterSearch()
 {
     ui->frameSearchButtons->setVisible(true);
     ui->btnAddContact->setHidden(true);
+    ui->widget->setEnabled(false);
+    ui->lblResultNumber->setVisible(true);
 }
 
 void MainWindow::setItemsVisiblityBeforeSearch()
 {
     ui->frameSearchButtons->setHidden(true);
     ui->btnAddContact->setVisible(true);
-
+    ui->widget->setEnabled(true);
+    ui->lblResultNumber->setVisible(false);
 }
 
 void MainWindow::on_btnCancel_clicked()
@@ -282,12 +292,47 @@ void MainWindow::on_btnDelete_clicked()
     ContactInfo contactInfo = (SearchEngine::getInstance())->getCurrentResultItem();
     checkValidityOfContactInfoToShowOnFrame(contactInfo);
     checkNextAndPreviousButtons();
+    showNumberOfSearchResults();
 }
 
 void MainWindow::checkValidityOfContactInfoToShowOnFrame(ContactInfo &contactInfo)
 {
 //    if(contactInfo.isValid())
 //    {
+        Logger::log("*****   Show ContactInfo on the frame");
         showContactInfoOnFrame(contactInfo);
 //    }
+}
+
+void MainWindow::on_lineEditSearch_returnPressed()
+{
+    on_btnSearch_clicked();
+}
+
+void MainWindow::on_btnEdit_clicked()
+{
+    QString fullName = ui->lineEditFullName->text();
+    QString address = ui->lineEditAddress->text();
+    QString postalcode = ui->lineEditPostalCode->text();
+    QString email = ui->lineEditEmail->text();
+    QString phoneNumber = ui->lineEditPhone->text();
+    QString comment = ui->lineEditComment->text();
+    //typeInfo of a contact is not editable yet
+    QString typeInfo ;
+    if(ui->radioButtonGeneral->isChecked())
+        typeInfo = "General";
+    else
+        typeInfo = "Commercial";
+
+    //Validate input values before save, like:
+    if(phoneNumber == "" || fullName == "")
+        return;
+
+    ContactInfo* contactInfo = new ContactInfo(
+                fullName, address, postalcode, email, phoneNumber, comment, typeInfo);
+//    if((DbInterface::getInstance())->addContact(contactInfo))
+//        QMessageBox::information(this,"Success","Contact edited successfully");
+//    else
+//        QMessageBox::critical(this,"Failure","Fail to edit the contact");
+    delete contactInfo;
 }

@@ -45,6 +45,10 @@ private slots:
 
     void on_btnDelete_clicked();
 
+    void on_lineEditSearch_returnPressed();
+
+    void on_btnEdit_clicked();
+
 private:
     Ui::MainWindow *ui;
     void deleteDbConnectorInstance();
@@ -55,5 +59,6 @@ private:
     void clearFrameSearchItems();
     void checkNextAndPreviousButtons();
     void checkValidityOfContactInfoToShowOnFrame(ContactInfo &);
+    void showNumberOfSearchResults();
 };
 #endif // MAINWINDOW_H
