@@ -13,14 +13,12 @@ Contact::Contact()
     setPhoneNumber("") ;
     setComment("") ;
     resetMarked();
-//    Logger::log("No argument constructor of Contact executed");
 }
 
 Contact::Contact(QString id, QString fullName, QString address, QString postalcode,
                  QString email, QString phoneNumber, QString comment, bool marked)
 {
     setValues(id, fullName, address, postalcode, email, phoneNumber, comment, marked);
-    //    Logger::log("With argument constructor of Contact executed");
 }
 
 bool Contact::setValues(QString id, QString fullName, QString address, QString postalcode,
@@ -140,6 +138,10 @@ QString Contact::getComment()
     return comment;
 }
 
+bool Contact::getMarked()
+{
+    return marked;
+}
 
 
 

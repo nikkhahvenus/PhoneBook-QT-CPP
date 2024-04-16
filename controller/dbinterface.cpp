@@ -271,3 +271,36 @@ bool DbInterface::deleteContactFromAllGroups(Contact * contact)
     return returnValue;
 }
 
+bool DbInterface::updateContact(ContactInfo *contactInfo)
+{
+    bool returnValue = true;
+
+    if (contactInfo->getTypeInfo() == "Commercial")
+        returnValue = repositoryPtr->updateCommertialContact(contactInfo);
+    else
+        returnValue = repositoryPtr->updateGeneralContact(contactInfo);
+
+    if( returnValue )
+    {
+        returnValue = updateContactInContactList( contactInfo);
+    }
+
+    return returnValue;
+}
+
+bool DbInterface::updateContactInContactList( ContactInfo *contactInfo)
+{
+    bool returnValue = true;
+    int contactIndexInContactList = (SearchEngine::getInstance())->getContactIndexInContactList();
+
+    Logger::log(QVariant(contactIndexInContactList).toString());
+
+    Contact * contact = contactList[contactIndexInContactList];
+    if(!contact)
+        returnValue = false;
+    else
+        contact->setValues(contactInfo->getId(), contactInfo->getFullName(), contactInfo->getAddress(), contactInfo->getPostalcode(),
+                       contactInfo->getEmail(), contactInfo->getPhoneNumber(), contactInfo->getComment(), contact->getMarked());
+
+    return returnValue;
+}

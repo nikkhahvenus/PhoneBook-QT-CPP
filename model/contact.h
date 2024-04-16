@@ -19,7 +19,6 @@ protected:
 
     Contact();
     Contact(QString ,QString ,QString ,QString ,QString , QString, QString ,bool );
-    bool setValues(QString ,QString ,QString ,QString ,QString , QString, QString ,bool );
     bool setId(QString);
     bool setFullName(QString);
     bool setAddress(QString);
@@ -31,6 +30,7 @@ protected:
     bool resetMarked();
 
 public:
+    bool setValues(QString ,QString ,QString ,QString ,QString , QString, QString ,bool );
     QString toString();
     QString getId();
     QString getFullName();
@@ -41,6 +41,7 @@ public:
     QString getComment();
     virtual ~Contact();
     virtual QString getTypeInfo() = 0;
+    bool getMarked();
 };
 
 #endif // CONTACT_H

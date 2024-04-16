@@ -148,3 +148,12 @@ bool SearchEngine::firstIndex()
         return true;
     return false;
 }
+
+int SearchEngine::getContactIndexInContactList()
+{
+    if(resultList.length() > 0)
+    {
+        return resultList[currentShowIndexOfResultList]->getIndex();
+    }
+    return -1;
+}

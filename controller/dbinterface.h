@@ -18,7 +18,7 @@ private:
     QList<Contact*> contactList;
     QList<Group*> groupList;
 
-
+    bool updateContactInContactList(ContactInfo *contactInfo);
 public:
     ~DbInterface();
     DbInterface(DbInterface &other) = delete;
@@ -46,15 +46,17 @@ public:
     Contact *getContactPtr(int);
     bool appendNewMemberForGroup(int , QString );
 
-    //addContact
-    bool addContact(ContactInfo *contactInfo);
+    //add contact
+    bool addContact(ContactInfo *);
 
-    //search
-    bool searchText(QString txtSearch);    
-    ContactInfo getContactInfoOf(int index);
-    bool deleteContactFromMemory(int index);
-    bool deleteContactFromAllGroups(Contact * contact);
+    //search contacts
+    bool searchText(QString );
+    ContactInfo getContactInfoOf(int );
+    bool deleteContactFromMemory(int );
+    bool deleteContactFromAllGroups(Contact * );
 
+    //edit contact
+    bool updateContact(ContactInfo *);
 };
 
 #endif // DBINTERFACE_H

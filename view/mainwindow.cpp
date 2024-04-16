@@ -298,9 +298,7 @@ void MainWindow::on_btnDelete_clicked()
 void MainWindow::checkValidityOfContactInfoToShowOnFrame(ContactInfo &contactInfo)
 {
 //    if(contactInfo.isValid())
-//    {
         showContactInfoOnFrame(contactInfo);
-//    }
 }
 
 void MainWindow::on_lineEditSearch_returnPressed()
@@ -310,6 +308,9 @@ void MainWindow::on_lineEditSearch_returnPressed()
 
 void MainWindow::on_btnEdit_clicked()
 {
+    if((SearchEngine::getInstance())->getNumberOfResuls() <1)
+        return;
+    QString id = (SearchEngine::getInstance())->getCurrentResultItem().getId();
     QString fullName = ui->lineEditFullName->text();
     QString address = ui->lineEditAddress->text();
     QString postalcode = ui->lineEditPostalCode->text();
@@ -327,11 +328,12 @@ void MainWindow::on_btnEdit_clicked()
     if(phoneNumber == "" || fullName == "")
         return;
 
+
     ContactInfo* contactInfo = new ContactInfo(
-                fullName, address, postalcode, email, phoneNumber, comment, typeInfo);
-//    if((DbInterface::getInstance())->addContact(contactInfo))
-//        QMessageBox::information(this,"Success","Contact edited successfully");
-//    else
-//        QMessageBox::critical(this,"Failure","Fail to edit the contact");
+                fullName, address, postalcode, email, phoneNumber, comment, typeInfo, id);
+    if((DbInterface::getInstance())->updateContact(contactInfo))
+        QMessageBox::information(this,"Success","Contact updated successfully");
+    else
+        QMessageBox::critical(this,"Failure","Fail to update the contact");
     delete contactInfo;
 }

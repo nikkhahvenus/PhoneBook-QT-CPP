@@ -38,6 +38,7 @@ public:
     bool firstIndex();
     bool deleteCurrentResultItem();
     int getNumberOfResuls();
+    int getContactIndexInContactList();
 };
 
 #endif // SEARCHENGINE_H

@@ -400,3 +400,49 @@ bool Repository::deleteGeneralContact(QString ownerId,QString generalId)
     }
     return returnValue;
 }
+
+bool Repository::updateCommertialContact( ContactInfo *contactInfo)
+{
+    bool returnValue = true;
+    QSqlQuery qry;
+
+    qry.prepare("update commercial set FullName = :FullName , Phone=:Phone, Address=:Address, PostalCode=:PostalCode, Email=:Email, Comment=:Comment "
+                " where id= :commercialId");
+
+    qry.bindValue(":commercialId", contactInfo->getId() );
+    qry.bindValue(":FullName", contactInfo->getFullName());
+    qry.bindValue(":Phone", contactInfo->getPhoneNumber());
+    qry.bindValue(":Address", contactInfo->getAddress());
+    qry.bindValue(":PostalCode", contactInfo->getPostalcode());
+    qry.bindValue(":Email", contactInfo->getEmail());
+    qry.bindValue(":Comment", contactInfo->getComment());
+
+    if(!qry.exec()){
+        Logger::log("update commercial contact error: "+ qry.lastError().text() );
+        returnValue = false;
+    }
+    return returnValue;
+}
+
+bool Repository::updateGeneralContact( ContactInfo *contactInfo)
+{
+    bool returnValue = true;
+    QSqlQuery qry;
+
+    qry.prepare("update general set FullName = :FullName , Phone=:Phone, Address=:Address, PostalCode=:PostalCode, Email=:Email, Comment=:Comment "
+                " where id= :generalId");
+
+    qry.bindValue(":generalId", contactInfo->getId() );
+    qry.bindValue(":FullName", contactInfo->getFullName());
+    qry.bindValue(":Phone", contactInfo->getPhoneNumber());
+    qry.bindValue(":Address", contactInfo->getAddress());
+    qry.bindValue(":PostalCode", contactInfo->getPostalcode());
+    qry.bindValue(":Email", contactInfo->getEmail());
+    qry.bindValue(":Comment", contactInfo->getComment());
+
+    if(!qry.exec()){
+        Logger::log("update general contact error: "+ qry.lastError().text() );
+        returnValue = false;
+    }
+    return returnValue;
+}

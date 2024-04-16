@@ -40,6 +40,8 @@ public:
     bool deleteGroupFromDB(QString ownerId, QString groupId);
     bool deleteCommercialContact(QString , QString );
     bool deleteGeneralContact(QString , QString );
+    bool updateCommertialContact(ContactInfo *);
+    bool updateGeneralContact(ContactInfo *);
 };
 
 #endif // REPOSITORY_H
