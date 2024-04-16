@@ -100,7 +100,7 @@ bool Contact::resetMarked()
 
 QString Contact::toString()
 {
-    return id + " " + fullName + " " + phoneNumber + " " + address + " " + postalcode + " " + email + " " + (marked == 1 ? "Marked" : "Unmarked") + " " + comment + " " + getTypeInfo();
+    return id + " " + fullName + " " + phoneNumber + " " + address + " " + postalcode + " " + email + " " + (marked == 1 ? MARKED : UNMARKED) + " " + comment + " " + getTypeInfo();
 }
 
 QString Contact::getId()

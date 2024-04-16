@@ -91,7 +91,7 @@ bool Repository::loadCommercialGroupMembers(QString ownerId, QString groupId)
     if(qry.exec()){
         while(qry.next()){
             QString commercialId = qry.value(0).toString();
-            int index = indexOfContactInContactList(commercialId, "General");
+            int index = indexOfContactInContactList(commercialId, GENERAL);
             if( index >= 0 )
                 (DbInterface::getInstance())->appendNewMemberForGroup(index, groupId);
             else
@@ -124,7 +124,7 @@ bool Repository::loadGeneralGroupMembers(QString ownerId, QString groupId)
     if(qry.exec()){
         while(qry.next()){
             QString generalId = qry.value(0).toString();
-            int index = indexOfContactInContactList(generalId, "General");
+            int index = indexOfContactInContactList(generalId, GENERAL);
             if( index >= 0 )
                 (DbInterface::getInstance())->appendNewMemberForGroup(index, groupId);
             else
@@ -235,7 +235,7 @@ bool Repository::inserContactIntoCommertialTable(QString ownerId, ContactInfo *c
 {
     bool returnValue = true;
     QSqlQuery qry;
-    if(contactInfo->getTypeInfo() != "Commercial")
+    if(contactInfo->getTypeInfo() != COMMERCIAL)
         return false;
     qry.prepare("insert into commercial (OwnerId, FullName, Phone, Address, PostalCode, Email,Comment) values (:OwnerId, :FullName, :Phone, :Address, :PostalCode, :Email, :Comment)");
 
@@ -275,7 +275,7 @@ bool Repository::inserContactIntoGeneralTable(QString ownerId, ContactInfo *cont
 {
     bool returnValue = true;
     QSqlQuery qry;
-    if(contactInfo->getTypeInfo() != "General")
+    if(contactInfo->getTypeInfo() != GENERAL)
         return false;
     qry.prepare("insert into general (OwnerId, FullName, Phone, Address, PostalCode, Email,Comment) values (:OwnerId, :FullName, :Phone, :Address, :PostalCode, :Email, :Comment)");
 

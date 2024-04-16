@@ -154,9 +154,9 @@ void MainWindow::on_btnAddContact_clicked()
     QString comment = ui->lineEditComment->text();
     QString typeInfo ;
     if(ui->radioButtonGeneral->isChecked())
-        typeInfo = "General";
+        typeInfo = GENERAL;
     else
-        typeInfo = "Commercial";
+        typeInfo = COMMERCIAL;
 
     //Validate input values before save, like:
     if(phoneNumber == "" || fullName == "")
@@ -226,7 +226,7 @@ void MainWindow::showContactInfoOnFrame(ContactInfo contactInfo)
     ui->lineEditEmail->setText( contactInfo.getEmail());
     ui->lineEditPhone->setText( contactInfo.getPhoneNumber());
     ui->lineEditComment->setText( contactInfo.getComment());
-    setViewCommercialTypeTo(contactInfo.getTypeInfo() == "Commercial");
+    setViewCommercialTypeTo(contactInfo.getTypeInfo() == COMMERCIAL);
 }
 
 void MainWindow::clearFrameContactInfoItems()
@@ -320,9 +320,9 @@ void MainWindow::on_btnEdit_clicked()
     //typeInfo of a contact is not editable yet
     QString typeInfo ;
     if(ui->radioButtonGeneral->isChecked())
-        typeInfo = "General";
+        typeInfo = GENERAL;
     else
-        typeInfo = "Commercial";
+        typeInfo = COMMERCIAL;
 
     //Validate input values before save, like:
     if(phoneNumber == "" || fullName == "")

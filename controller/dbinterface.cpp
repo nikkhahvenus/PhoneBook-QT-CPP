@@ -195,7 +195,7 @@ bool DbInterface::appendNewMemberForGroup(int index, QString groupId)
 bool DbInterface::addContact(ContactInfo *contactInfo)
 {
     bool returnValue = true;
-    if (contactInfo->getTypeInfo() == "Commercial")
+    if (contactInfo->getTypeInfo() == COMMERCIAL )
         returnValue = repositoryPtr->inserContactIntoCommertialTable(phoneOwner.getId(),contactInfo);
     else
         returnValue = repositoryPtr->inserContactIntoGeneralTable(phoneOwner.getId(),contactInfo);
@@ -235,7 +235,7 @@ bool DbInterface::deleteContactFromMemory(int index)
     returnValue = true;
     returnValue &= deleteContactFromAllGroups( contact);
 
-    if(contact->getTypeInfo() == "Commercial")
+    if(contact->getTypeInfo() == COMMERCIAL)
     {
         returnValue &= (Repository::getInstance())->deleteCommercialContact(phoneOwner.getId(),contact->getId());
     }
@@ -275,7 +275,7 @@ bool DbInterface::updateContact(ContactInfo *contactInfo)
 {
     bool returnValue = true;
 
-    if (contactInfo->getTypeInfo() == "Commercial")
+    if (contactInfo->getTypeInfo() == COMMERCIAL)
         returnValue = repositoryPtr->updateCommertialContact(contactInfo);
     else
         returnValue = repositoryPtr->updateGeneralContact(contactInfo);

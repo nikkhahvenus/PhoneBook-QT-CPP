@@ -3,6 +3,10 @@
 #include <QString>
 #include <QDebug>
 enum logTypeS{DEBUGLOG,CONSOLELOG,FILELOG};
+#define COMMERCIAL "Commercial"
+#define GENERAL "General"
+#define MARKED "Marked"
+#define UNMARKED "Unmarked"
 
 class Logger
 {

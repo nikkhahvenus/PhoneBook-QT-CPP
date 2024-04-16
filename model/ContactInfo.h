@@ -33,7 +33,6 @@ public:
     QString getTypeInfo();
     void setValues(QString fullName, QString address, QString postalcode, QString email,
                    QString phoneNumber, QString comment,  QString typeInfo, QString id , bool valid);
-//    void operator=(ContactInfo);
     bool isValid();
 };
 
