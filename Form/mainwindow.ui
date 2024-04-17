@@ -1025,6 +1025,8 @@ Ex: 09171234567</string>
      <string>Help</string>
     </property>
     <addaction name="actionLicense"/>
+    <addaction name="actionChange_DB_file_name_path"/>
+    <addaction name="actionSelect_SQL_file"/>
     <addaction name="actionCreate_Initialize_DB"/>
    </widget>
    <widget class="QMenu" name="menuFile">
@@ -1038,7 +1040,7 @@ Ex: 09171234567</string>
   </widget>
   <action name="actionCreate_Initialize_DB">
    <property name="text">
-    <string>Create And Initialize DB</string>
+    <string>Initialize DB</string>
    </property>
    <property name="visible">
     <bool>true</bool>
@@ -1055,6 +1057,16 @@ Ex: 09171234567</string>
    </property>
    <property name="visible">
     <bool>true</bool>
+   </property>
+  </action>
+  <action name="actionChange_DB_file_name_path">
+   <property name="text">
+    <string>Change DB file name &amp; path</string>
+   </property>
+  </action>
+  <action name="actionSelect_SQL_file">
+   <property name="text">
+    <string>Select SQL file</string>
    </property>
   </action>
  </widget>

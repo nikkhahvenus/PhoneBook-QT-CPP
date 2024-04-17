@@ -54,6 +54,10 @@ private slots:
 
     void on_actionLogout_triggered();
 
+    void on_actionChange_DB_file_name_path_triggered();
+
+    void on_actionSelect_SQL_file_triggered();
+
 private:
     Ui::MainWindow *ui;
     void deleteDbConnectorInstance();

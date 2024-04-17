@@ -1,8 +1,10 @@
 #include "dbconnector.h"
-
 DbConnector* DbConnector::dbConnectorPtr= nullptr;;
-QString DbConnector::dbPath= "/Users/mohammadnikkhah/QT/phoneBookProject/phoneBookApp/phonebook.db";
-QString DbConnector::sqlCommandsFileToCreateDB = "/Users/mohammadnikkhah/QT/phoneBookProject/phoneBookApp/controller/sql.sql";
+//QString DbConnector::dbPath= "/Users/mohammadnikkhah/QT/phoneBookProject/phoneBookApp/phonebook.db";
+//QString DbConnector::sqlCommandsFileToCreateDB = "/Users/mohammadnikkhah/QT/phoneBookProject/phoneBookApp/sql.sql";
+QString DbConnector::dbPath= "phonebook.db";
+QString DbConnector::sqlCommandsFileToCreateDB = "/Users/mohammadnikkhah/QT/phoneBookProject/phoneBookApp/sql.sql";
+QString DbConnector::connectionName = "importantConnection" ;
 
 
 DbConnector::DbConnector()
@@ -46,26 +48,26 @@ void DbConnector::closeDBConnection()
     if(dbConnectorPtr && dbConnectorPtr->phoneDB.isValid() && dbConnectorPtr->phoneDB.isOpen())
     {
         dbConnectorPtr->phoneDB.close();
-        Logger::log("Connection closed");
+        //QSqlDatabase::removeDatabase(connectionName);
     }
 }
 
 bool DbConnector::openDBConnection()
 {
-    if(!dbConnectorPtr){
-        Logger::log("Run GetInstance to make an instance of DbConnector then run openDBConnection");
-        return false;
-    }
-    if(dbConnectorPtr->phoneDB.isValid() && dbConnectorPtr->phoneDB.isOpen())
-    {
-        Logger::log("DB is connected in advanced: "+ dbConnectorPtr->phoneDB.databaseName());
-        return  true;
-    }
-    else if(!dbConnectorPtr->phoneDB.isValid())
-    {
-        dbConnectorPtr->phoneDB = QSqlDatabase::addDatabase("QSQLITE");
+//    if(!dbConnectorPtr){
+//        Logger::log("Run GetInstance to make an instance of DbConnector then run openDBConnection");
+//        return false;
+//    }
+//    if(dbConnectorPtr->phoneDB.isValid() && dbConnectorPtr->phoneDB.isOpen())
+//    {
+//        Logger::log("DB is connected in advanced: "+ dbConnectorPtr->phoneDB.databaseName());
+//        return  true;
+//    }
+//    else if(!dbConnectorPtr->phoneDB.isValid())
+//    {
+        dbConnectorPtr->phoneDB = QSqlDatabase::addDatabase("QSQLITE",connectionName);
         dbConnectorPtr->phoneDB.setDatabaseName(dbPath);
-    }
+//    }
 
     if(!dbConnectorPtr->phoneDB.open())
     {
@@ -82,13 +84,19 @@ bool DbConnector::openDBConnection()
 
 int DbConnector::ParseSqlScriptFile()
 {
+
     if(!(dbConnectorPtr->phoneDB.isValid() && dbConnectorPtr->phoneDB.isOpen())){
+
         Logger::log("Run readyConnection to make DB connection ready to use");
         return false;
     }
+
+
     QSqlDatabase &db= dbConnectorPtr->phoneDB;
+
     const QString & fileName = sqlCommandsFileToCreateDB;
     QFile file(fileName);
+
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
         Logger::log("Failed to open the input sql file");

@@ -15,6 +15,7 @@ private:
     QSqlDatabase phoneDB;
     static QString dbPath;
     static QString sqlCommandsFileToCreateDB ;
+    static QString connectionName ;
 
 public:
     ~DbConnector();
