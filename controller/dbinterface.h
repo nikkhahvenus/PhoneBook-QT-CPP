@@ -40,9 +40,9 @@ public:
     bool InitializeForCurrentLogin();
     bool appendContact(Contact *);
     bool appendGroup(Group *);
-    int getLengthOfContactList();
-    QString getIdOfContactInPlaceOfIndexInContactList(int );
-    QString getTypeOfContactInPlaceOfIndexInContactList(int);
+//    int getLengthOfContactList();
+//    QString getIdOfContactInPlaceOfIndexInContactList(int );
+//    QString getTypeOfContactInPlaceOfIndexInContactList(int);
     Contact *getContactPtr(int);
     bool appendNewMemberForGroup(int , QString );
 

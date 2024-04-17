@@ -338,9 +338,9 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="btnEdit">
+         <widget class="QPushButton" name="btnUpdate">
           <property name="text">
-           <string>Edit</string>
+           <string>Update</string>
           </property>
          </widget>
         </item>
@@ -1067,7 +1067,7 @@ Ex: 09171234567</string>
   <tabstop>btnPrevious</tabstop>
   <tabstop>btnNext</tabstop>
   <tabstop>btnDelete</tabstop>
-  <tabstop>btnEdit</tabstop>
+  <tabstop>btnUpdate</tabstop>
   <tabstop>btnCancel</tabstop>
   <tabstop>btnAddContact</tabstop>
   <tabstop>lineEditSearch</tabstop>

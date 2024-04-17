@@ -301,7 +301,12 @@ void MainWindow::on_lineEditSearch_returnPressed()
     on_btnSearch_clicked();
 }
 
-void MainWindow::on_btnEdit_clicked()
+void MainWindow::on_actionLogout_triggered()
+{
+    on_btnLogout_clicked();
+}
+
+void MainWindow::on_btnUpdate_clicked()
 {
     if((SearchEngine::getInstance())->getNumberOfResuls() <1)
         return;
@@ -331,9 +336,5 @@ void MainWindow::on_btnEdit_clicked()
     else
         QMessageBox::critical(this,"Failure","Fail to update the contact");
     delete contactInfo;
-}
 
-void MainWindow::on_actionLogout_triggered()
-{
-    on_btnLogout_clicked();
 }

@@ -94,7 +94,7 @@ bool Repository::loadCommercialGroupMembers(QString ownerId, QString groupId)
     if(qry.exec()){
         while(qry.next()){
             QString commercialId = qry.value(0).toString();
-            int index = (DbInterface::getInstance())->indexOfContactInContactList(commercialId, GENERAL);
+            int index = (DbInterface::getInstance())->indexOfContactInContactList(commercialId, COMMERCIAL);
             if( index >= 0 )
                 (DbInterface::getInstance())->appendNewMemberForGroup(index, groupId);
             else

@@ -47,11 +47,11 @@ private slots:
 
     void on_lineEditSearch_returnPressed();
 
-    void on_btnEdit_clicked();
-
     void on_actionLogout_triggered();
 
     void on_actionSelect_SQL_file_triggered();
+
+    void on_btnUpdate_clicked();
 
 private:
     Ui::MainWindow *ui;

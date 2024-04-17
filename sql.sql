@@ -1,3 +1,9 @@
+DROP TABLE `GroupMembersOfGeneralContacts`;
+DROP TABLE `GroupMembersOfCommercialContacts`;
+DROP TABLE `Groups`;
+DROP TABLE `General`;
+DROP TABLE `Commercial`;
+DROP TABLE `Owner`;
 
 
 CREATE TABLE IF NOT EXISTS `Owner` (
