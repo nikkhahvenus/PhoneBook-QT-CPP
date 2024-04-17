@@ -156,19 +156,6 @@ bool DbInterface::appendGroup(Group * newGroup)
     return true;
 }
 
-//int DbInterface::getLengthOfContactList()
-//{
-//    return contactList.length();
-//}
-
-//QString DbInterface::getIdOfContactInPlaceOfIndexInContactList(int indexInContactList)
-//{
-//    return contactList[indexInContactList]->getId();
-//}
-//QString DbInterface::getTypeOfContactInPlaceOfIndexInContactList(int indexInContactList)
-//{
-//    return contactList[indexInContactList]->getTypeInfo();
-//}
 
 Contact* DbInterface::getContactPtr(int indexInContactList)
 {
@@ -228,6 +215,9 @@ ContactInfo DbInterface::getContactInfoOf(int index)
 
 bool DbInterface::deleteContactFromMemory(int index)
 {
+    Logger::log("deleteContactFromMemory: index in contactList = "+ QVariant(index).toString());
+    Logger::log("contactList value in index = "+ QVariant(index).toString()+ " is "+contactList[index]->toString());
+
     bool returnValue = false;
     if(index < 0 || index >= contactList.length())
         return returnValue;
@@ -256,13 +246,20 @@ bool DbInterface::deleteContactFromAllGroups(Contact * contact)
 {
     bool returnValue = true;
     int groupLength = groupList.length();
+
+    Logger::log("deleteContactFromAllGroups : "+contact->toString());
+    Logger::log("groupLength : "+QVariant(groupLength).toString());
+
     for(int i=0; i< groupLength; i++ )
     {
         Group *group = groupList[i];
-        returnValue &= group->deleteContactFromMemberList(contact, phoneOwner.getId());
-        if(group->getMemberListLength() == 0)
+        Logger::log("*********** 1");
+        group->printGroupMembers();
+        Logger::log("*********** 2" );
+        returnValue = group->deleteContactFromMemberList(contact, phoneOwner.getId());
+        if(returnValue && group->getMemberListLength() == 0)
         {
-            returnValue &= (Repository::getInstance())->deleteGroupFromDB(phoneOwner.getId(),groupList[i]->getId());
+            returnValue = (Repository::getInstance())->deleteGroupFromDB(phoneOwner.getId(),groupList[i]->getId());
             groupList.removeAt(i);
             i--;
             groupLength--;
@@ -324,3 +321,17 @@ int DbInterface::indexOfContactInContactList( QString contactId, QString Contact
     Logger::log("Can not find "+contactId + " contactId with " + ContactType + " type");
     return -1;
 }
+
+//int DbInterface::getLengthOfContactList()
+//{
+//    return contactList.length();
+//}
+
+//QString DbInterface::getIdOfContactInPlaceOfIndexInContactList(int indexInContactList)
+//{
+//    return contactList[indexInContactList]->getId();
+//}
+//QString DbInterface::getTypeOfContactInPlaceOfIndexInContactList(int indexInContactList)
+//{
+//    return contactList[indexInContactList]->getTypeInfo();
+//}

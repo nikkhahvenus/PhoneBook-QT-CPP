@@ -1,9 +1,9 @@
-DROP TABLE `GroupMembersOfGeneralContacts`;
-DROP TABLE `GroupMembersOfCommercialContacts`;
-DROP TABLE `Groups`;
-DROP TABLE `General`;
-DROP TABLE `Commercial`;
-DROP TABLE `Owner`;
+DROP TABLE IF EXISTS `GroupMembersOfGeneralContacts`;
+DROP TABLE IF EXISTS `GroupMembersOfCommercialContacts`;
+DROP TABLE IF EXISTS `Groups`;
+DROP TABLE IF EXISTS `General`;
+DROP TABLE IF EXISTS `Commercial`;
+DROP TABLE IF EXISTS `Owner`;
 
 
 CREATE TABLE IF NOT EXISTS `Owner` (
@@ -94,11 +94,11 @@ INSERT INTO `General` (`OwnerId`,`FullName`,`Phone`) VALUES (2,'mehdi','09173000
 INSERT INTO `Groups` (`OwnerId`,`Name`,`Description`) VALUES (2,'roomate','My Roomates');
 INSERT INTO `Groups` (`OwnerId`,`Name`,`Description`) VALUES (2,'friends','My Friends');
 
-INSERT INTO `GroupMembersOfCommercialContacts` (`OwnerId`,`GroupId`,`CommercialId`) VALUES (2,1,4);
-INSERT INTO `GroupMembersOfGeneralContacts` (`OwnerId`,`GroupId`,`GeneralId`) VALUES (2,1,6);
+INSERT INTO `GroupMembersOfCommercialContacts` (`OwnerId`,`GroupId`,`CommercialId`) VALUES (2,2,4);
+INSERT INTO `GroupMembersOfGeneralContacts` (`OwnerId`,`GroupId`,`GeneralId`) VALUES (2,2,6);
 
-INSERT INTO `GroupMembersOfCommercialContacts` (`OwnerId`,`GroupId`,`CommercialId`) VALUES (2,2,5);
-INSERT INTO `GroupMembersOfGeneralContacts` (`OwnerId`,`GroupId`,`GeneralId`) VALUES (2,2,5);
+INSERT INTO `GroupMembersOfCommercialContacts` (`OwnerId`,`GroupId`,`CommercialId`) VALUES (2,3,5);
+INSERT INTO `GroupMembersOfGeneralContacts` (`OwnerId`,`GroupId`,`GeneralId`) VALUES (2,3,5);
 
 INSERT INTO `General` (`OwnerId`,`FullName`,`Phone`) VALUES (3,'ali','09172000000');
 INSERT INTO `General` (`OwnerId`,`FullName`,`Phone`) VALUES (3,'afshin','09177000000');
