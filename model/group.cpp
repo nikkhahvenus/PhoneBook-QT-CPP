@@ -72,28 +72,22 @@ void Group::setDescription(QString description)
     this->description = description;
 }
 
-bool Group::deleteContactFromMemberList(Contact *contact, QString ownerId)
-{
-    bool returnValue = true;
-    int memberLength = memberList.length();
-    bool found = false;
-    for(int i=0 ; i < memberLength && !found ; i++){
-        if(memberList[i] == contact)
-        {
-            found = true;
-            if (contact->getTypeInfo() == COMMERCIAL)
-                returnValue = (Repository::getInstance())->deleteCommercialGroupContactRelation(ownerId, id, contact->getId());
-            else
-                returnValue = (Repository::getInstance())->deleteGeneralGroupContactRelation(ownerId, id, contact->getId());
-
-            if(returnValue)
-                memberList.removeAt(i);
-        }
-    }
-    return returnValue;
-}
-
 int Group::getMemberListLength()
 {
     return memberList.length();
+}
+
+Contact* Group::getMember(int i)
+{
+    if(i<0 || i>= memberList.length())
+        return nullptr;
+    return  memberList[i];
+}
+
+bool Group::deleteMember(int i)
+{
+    if(i<0 || i>= memberList.length())
+        return false;
+    memberList.removeAt(i);
+    return true;
 }

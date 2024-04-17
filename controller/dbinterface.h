@@ -19,6 +19,7 @@ private:
     QList<Group*> groupList;
 
     bool updateContactInContactList(ContactInfo *contactInfo);
+    bool deleteContactFromMemberList(Group *group, Contact *contact, QString ownerId);
 public:
     ~DbInterface();
     DbInterface(DbInterface &other) = delete;

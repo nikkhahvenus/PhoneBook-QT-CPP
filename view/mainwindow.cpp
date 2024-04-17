@@ -272,6 +272,8 @@ void MainWindow::on_btnPrevious_clicked()
 
 void MainWindow::on_btnDelete_clicked()
 {
+    if((SearchEngine::getInstance())->getNumberOfResuls() == 0)
+        return;
     QMessageBox msgBox;
     msgBox.setWindowTitle("Delete");
     msgBox.setText("Are you sure that you want to delete the contact?");

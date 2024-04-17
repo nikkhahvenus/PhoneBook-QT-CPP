@@ -247,13 +247,34 @@ bool DbInterface::deleteContactFromAllGroups(Contact * contact)
     for(int i=0; i< groupLength; i++ )
     {
         Group *group = groupList[i];
-        returnValue = group->deleteContactFromMemberList(contact, phoneOwner.getId());
+        returnValue = deleteContactFromMemberList(group, contact, phoneOwner.getId());
         if(returnValue && group->getMemberListLength() == 0)
         {
             returnValue = (Repository::getInstance())->deleteGroupFromDB(phoneOwner.getId(),groupList[i]->getId());
             groupList.removeAt(i);
             i--;
             groupLength--;
+        }
+    }
+    return returnValue;
+}
+
+bool DbInterface::deleteContactFromMemberList(Group* group, Contact *contact, QString ownerId)
+{
+    bool returnValue = true;
+    int memberLength = group->getMemberListLength();
+    bool found = false;
+    for(int i=0 ; i < memberLength && !found ; i++){
+        if(group->getMember(i) == contact)
+        {
+            found = true;
+            if (contact->getTypeInfo() == COMMERCIAL)
+                returnValue = (Repository::getInstance())->deleteCommercialGroupContactRelation(ownerId, group->getId(), contact->getId());
+            else
+                returnValue = (Repository::getInstance())->deleteGeneralGroupContactRelation(ownerId, group->getId(), contact->getId());
+
+            if(returnValue)
+                returnValue = group->deleteMember(i);
         }
     }
     return returnValue;

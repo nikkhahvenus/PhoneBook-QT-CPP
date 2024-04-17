@@ -29,8 +29,9 @@ public:
     QString toString();
     void printGroupMembers();
 
-    bool deleteContactFromMemberList(Contact *contact, QString ownerId);
     int getMemberListLength();
+    Contact *getMember(int);
+    bool deleteMember(int );
 };
 
 #endif // GROUP_H
