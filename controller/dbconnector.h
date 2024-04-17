@@ -12,7 +12,6 @@ protected:
     DbConnector();
 
 private:
-    QSqlDatabase phoneDB;
     static QString dbPath;
     static QString sqlCommandsFileToCreateDB ;
     static QString connectionName ;
@@ -26,6 +25,7 @@ public:
     static bool readyConnection();
     static void setDbFilePath(QString);
     static void setSQLFilePath(QString);
+    static QString getConnectionName();
 
     int ParseSqlScriptFile();
 

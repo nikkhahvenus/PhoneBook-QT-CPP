@@ -53,20 +53,10 @@ void MainWindow::deleteRepositoryInstance()
     }
 }
 
-void MainWindow::on_actionChange_DB_file_name_path_triggered()
-{
-    QString dbFileName = QFileDialog::getSaveFileName(this,"Create a new file to Save DB ",QDir::homePath(),"DB file (*.db)", new QString("DB file (*.db)"));
-    (DbConnector::getInstance())->setDbFilePath( dbFileName);
-}
-
 void MainWindow::on_actionSelect_SQL_file_triggered()
 {
     QString sqlFileName = QFileDialog::getOpenFileName(this,"Select SQL file",QDir::homePath(),"SQL file (*.sql)");
     (DbConnector::getInstance())->setSQLFilePath( sqlFileName);
-}
-
-void MainWindow::on_actionCreate_Initialize_DB_triggered()
-{
     QString((DbConnector::getInstance())->ParseSqlScriptFile());
 }
 
@@ -353,5 +343,9 @@ void MainWindow::on_actionLogout_triggered()
     on_btnLogout_clicked();
 }
 
-
+//void MainWindow::on_actionChange_DB_file_name_path_triggered()
+//{
+//    QString dbFileName = QFileDialog::getSaveFileName(this,"Create a new file to Save DB ",QDir::homePath(),"DB file (*.db)", new QString("DB file (*.db)"));
+//    (DbConnector::getInstance())->setDbFilePath( dbFileName);
+//}
 

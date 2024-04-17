@@ -7,6 +7,7 @@
 #include "../model/commercial.h"
 #include "../model/general.h"
 #include "../model/group.h"
+#include "dbconnector.h"
 
 class Repository
 {

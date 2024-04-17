@@ -24,9 +24,6 @@ public:
 
 private slots:
     void on_btnSearch_clicked();
-
-    void on_actionCreate_Initialize_DB_triggered();
-
     void on_actionLicense_triggered();
     void setItemsVisibilityBeforeLogin();
     void setItemsVisibilityAfterLogin();
@@ -53,8 +50,6 @@ private slots:
     void on_btnEdit_clicked();
 
     void on_actionLogout_triggered();
-
-    void on_actionChange_DB_file_name_path_triggered();
 
     void on_actionSelect_SQL_file_triggered();
 

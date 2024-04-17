@@ -22,7 +22,8 @@ Repository *Repository::getInstance()
 
 PhoneOwner Repository::fetchOwnerInformation(QString phone)
 {
-    QSqlQuery qry;
+    QSqlDatabase  db = QSqlDatabase::database(DbConnector::getConnectionName());
+    QSqlQuery qry(db);
     QSqlQueryModel *model = new QSqlQueryModel();
     PhoneOwner owner;
 
@@ -53,7 +54,8 @@ PhoneOwner Repository::fetchOwnerInformation(QString phone)
 bool Repository::loadGroups(QString ownerId)
 {
     bool returnValue = true;
-    QSqlQuery qry;
+    QSqlDatabase  db = QSqlDatabase::database(DbConnector::getConnectionName());
+    QSqlQuery qry(db);
     qry.prepare("select id, name, description from groups where ownerid = :id");
 
     qry.bindValue(":id", ownerId);
@@ -80,7 +82,8 @@ bool Repository::loadGroups(QString ownerId)
 bool Repository::loadCommercialGroupMembers(QString ownerId, QString groupId)
 {
     bool returnValue = true;
-    QSqlQuery qry;
+    QSqlDatabase  db = QSqlDatabase::database(DbConnector::getConnectionName());
+    QSqlQuery qry(db);
     qry.prepare("select CommercialId from GroupMembersOfCommercialContacts "
                 "where ownerid = :ownerId and groupId = :groupId"
                 );
@@ -113,7 +116,8 @@ bool Repository::loadCommercialGroupMembers(QString ownerId, QString groupId)
 bool Repository::loadGeneralGroupMembers(QString ownerId, QString groupId)
 {
     bool returnValue = true;
-    QSqlQuery qry;
+    QSqlDatabase  db = QSqlDatabase::database(DbConnector::getConnectionName());
+    QSqlQuery qry(db);
     qry.prepare("select GeneralId from GroupMembersOfGeneralContacts "
                 "where ownerid = :ownerId and groupId = :groupId"
                 );
@@ -166,7 +170,8 @@ bool Repository::loadContacts(QString ownerId)
 bool Repository::loadGeneralContacts(QString ownerId)
 {
     bool returnValue = true;
-    QSqlQuery qry;
+    QSqlDatabase  db = QSqlDatabase::database(DbConnector::getConnectionName());
+    QSqlQuery qry(db);
     qry.prepare("select id, fullname, phone, address, postalcode, email,marked, comment from general "
                 "where ownerid = :ownerId");
 
@@ -200,7 +205,8 @@ bool Repository::loadGeneralContacts(QString ownerId)
 bool Repository::loadCommercialContacts(QString ownerId)
 {
     bool returnValue = true;
-    QSqlQuery qry;
+    QSqlDatabase  db = QSqlDatabase::database(DbConnector::getConnectionName());
+    QSqlQuery qry(db);
     qry.prepare("select id, fullname, phone, address, postalcode, email,marked, comment from commercial "
                 "where ownerid = :ownerId");
 
@@ -234,7 +240,8 @@ bool Repository::loadCommercialContacts(QString ownerId)
 bool Repository::inserContactIntoCommertialTable(QString ownerId, ContactInfo *contactInfo)
 {
     bool returnValue = true;
-    QSqlQuery qry;
+    QSqlDatabase  db = QSqlDatabase::database(DbConnector::getConnectionName());
+    QSqlQuery qry(db);
     if(contactInfo->getTypeInfo() != COMMERCIAL)
         return false;
     qry.prepare("insert into commercial (OwnerId, FullName, Phone, Address, PostalCode, Email,Comment) values (:OwnerId, :FullName, :Phone, :Address, :PostalCode, :Email, :Comment)");
@@ -274,7 +281,8 @@ bool Repository::inserContactIntoCommertialTable(QString ownerId, ContactInfo *c
 bool Repository::inserContactIntoGeneralTable(QString ownerId, ContactInfo *contactInfo)
 {
     bool returnValue = true;
-    QSqlQuery qry;
+    QSqlDatabase  db = QSqlDatabase::database(DbConnector::getConnectionName());
+    QSqlQuery qry(db);
     if(contactInfo->getTypeInfo() != GENERAL)
         return false;
     qry.prepare("insert into general (OwnerId, FullName, Phone, Address, PostalCode, Email,Comment) values (:OwnerId, :FullName, :Phone, :Address, :PostalCode, :Email, :Comment)");
@@ -314,7 +322,8 @@ bool Repository::inserContactIntoGeneralTable(QString ownerId, ContactInfo *cont
 bool Repository::deleteCommercialGroupContactRelation(QString ownerId, QString groupId, QString commercialId)
 {
     bool returnValue = true;
-    QSqlQuery qry;
+    QSqlDatabase  db = QSqlDatabase::database(DbConnector::getConnectionName());
+    QSqlQuery qry(db);
 
     qry.prepare("delete from GroupMembersOfCommercialContacts"
                 " where ownerid = :ownerId and groupId = :groupId and commercialId = :commercialId");
@@ -333,7 +342,8 @@ bool Repository::deleteCommercialGroupContactRelation(QString ownerId, QString g
 bool Repository::deleteGeneralGroupContactRelation(QString ownerId, QString groupId, QString generalId)
 {
     bool returnValue = true;
-    QSqlQuery qry;
+    QSqlDatabase  db = QSqlDatabase::database(DbConnector::getConnectionName());
+    QSqlQuery qry(db);
 
     qry.prepare("delete from GroupMembersOfGeneralContacts"
                 " where ownerid = :ownerId and groupId = :groupId and generalId = :generalId");
@@ -352,7 +362,8 @@ bool Repository::deleteGeneralGroupContactRelation(QString ownerId, QString grou
 bool Repository::deleteGroupFromDB(QString ownerId, QString groupId)
 {
     bool returnValue = true;
-    QSqlQuery qry;
+    QSqlDatabase  db = QSqlDatabase::database(DbConnector::getConnectionName());
+    QSqlQuery qry(db);
 
     qry.prepare("delete from Groups"
                 " where ownerid = :ownerId and groupId = :groupId");
@@ -370,7 +381,8 @@ bool Repository::deleteGroupFromDB(QString ownerId, QString groupId)
 bool Repository::deleteCommercialContact(QString ownerId,QString commercialId)
 {
     bool returnValue = true;
-    QSqlQuery qry;
+    QSqlDatabase  db = QSqlDatabase::database(DbConnector::getConnectionName());
+    QSqlQuery qry(db);
 
     qry.prepare("delete from commercial where ownerid = :ownerId and id = :commercialId");
 
@@ -387,7 +399,8 @@ bool Repository::deleteCommercialContact(QString ownerId,QString commercialId)
 bool Repository::deleteGeneralContact(QString ownerId,QString generalId)
 {
     bool returnValue = true;
-    QSqlQuery qry;
+    QSqlDatabase  db = QSqlDatabase::database(DbConnector::getConnectionName());
+    QSqlQuery qry(db);
 
     qry.prepare("delete from general where ownerId= :ownerId and id= :generalId");
 
@@ -404,7 +417,8 @@ bool Repository::deleteGeneralContact(QString ownerId,QString generalId)
 bool Repository::updateCommertialContact( ContactInfo *contactInfo)
 {
     bool returnValue = true;
-    QSqlQuery qry;
+    QSqlDatabase  db = QSqlDatabase::database(DbConnector::getConnectionName());
+    QSqlQuery qry(db);
 
     qry.prepare("update commercial set FullName = :FullName , Phone=:Phone, Address=:Address, PostalCode=:PostalCode, Email=:Email, Comment=:Comment "
                 " where id= :commercialId");
@@ -427,7 +441,8 @@ bool Repository::updateCommertialContact( ContactInfo *contactInfo)
 bool Repository::updateGeneralContact( ContactInfo *contactInfo)
 {
     bool returnValue = true;
-    QSqlQuery qry;
+    QSqlDatabase  db = QSqlDatabase::database(DbConnector::getConnectionName());
+    QSqlQuery qry(db);
 
     qry.prepare("update general set FullName = :FullName , Phone=:Phone, Address=:Address, PostalCode=:PostalCode, Email=:Email, Comment=:Comment "
                 " where id= :generalId");

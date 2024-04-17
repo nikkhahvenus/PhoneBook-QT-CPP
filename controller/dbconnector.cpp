@@ -1,10 +1,10 @@
 #include "dbconnector.h"
-DbConnector* DbConnector::dbConnectorPtr= nullptr;;
+DbConnector* DbConnector::dbConnectorPtr = nullptr;
+
 //QString DbConnector::dbPath= "/Users/mohammadnikkhah/QT/phoneBookProject/phoneBookApp/phonebook.db";
-//QString DbConnector::sqlCommandsFileToCreateDB = "/Users/mohammadnikkhah/QT/phoneBookProject/phoneBookApp/sql.sql";
-QString DbConnector::dbPath= "phonebook.db";
+QString DbConnector::dbPath= "phonebook1.db";
 QString DbConnector::sqlCommandsFileToCreateDB = "/Users/mohammadnikkhah/QT/phoneBookProject/phoneBookApp/sql.sql";
-QString DbConnector::connectionName = "importantConnection" ;
+QString DbConnector::connectionName = "dbConnection" ;
 
 
 DbConnector::DbConnector()
@@ -16,7 +16,7 @@ DbConnector::~DbConnector(){
 
 bool DbConnector::readyConnection()
 {
-    if(getInstance()== nullptr){
+    if(getInstance() == nullptr){
         Logger::log("Space allocation for DbConnector failed");
         return false;
     }
@@ -35,6 +35,11 @@ void DbConnector::setSQLFilePath(QString newSqlFilePath)
     sqlCommandsFileToCreateDB = newSqlFilePath;
 }
 
+QString DbConnector::getConnectionName()
+{
+    return connectionName;
+}
+
 
 DbConnector* DbConnector::getInstance()
 {
@@ -45,31 +50,21 @@ DbConnector* DbConnector::getInstance()
 }
 void DbConnector::closeDBConnection()
 {
-    if(dbConnectorPtr && dbConnectorPtr->phoneDB.isValid() && dbConnectorPtr->phoneDB.isOpen())
+    QSqlDatabase  db = QSqlDatabase::database(connectionName);
+    if(db.isValid() && db.isOpen())
     {
-        dbConnectorPtr->phoneDB.close();
+        db.close();
         //QSqlDatabase::removeDatabase(connectionName);
     }
 }
 
 bool DbConnector::openDBConnection()
 {
-//    if(!dbConnectorPtr){
-//        Logger::log("Run GetInstance to make an instance of DbConnector then run openDBConnection");
-//        return false;
-//    }
-//    if(dbConnectorPtr->phoneDB.isValid() && dbConnectorPtr->phoneDB.isOpen())
-//    {
-//        Logger::log("DB is connected in advanced: "+ dbConnectorPtr->phoneDB.databaseName());
-//        return  true;
-//    }
-//    else if(!dbConnectorPtr->phoneDB.isValid())
-//    {
-        dbConnectorPtr->phoneDB = QSqlDatabase::addDatabase("QSQLITE",connectionName);
-        dbConnectorPtr->phoneDB.setDatabaseName(dbPath);
-//    }
 
-    if(!dbConnectorPtr->phoneDB.open())
+    QSqlDatabase  db = QSqlDatabase::addDatabase("QSQLITE",connectionName);
+    db.setDatabaseName(dbPath);
+
+    if(!db.open())
     {
         Logger::log( "Failed to open database....");
         return false;
@@ -84,15 +79,12 @@ bool DbConnector::openDBConnection()
 
 int DbConnector::ParseSqlScriptFile()
 {
-
-    if(!(dbConnectorPtr->phoneDB.isValid() && dbConnectorPtr->phoneDB.isOpen())){
+    QSqlDatabase  db = QSqlDatabase::database(connectionName);
+    if(!(db.isValid() && db.isOpen())){
 
         Logger::log("Run readyConnection to make DB connection ready to use");
         return false;
     }
-
-
-    QSqlDatabase &db= dbConnectorPtr->phoneDB;
 
     const QString & fileName = sqlCommandsFileToCreateDB;
     QFile file(fileName);
@@ -162,6 +154,6 @@ int DbConnector::ParseSqlScriptFile()
                 Logger::log( "Failed:" + statement + "\nReason:" + query.lastError().text());
         }
     }
-
+    Logger::log("Done");
     return successCount;
 }
