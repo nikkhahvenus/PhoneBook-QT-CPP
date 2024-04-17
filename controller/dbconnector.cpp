@@ -1,7 +1,6 @@
 #include "dbconnector.h"
 DbConnector* DbConnector::dbConnectorPtr = nullptr;
 
-//QString DbConnector::dbPath= "/Users/mohammadnikkhah/QT/phoneBookProject/phoneBookApp/phonebook.db";
 QString DbConnector::dbPath= "phonebook1.db";
 QString DbConnector::sqlCommandsFileToCreateDB = "/Users/mohammadnikkhah/QT/phoneBookProject/phoneBookApp/sql.sql";
 QString DbConnector::connectionName = "dbConnection" ;

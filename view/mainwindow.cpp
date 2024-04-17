@@ -70,7 +70,6 @@ void MainWindow::setItemsVisibilityBeforeLogin()
 
 
     ui->frameUser->setHidden(true);
-//    ui->menuBar->setHidden(true);
 
     ui->lineEditErrorLogin->setText("");
     ui->lineEditLogin->clear();
@@ -78,7 +77,6 @@ void MainWindow::setItemsVisibilityBeforeLogin()
     ui->frameLogin->setVisible(true);
     ui->lineEditErrorLogin->setVisible(false);
 
-    //ui->frameLogin->show();
 }
 
 void MainWindow::setItemsVisibilityAfterLogin()
@@ -86,13 +84,11 @@ void MainWindow::setItemsVisibilityAfterLogin()
     ui->frameLogin->setHidden(true);
 
     ui->frameUser->setVisible(true);
-//    ui->menuBar->setVisible(true);
 
     setViewCommercialTypeTo(false);
 
     setItemsVisiblityBeforeSearch();
 
-//    ui->frameUser->show();
 }
 
 void MainWindow::setViewCommercialTypeTo(bool flag)
@@ -135,7 +131,6 @@ void MainWindow::on_btnLogout_clicked()
 {
     setItemsVisibilityBeforeLogin();
     (DbInterface::getInstance())->reset();
-    //(SearchEngine::getInstance)->clearResultList();
 
     clearFrameSearchItems();
     clearFrameContactInfoItems();
@@ -342,10 +337,3 @@ void MainWindow::on_actionLogout_triggered()
 {
     on_btnLogout_clicked();
 }
-
-//void MainWindow::on_actionChange_DB_file_name_path_triggered()
-//{
-//    QString dbFileName = QFileDialog::getSaveFileName(this,"Create a new file to Save DB ",QDir::homePath(),"DB file (*.db)", new QString("DB file (*.db)"));
-//    (DbConnector::getInstance())->setDbFilePath( dbFileName);
-//}
-

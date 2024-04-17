@@ -17,7 +17,6 @@ protected:
 private:
     bool loadGeneralContacts(QString ownerId);
     bool loadCommercialContacts(QString ownerId);
-    int indexOfContactInContactList(QString , QString );
 
 public:
     ~Repository();

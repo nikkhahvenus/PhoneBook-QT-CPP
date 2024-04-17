@@ -9,11 +9,11 @@ int main(int argc, char *argv[])
     MainWindow w;
 
     QSplashScreen *splash = new QSplashScreen;
-    splash->setPixmap(QPixmap("/Users/mohammadnikkhah/QT/phoneBookProject/phoneBookApp/image/phoneBook.jpg"));
-    splash->show();
-    QTimer::singleShot(2500,splash,SLOT(close()));
-    QTimer::singleShot(2500,&w,SLOT(show()));
+    //    splash->setPixmap(QPixmap("../phoneBookApp/image/phoneBook.jpg"));
+    //    splash->show();
+    //    QTimer::singleShot(2500,splash,SLOT(close()));
+    //    QTimer::singleShot(2500,&w,SLOT(show()));
 
-//    w.show();
+    w.show();
     return a.exec();
 }

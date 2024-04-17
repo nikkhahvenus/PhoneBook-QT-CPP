@@ -57,6 +57,7 @@ public:
 
     //edit contact
     bool updateContact(ContactInfo *);
+    int indexOfContactInContactList(QString contactId, QString ContactType);
 };
 
 #endif // DBINTERFACE_H

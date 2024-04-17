@@ -161,14 +161,14 @@ int DbInterface::getLengthOfContactList()
     return contactList.length();
 }
 
-QString DbInterface::getIdOfContactInPlaceOfIndexInContactList(int indexInContactList)
-{
-    return contactList[indexInContactList]->getId();
-}
-QString DbInterface::getTypeOfContactInPlaceOfIndexInContactList(int indexInContactList)
-{
-    return contactList[indexInContactList]->getTypeInfo();
-}
+//QString DbInterface::getIdOfContactInPlaceOfIndexInContactList(int indexInContactList)
+//{
+//    return contactList[indexInContactList]->getId();
+//}
+//QString DbInterface::getTypeOfContactInPlaceOfIndexInContactList(int indexInContactList)
+//{
+//    return contactList[indexInContactList]->getTypeInfo();
+//}
 
 Contact* DbInterface::getContactPtr(int indexInContactList)
 {
@@ -303,4 +303,23 @@ bool DbInterface::updateContactInContactList( ContactInfo *contactInfo)
                        contactInfo->getEmail(), contactInfo->getPhoneNumber(), contactInfo->getComment(), contact->getMarked());
 
     return returnValue;
+}
+
+int DbInterface::indexOfContactInContactList( QString contactId, QString ContactType)
+{
+    Logger::log(contactId+ " "+ ContactType);
+    int CLlength = getLengthOfContactList();
+    for ( int i = 0 ; i < CLlength ; i++ )
+    {
+//        QString CId = getIdOfContactInPlaceOfIndexInContactList(i);
+//        QString CType = getTypeOfContactInPlaceOfIndexInContactList(i);
+        QString CId = contactList[i]->getId();
+        QString CType = contactList[i]->getTypeInfo();
+        if(CId == contactId && CType == ContactType ){
+            Logger::log("founded "+ CId + " "+ CType);
+            return i;
+        }
+    }
+    Logger::log("Can not find "+contactId + " contactId with " + ContactType + " type");
+    return -1;
 }

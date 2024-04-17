@@ -94,7 +94,7 @@ bool Repository::loadCommercialGroupMembers(QString ownerId, QString groupId)
     if(qry.exec()){
         while(qry.next()){
             QString commercialId = qry.value(0).toString();
-            int index = indexOfContactInContactList(commercialId, GENERAL);
+            int index = (DbInterface::getInstance())->indexOfContactInContactList(commercialId, GENERAL);
             if( index >= 0 )
                 (DbInterface::getInstance())->appendNewMemberForGroup(index, groupId);
             else
@@ -128,7 +128,7 @@ bool Repository::loadGeneralGroupMembers(QString ownerId, QString groupId)
     if(qry.exec()){
         while(qry.next()){
             QString generalId = qry.value(0).toString();
-            int index = indexOfContactInContactList(generalId, GENERAL);
+            int index = (DbInterface::getInstance())->indexOfContactInContactList(generalId, GENERAL);
             if( index >= 0 )
                 (DbInterface::getInstance())->appendNewMemberForGroup(index, groupId);
             else
@@ -141,25 +141,8 @@ bool Repository::loadGeneralGroupMembers(QString ownerId, QString groupId)
         Logger::log("query execution error for loading general group members" );
         returnValue = false;
     }
-//    group.printGroupMembers();
 
     return returnValue;
-}
-
-
-int Repository::indexOfContactInContactList( QString contactId, QString ContactType)
-{
-    int CLlength = (DbInterface::getInstance())->getLengthOfContactList();
-    for ( int i = 0 ; i < CLlength ; i++ )
-    {
-        QString CId = (DbInterface::getInstance())->getIdOfContactInPlaceOfIndexInContactList(i);
-        QString CType = (DbInterface::getInstance())->getTypeOfContactInPlaceOfIndexInContactList(i);
-        if(CId == contactId && CType == ContactType ){
-            return i;
-        }
-    }
-    Logger::log("Can not find "+contactId + " contactId with " + ContactType + " type");
-    return -1;
 }
 
 bool Repository::loadContacts(QString ownerId)
