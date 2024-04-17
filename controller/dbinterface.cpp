@@ -215,9 +215,6 @@ ContactInfo DbInterface::getContactInfoOf(int index)
 
 bool DbInterface::deleteContactFromMemory(int index)
 {
-    Logger::log("deleteContactFromMemory: index in contactList = "+ QVariant(index).toString());
-    Logger::log("contactList value in index = "+ QVariant(index).toString()+ " is "+contactList[index]->toString());
-
     bool returnValue = false;
     if(index < 0 || index >= contactList.length())
         return returnValue;
@@ -247,15 +244,9 @@ bool DbInterface::deleteContactFromAllGroups(Contact * contact)
     bool returnValue = true;
     int groupLength = groupList.length();
 
-    Logger::log("deleteContactFromAllGroups : "+contact->toString());
-    Logger::log("groupLength : "+QVariant(groupLength).toString());
-
     for(int i=0; i< groupLength; i++ )
     {
         Group *group = groupList[i];
-        Logger::log("*********** 1");
-        group->printGroupMembers();
-        Logger::log("*********** 2" );
         returnValue = group->deleteContactFromMemberList(contact, phoneOwner.getId());
         if(returnValue && group->getMemberListLength() == 0)
         {
@@ -290,8 +281,6 @@ bool DbInterface::updateContactInContactList( ContactInfo *contactInfo)
     bool returnValue = true;
     int contactIndexInContactList = (SearchEngine::getInstance())->getContactIndexInContactList();
 
-    Logger::log(QVariant(contactIndexInContactList).toString());
-
     Contact * contact = contactList[contactIndexInContactList];
     if(!contact)
         returnValue = false;
@@ -304,34 +293,15 @@ bool DbInterface::updateContactInContactList( ContactInfo *contactInfo)
 
 int DbInterface::indexOfContactInContactList( QString contactId, QString ContactType)
 {
-//    Logger::log(contactId+ " "+ ContactType);
     int CLlength = contactList.length();
-//    int CLlength = getLengthOfContactList();
     for ( int i = 0 ; i < CLlength ; i++ )
     {
-//        QString CId = getIdOfContactInPlaceOfIndexInContactList(i);
-//        QString CType = getTypeOfContactInPlaceOfIndexInContactList(i);
         QString CId = contactList[i]->getId();
         QString CType = contactList[i]->getTypeInfo();
         if(CId == contactId && CType == ContactType ){
-//            Logger::log("founded "+ CId + " "+ CType);
             return i;
         }
     }
     Logger::log("Can not find "+contactId + " contactId with " + ContactType + " type");
     return -1;
 }
-
-//int DbInterface::getLengthOfContactList()
-//{
-//    return contactList.length();
-//}
-
-//QString DbInterface::getIdOfContactInPlaceOfIndexInContactList(int indexInContactList)
-//{
-//    return contactList[indexInContactList]->getId();
-//}
-//QString DbInterface::getTypeOfContactInPlaceOfIndexInContactList(int indexInContactList)
-//{
-//    return contactList[indexInContactList]->getTypeInfo();
-//}

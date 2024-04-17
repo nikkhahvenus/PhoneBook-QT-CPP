@@ -74,29 +74,20 @@ void Group::setDescription(QString description)
 
 bool Group::deleteContactFromMemberList(Contact *contact, QString ownerId)
 {
-    Logger::log("deleteContactFromMemberList : "+contact->toString() + " ownerId= "+ QVariant(ownerId).toString());
-
     bool returnValue = true;
     int memberLength = memberList.length();
-    Logger::log("MemberLength = "+ QVariant(memberLength).toString());
     bool found = false;
     for(int i=0 ; i < memberLength && !found ; i++){
         if(memberList[i] == contact)
         {
             found = true;
-            Logger::log("member of list with index = "+ QVariant(i).toString());
             if (contact->getTypeInfo() == COMMERCIAL)
                 returnValue = (Repository::getInstance())->deleteCommercialGroupContactRelation(ownerId, id, contact->getId());
             else
                 returnValue = (Repository::getInstance())->deleteGeneralGroupContactRelation(ownerId, id, contact->getId());
 
-            Logger::log("returnValue = "+ QVariant(returnValue).toString());
             if(returnValue)
-            {
                 memberList.removeAt(i);
-               // i--;
-               // memberLength--;
-            }
         }
     }
     return returnValue;

@@ -36,6 +36,7 @@ bool SearchEngine::searchInSensitive(QString txtSearch, QList<Contact *> &contac
                 || (contact->getEmail()).toLower().contains(txtSearchLower)
                 || (contact->getPhoneNumber()).toLower().contains(txtSearchLower)
                 || (contact->getComment()).toLower().contains(txtSearchLower)
+                || txtSearchLower == "*"
           )
         {
             Result * result = new Result(i);

@@ -90,7 +90,6 @@ bool Repository::loadCommercialGroupMembers(QString ownerId, QString groupId)
 
     qry.bindValue(":ownerId", ownerId);
     qry.bindValue(":groupId", groupId);
-    Logger::log("loadCommercialGroupMembers ownerId= "+QVariant(ownerId).toString()+" groupId= "+QVariant(groupId).toString());
 
     if(qry.exec()){
         while(qry.next()){
@@ -98,7 +97,6 @@ bool Repository::loadCommercialGroupMembers(QString ownerId, QString groupId)
             int index = (DbInterface::getInstance())->indexOfContactInContactList(commercialId, COMMERCIAL);
             if( index >= 0 )
             {
-                Logger::log("group member index in contact list = "+QVariant(index).toString());
                 (DbInterface::getInstance())->appendNewMemberForGroup(index, groupId);
             }
             else
@@ -129,14 +127,12 @@ bool Repository::loadGeneralGroupMembers(QString ownerId, QString groupId)
 
     qry.bindValue(":ownerId", ownerId);
     qry.bindValue(":groupId", groupId);
-    Logger::log("loadGeneralGroupMembers ownerId= "+QVariant(ownerId).toString()+" groupId= "+QVariant(groupId).toString());
     if(qry.exec()){
         while(qry.next()){
             QString generalId = qry.value(0).toString();
             int index = (DbInterface::getInstance())->indexOfContactInContactList(generalId, GENERAL);
             if( index >= 0 )
             {
-                Logger::log("group member index in contact list = "+QVariant(index).toString());
                 (DbInterface::getInstance())->appendNewMemberForGroup(index, groupId);
             }
             else
@@ -325,13 +321,11 @@ bool Repository::deleteCommercialGroupContactRelation(QString ownerId, QString g
     qry.bindValue(":groupId", groupId );
     qry.bindValue(":commercialId", commercialId);
 
-    Logger::log("deleteCommercialGroupContactRelation 1   ownerId: " + QVariant(ownerId).toString() + " groupId: " + QVariant(groupId).toString() + " commercialId: " + QVariant(commercialId).toString());
 
     if(!qry.exec()){
         Logger::log("deleting commercial contact error: "+ qry.lastError().text() );
         returnValue = false;
     }
-    Logger::log("deleteCommercialGroupContactRelation 2   ownerId: " + QVariant(ownerId).toString() + " groupId: " + QVariant(groupId).toString() + " commercialId: " + QVariant(commercialId).toString());
 
     return returnValue;
 }
@@ -349,12 +343,10 @@ bool Repository::deleteGeneralGroupContactRelation(QString ownerId, QString grou
     qry.bindValue(":groupId", groupId );
     qry.bindValue(":generalId", generalId);
 
-    Logger::log("deleteGeneralGroupContactRelation 1   ownerId: " + QVariant(ownerId).toString() + " groupId: " + QVariant(groupId).toString() + " generalId: " + QVariant(generalId).toString());
     if(!qry.exec()){
         Logger::log("deleting general contact error: "+ qry.lastError().text() );
         returnValue = false;
     }
-    Logger::log("deleteGeneralGroupContactRelation 2   ownerId: " + QVariant(ownerId).toString() + " groupId: " + QVariant(groupId).toString() + " generalId: " + QVariant(generalId).toString());
     return returnValue;
 }
 
@@ -370,7 +362,6 @@ bool Repository::deleteGroupFromDB(QString ownerId, QString groupId)
     qry.bindValue(":groupId", groupId );
 
     if(!qry.exec()){
-        Logger::log("ownerId: " + QVariant(ownerId).toString() + " groupId: "+ QVariant(groupId).toString());
         Logger::log("deleting group error: "+ qry.lastError().text() );
         returnValue = false;
     }
