@@ -2,8 +2,11 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "../controller/dbconnector.h"
+#include <QFileDialog>
+#include <QMessageBox>
 #include "../controller/logger.h"
+#include "../controller/dbconnector.h"
+#include "../controller/dbinterface.h"
 #include "../model/ContactInfo.h"
 
 QT_BEGIN_NAMESPACE
@@ -48,6 +51,8 @@ private slots:
     void on_lineEditSearch_returnPressed();
 
     void on_btnEdit_clicked();
+
+    void on_actionLogout_triggered();
 
 private:
     Ui::MainWindow *ui;

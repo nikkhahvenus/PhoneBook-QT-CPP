@@ -2,7 +2,7 @@
 
 DbConnector* DbConnector::dbConnectorPtr= nullptr;;
 QString DbConnector::dbPath= "/Users/mohammadnikkhah/QT/phoneBookProject/phoneBookApp/phonebook.db";
-
+QString DbConnector::sqlCommandsFileToCreateDB = "/Users/mohammadnikkhah/QT/phoneBookProject/phoneBookApp/controller/sql.sql";
 
 
 DbConnector::DbConnector()
@@ -19,6 +19,18 @@ bool DbConnector::readyConnection()
         return false;
     }
     return openDBConnection();
+}
+
+void DbConnector::setDbFilePath(QString newDbFilePath)
+{
+    //validate path before assignment
+    dbPath = newDbFilePath;
+}
+
+void DbConnector::setSQLFilePath(QString newSqlFilePath)
+{
+    //validate file path before assignment
+    sqlCommandsFileToCreateDB = newSqlFilePath;
 }
 
 
@@ -75,7 +87,7 @@ int DbConnector::ParseSqlScriptFile()
         return false;
     }
     QSqlDatabase &db= dbConnectorPtr->phoneDB;
-    const QString & fileName = tableCreationCommandsFileName;
+    const QString & fileName = sqlCommandsFileToCreateDB;
     QFile file(fileName);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {

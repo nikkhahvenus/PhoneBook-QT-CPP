@@ -1049,11 +1049,6 @@ Ex: 09171234567</string>
     <string>License</string>
    </property>
   </action>
-  <action name="actionLogin">
-   <property name="text">
-    <string>Login</string>
-   </property>
-  </action>
   <action name="actionLogout">
    <property name="text">
     <string>Logout</string>

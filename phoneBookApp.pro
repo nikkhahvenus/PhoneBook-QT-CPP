@@ -57,5 +57,4 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 DISTFILES += \
-    controller/sql.sql \
-    test.sql
+    controller/sql.sql

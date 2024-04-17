@@ -1,10 +1,6 @@
 #include "mainwindow.h"
-#include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "../controller/dbconnector.h"
-#include <QMessageBox>
-#include "../controller/dbinterface.h"
-#include "../model/ContactInfo.h"
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -60,6 +56,12 @@ void MainWindow::deleteRepositoryInstance()
 
 void MainWindow::on_actionCreate_Initialize_DB_triggered()
 {
+    QString dbFileName = QFileDialog::getSaveFileName(this,"Create a new file to Save DB ",QDir::homePath(),"DB file (*.db)", new QString("DB file (*.db)"));
+    (DbConnector::getInstance())->setDbFilePath( dbFileName);
+
+    QString sqlFileName = QFileDialog::getOpenFileName(this,"Select SQL file",QDir::homePath(),"SQL file (*.sql)");
+    (DbConnector::getInstance())->setSQLFilePath( sqlFileName);
+
     QString((DbConnector::getInstance())->ParseSqlScriptFile());
 }
 
@@ -73,7 +75,7 @@ void MainWindow::setItemsVisibilityBeforeLogin()
 
 
     ui->frameUser->setHidden(true);
-    ui->menuBar->setHidden(true);
+//    ui->menuBar->setHidden(true);
 
     ui->lineEditErrorLogin->setText("");
     ui->lineEditLogin->clear();
@@ -89,7 +91,7 @@ void MainWindow::setItemsVisibilityAfterLogin()
     ui->frameLogin->setHidden(true);
 
     ui->frameUser->setVisible(true);
-    ui->menuBar->setVisible(true);
+//    ui->menuBar->setVisible(true);
 
     setViewCommercialTypeTo(false);
 
@@ -339,4 +341,9 @@ void MainWindow::on_btnEdit_clicked()
     else
         QMessageBox::critical(this,"Failure","Fail to update the contact");
     delete contactInfo;
+}
+
+void MainWindow::on_actionLogout_triggered()
+{
+    on_btnLogout_clicked();
 }

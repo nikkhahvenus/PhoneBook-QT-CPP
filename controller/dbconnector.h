@@ -14,7 +14,7 @@ protected:
 private:
     QSqlDatabase phoneDB;
     static QString dbPath;
-    const QString tableCreationCommandsFileName = "/Users/mohammadnikkhah/QT/phoneBookProject/phoneBookApp/controller/sql.sql";
+    static QString sqlCommandsFileToCreateDB ;
 
 public:
     ~DbConnector();
@@ -23,6 +23,9 @@ public:
 
     static DbConnector *getInstance();
     static bool readyConnection();
+    static void setDbFilePath(QString);
+    static void setSQLFilePath(QString);
+
     int ParseSqlScriptFile();
 
 private:
